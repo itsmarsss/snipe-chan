@@ -1,7 +1,7 @@
 # Snipe Chan
 **What is Snipe Chan?**
 
-Snipe Chan is a Discord Bot that snipes messages, you will have to run your own snipe bot with the code provided because of the strict Discord TOS.
+Snipe Chan is a Discord Bot that snipes messages, you will have to run your own snipe bot with the code provided because of the limitations of Discord TOS.
 
 **How to Download Snipe Chan?**
 1. Head over to [[Releases]](https://github.com/itsmarsss/Snipe-Chan/releases) and look for the latest version

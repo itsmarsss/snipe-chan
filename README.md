@@ -41,6 +41,14 @@ Snipe Chan was created  in early 2021 because some guy wouldn't stop deleting me
 **• Editable settings in config.yml**
 
 
+**• Snipe messages**
+**• Snipe files**
+**• Sniped cache**
+**• Editable settings in config.yml**
+**• [prefix]snipe command (shows latest snipe)**
+**• [prefix]sniped [index] command (shows a snipe in sniped cache)**
+
+
 ## Upcoming Features
 **• Editable status**
 

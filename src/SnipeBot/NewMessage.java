@@ -18,7 +18,7 @@ public class NewMessage extends ListenerAdapter {
 			return;
 
 		if(SnipeChanBot.config.isEnableSnipeCommand() && event.getMessage().getContentRaw().startsWith("<@!" + SnipeChanBot.jda.getSelfUser().getId() + ">")) {
-			event.getMessage().reply("My prefix is `" + SnipeChanBot.config.getPrefix() + "`, do `" + SnipeChanBot.config.getPrefix() + "sniped` for a sniped messages!").queue();
+			event.getMessage().reply("My prefix is `" + SnipeChanBot.config.getPrefix() + "`, do `" + SnipeChanBot.config.getPrefix() + "sniped` for a sniped message!").queue();
 			return;
 		}
 

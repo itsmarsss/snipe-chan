@@ -1,16 +1,23 @@
 package SnipeBot;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
+import net.dv8tion.jda.api.entities.Message.Attachment;
+import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.requests.restaction.MessageAction;
 
 public class EditedMessage extends ListenerAdapter {
 
 	@SuppressWarnings("deprecation")
-	public void onGuildMessageUpdate(GuildMessageUpdateEvent event) {
+	@Override
+	public void onMessageUpdate(MessageUpdateEvent event) {
 		if(!event.getGuild().getId().equals(SnipeChanBot.config.getServerID()))
 			return;
 		
@@ -25,6 +32,8 @@ public class EditedMessage extends ListenerAdapter {
 		if(messageIndex == -1)
 			return;
 
+		boolean addButton = false;
+		
 		Message originalMessage = SnipeChanBot.messageCache.get(messageIndex);
 		SnipeChanBot.messageCache.remove(messageIndex);
 		SnipeChanBot.messageCache.add(event.getMessage());
@@ -42,16 +51,18 @@ public class EditedMessage extends ListenerAdapter {
 			}
 			if(originalMessage.getAttachments().size() > 0) {
 				emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachments");
+				addButton = true;
 			}
 			if(SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
 				SnipeChanBot.snipedCache.remove(0);
-			SnipeChanBot.snipedCache.add(emb.build());
+			SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
 		}else if(SnipeChanBot.config.isSnipeEditedFiles()) {
 			if(originalMessage.getAttachments().size() > 0) {
 				emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachments");
 				if(SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
 					SnipeChanBot.snipedCache.remove(0);
-				SnipeChanBot.snipedCache.add(emb.build());
+				SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
+				addButton = true;
 			}
 		}else if(SnipeChanBot.config.isSnipeEditedMessages()) {
 			if(!originalMessage.getContentRaw().isBlank()) {
@@ -59,11 +70,33 @@ public class EditedMessage extends ListenerAdapter {
 				.appendDescription("\n**Current Message:** " + event.getMessage().getContentRaw());
 				if(SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
 					SnipeChanBot.snipedCache.remove(0);
-				SnipeChanBot.snipedCache.add(emb.build());
+				SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
 			}
 		}
+		emb.appendDescription("\n\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_");
 		if(SnipeChanBot.config.isSendSnipeNotifs()) {
-			event.getChannel().sendMessageEmbeds(emb.build()).queue();
+			MessageAction ma = event.getChannel().sendMessageEmbeds(emb.build());
+			if(addButton) {
+				Collection<ActionRow> collection = new ArrayList<ActionRow>();
+				Collection<Button> collection1 = new ArrayList<Button>();
+				Collection<Button> collection2 = new ArrayList<Button>();
+				int filecount = 0;
+				for(Attachment i : originalMessage.getAttachments()) {
+					if(filecount < 5) {
+						collection1.add(Button.link(i.getUrl(), i.getFileName()));
+					}else {
+						collection2.add(Button.link(i.getUrl(), i.getFileName()));
+					}
+					filecount++;
+				}
+				ActionRow row1 = ActionRow.of(collection1);
+				ActionRow row2 = ActionRow.of(collection2);
+				collection.add(row1);
+				collection.add(row2);
+
+				ma.setActionRows(collection);
+			}
+			ma.queue();
 		}
 		try{
 			SnipeChanBot.jda.getTextChannelById(SnipeChanBot.config.getSnipeEditedLogsID()).sendMessageEmbeds(emb.build()).queue();

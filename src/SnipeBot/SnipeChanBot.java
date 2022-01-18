@@ -1,11 +1,15 @@
 package SnipeBot;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Scanner;
@@ -20,16 +24,16 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class SnipeChanBot {
 	static ArrayList <Message> messageCache = new ArrayList <Message>();
-	static ArrayList <MessageEmbed> snipedCache = new ArrayList <MessageEmbed>();
+	static ArrayList <MessageInfo> snipedCache = new ArrayList <MessageInfo>();
 
 	static Config config;
 	static JDA jda;
 
+	private static final String version = "1.0.0-Beta";
 	private static String parent;
 	private static final EnumSet<GatewayIntent> intent = EnumSet.of(GatewayIntent.GUILD_MESSAGES);
 	public static void main(String[] args) throws UnsupportedEncodingException, URISyntaxException, FileNotFoundException, LoginException, InterruptedException {
@@ -50,6 +54,8 @@ public class SnipeChanBot {
 		System.out.println();
 		System.out.println("Warning[1]: This program will use up alot of computer ram if you make the setCache value extremely high");
 		System.out.println("Warning[2]: Use this program at your own risk, I (the creator of this program) will not be liable for any issues that it causes to your Discord Server or computer (or mental health?)");
+		System.out.println();
+		System.out.println("Version:" + versionCheck());
 		System.out.println();
 		parent = SnipeChanBot.class
 				.getProtectionDomain()
@@ -83,7 +89,7 @@ public class SnipeChanBot {
 			jda = JDABuilder.createDefault(config.getBotToken(), intent).build();
 			System.out.println("Connecting to Discord...");
 			System.out.println("Validating token...");
-		jda.awaitReady();
+			jda.awaitReady();
 		} catch(Exception e) {
 			System.out.println("______________________________________________________");
 			System.out.println("Given token is invalid.");
@@ -107,6 +113,38 @@ public class SnipeChanBot {
 		jda.addEventListener(new DeletedMessage());
 		jda.addEventListener(new NewMessage());
 		System.out.println("Done!");
+	}
+
+	private static String versionCheck() {
+		URL url = null;
+		String newest = "";
+		String note = "Author's Note: ";
+		try {
+			url = new URL("https://raw.githubusercontent.com/itsmarsss/Snipe-Chan/main/newestversion");
+			URLConnection uc;
+			uc = url.openConnection();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+			newest = reader.readLine();
+			String line = null;
+			while ((line = reader.readLine()) != null)
+				note+= line + "\n";
+			
+			if(note.equals("Author's Note: "))
+				note = "";
+			
+		}catch(Exception e) {
+			return "Unable to check for version and creator's note";
+		}
+		if(!newest.equals(version)) {
+			return "   [There is a newer version of Snipe Chan]" +
+					"\n\t##############################################" +
+					"\n\t   " + version + "(current) >> " + newest + "(newer)" + 
+					"\nNew version: https://github.com/itsmarsss/Snipe-Chan/releases" +
+					"\n\t##############################################" +
+					"\n" + note;
+		}
+		return " This program is up to date!" +
+		"\n" + note;
 	}
 
 	private static boolean readConfigYML() {

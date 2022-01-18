@@ -150,7 +150,7 @@ public class SnipeChanBot {
 	private static boolean readConfigYML() {
 		InputStream is;
 		try {
-			is = new FileInputStream(new File("C:\\Users\\kenny\\eclipse-workspace\\Snipe Chan\\bin\\config.yml"));
+			is = new FileInputStream(new File(parent + "/config.yml"));
 			Yaml yml = new Yaml(new Constructor(Config.class));
 			config = yml.load(is);
 			if(config.getBotToken().isBlank() || config.getServerID().isBlank()) {

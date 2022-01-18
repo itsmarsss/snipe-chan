@@ -3,6 +3,10 @@
 
 Snipe Chan is a Discord Bot that snipes messages, you will have to run your own snipe bot with the code provided because of the limitations of Discord TOS.
 
+**Why Snipe Chan?**
+
+Snipe Chan was created  in early 2021 because some guy wouldn't stop deleting messages, the name and original profile picture was suggested by "wvrs" (he's probably playing Genshin right now). The same group of people regrouped and "wvrs" reminded us of Snipe Chan, so I went back found the original poorly written source code and rewrote the bot so that anyone can use it. (Trust me, the currect code is still pretty crappy).
+
 **How to Download Snipe Chan?**
 1. Head over to [[Releases]](https://github.com/itsmarsss/Snipe-Chan/releases) and look for the latest version
 2. Download both SnipeChanBot.jar and config.yml
@@ -41,6 +45,14 @@ Snipe Chan is a Discord Bot that snipes messages, you will have to run your own 
 **• Editable status**
 
 NOTE: Feel free to suggest any features you want!
+
+## Images
+<h1 align="center">
+<img src="/assets/image0.png" alt="Icon" width="200" height="200" </img>
+</h1>
+<h1 align="center">
+<img src="/assets/image1.png" alt="Icon" width="734" height="672" </img>
+</h1>
 
 ## Video Demonstrations
 *In the process of making*

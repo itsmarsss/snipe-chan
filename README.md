@@ -1,5 +1,6 @@
 # Snipe Chan
 **What is Snipe Chan?**
+
 Snipe Chan is a Discord Bot that snipes messages, you will have to run your own snipe bot with the code provided because of the strict Discord TOS.
 
 **How to Download Snipe Chan?**
@@ -8,6 +9,7 @@ Snipe Chan is a Discord Bot that snipes messages, you will have to run your own 
 3. Put them into the same folder somewhere on your computer
 
 **How to use Snipe Chan?**
+
 *Make sure you have Java installed on your computer, safe source to [[download]](https://www.oracle.com/java/technologies/downloads/) Java*
 1. First you need to create a new application linked to your Discord profile in [[Developers Portal]](https://discord.com/developers/applications)
 2. Create a bot within the application in [Bot]

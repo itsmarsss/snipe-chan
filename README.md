@@ -9,13 +9,13 @@ Snipe Chan is a Discord Bot that snipes messages, you will have to run your own 
 
 **How to use Snipe Chan?**
 *Make sure you have Java installed on your computer, safe source to [[download]](https://www.oracle.com/java/technologies/downloads/) Java*
-1. First you need to create a new application linked to you Discord profile in [[Developers Portsl]](https://discord.com/developers/applications)
+1. First you need to create a new application linked to your Discord profile in [[Developers Portal]](https://discord.com/developers/applications)
 2. Create a bot within the application in [Bot]
 3. Enable MESSAGE CONTENT INTENT
 4. Copy the application's Application ID in [General Information]
 5. Invite the bot to your server using [[this tool]](https://discordapi.com/permissions.html) (make sure to tick [Administrator])
 6. Go back to [Bot] section and copy the [Token]
-8. Go into the downloaded config.yml file, and change "bottoken" to the copied Token from Step 6
+8. Go into the downloaded config.yml file, and change "botToken" to the copied Token from Step 6
 7. Enable Developers Mode on Discord in settings [Advanced]
 8. Right click the Discord server icon on the server column and click [Copy ID]
 9. Go into the config.yml file, and change "1234567890" next to "serverID" to the copied ID from Step 8

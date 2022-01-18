@@ -33,7 +33,7 @@ public class SnipeChanBot {
 	static Config config;
 	static JDA jda;
 
-	private static final String version = "1.0.0-Beta";
+	private static final String version = "1.2.0";
 	private static String parent;
 	private static final EnumSet<GatewayIntent> intent = EnumSet.of(GatewayIntent.GUILD_MESSAGES);
 	public static void main(String[] args) throws UnsupportedEncodingException, URISyntaxException, FileNotFoundException, LoginException, InterruptedException {
@@ -57,7 +57,7 @@ public class SnipeChanBot {
 		System.out.println();
 		System.out.println("Version:" + versionCheck());
 		System.out.println();
-		parent = new File(SnipeChanBot.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent();
+		parent = new File(ClassLoader.getSystemClassLoader().getResource(".").toURI()).getPath();
 		System.out.println("Path: " + parent);
 		if(parent == null) {
 			System.out.println("______________________________________________________");

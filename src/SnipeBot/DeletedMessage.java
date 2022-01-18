@@ -79,7 +79,7 @@ public class DeletedMessage extends ListenerAdapter {
 				Collection<Button> collection2 = new ArrayList<Button>();
 				int filecount = 0;
 				for(Attachment i : originalMessage.getAttachments()) {
-					if(filecount >= 5) {
+					if(filecount < 5) {
 						collection1.add(Button.link(i.getUrl(), i.getFileName()));
 					}else {
 						collection2.add(Button.link(i.getUrl(), i.getFileName()));
@@ -87,9 +87,11 @@ public class DeletedMessage extends ListenerAdapter {
 					filecount++;
 				}
 				ActionRow row1 = ActionRow.of(collection1);
-				ActionRow row2 = ActionRow.of(collection2);
 				collection.add(row1);
-				collection.add(row2);
+				try {
+					ActionRow row2 = ActionRow.of(collection2);
+					collection.add(row2);
+				}catch(Exception e) {}
 
 				ma.setActionRows(collection);
 			}

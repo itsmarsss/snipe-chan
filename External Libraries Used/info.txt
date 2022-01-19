@@ -1,3 +1,5 @@
 JDA (Java Discord Api) was used to make the bot work, the core of everything.
+  https://github.com/DV8FromTheWorld/JDA
 
 SnakeYaml was used to parse config.yml allowing users to have many options.
+  https://github.com/spariev/snakeyaml

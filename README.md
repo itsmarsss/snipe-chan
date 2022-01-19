@@ -1,5 +1,6 @@
 <h1 align="center">
 <br>
+<img src="/assets/image.png" alt="Icon" width="100" height="100" </img>
 Snipe Chan
 <br>
 </h1>

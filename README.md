@@ -1,13 +1,16 @@
-# Snipe Chan
-**What is Snipe Chan?**
+<h1 align="center">
+<br>
+Snipe Chan
+<br>
+</h1>
 
-Snipe Chan is a Discord Bot that snipes messages, you will have to run your own snipe bot with the code provided because of the limitations of Discord TOS.
+**What is Snipe Chan?** -
+ Snipe Chan is a Discord Bot that snipes messages, you will have to run your own snipe bot with the code provided because of the limitations of Discord TOS.
 
-**Why Snipe Chan?**
-
+**Why Snipe Chan?** -
 Snipe Chan was created  in early 2021 because some guy wouldn't stop deleting messages, the name and original profile picture was suggested by "wvrs" (he's probably playing Genshin right now). The same group of people regrouped and "wvrs" reminded us of Snipe Chan, so I went back found the original poorly written source code and rewrote the bot so that anyone can use it. (Trust me, the current code is still pretty crappy).
 
-**How to Download Snipe Chan?**
+**How to Download Snipe Chan?** 
 1. Head over to [[Releases]](https://github.com/itsmarsss/Snipe-Chan/releases) and look for the latest version
 2. Download both SnipeChanBot.jar and config.yml
 3. Put them into the same folder somewhere on your computer
@@ -32,25 +35,20 @@ Snipe Chan was created  in early 2021 because some guy wouldn't stop deleting me
 14. If there are issues that you cannot solve, please create an issue at [[Issue]](https://github.com/itsmarsss/Snipe-Chan/issues)
 
 ## Features
-**• Snipe messages**
-
-**• Snipe files**
-
-**• Sniped cache**
-
-**• Editable settings in config.yml**
-
-
-**• Snipe messages**
-**• Snipe files**
-**• Sniped cache**
-**• Editable settings in config.yml**
-**• [prefix]snipe command (shows latest snipe)**
-**• [prefix]sniped [index] command (shows a snipe in sniped cache)**
+- Snipe messages
+- Snipe files
+- Sniped cache
+- Editable settings in config.yml
+- Snipe messages
+- Snipe files
+- Sniped cache
+- Editable settings in config.yml
+- [prefix]snipe command (shows latest snipe)
+- [prefix]sniped [index] command (shows a snipe in sniped cache)
 
 
 ## Upcoming Features
-**• Editable status**
+- Editable status and status message
 
 NOTE: Feel free to suggest any features you want!
 

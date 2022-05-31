@@ -182,6 +182,9 @@ public class Config {
 		if(serverID.isBlank())
 			return false;
 		
+		if(prefix.isBlank())
+			return false;
+		
 		return true;
 	}
 }

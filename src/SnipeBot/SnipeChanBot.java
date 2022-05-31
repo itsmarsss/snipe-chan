@@ -154,7 +154,6 @@ public class SnipeChanBot {
 			Yaml yml = new Yaml(new Constructor(Config.class));
 			config = yml.load(is);
 			if(config.getBotToken().isBlank() || config.getServerID().isBlank()) {
-				System.out.println("here");
 				return false;
 			}
 			return true;

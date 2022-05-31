@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message.Attachment;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
@@ -16,13 +17,13 @@ public class NewMessage extends ListenerAdapter {
 	public void onMessageReceived(MessageReceivedEvent event) {
 		if(!event.getGuild().getId().equals(SnipeChanBot.config.getServerID()))
 			return;
-
-		if(SnipeChanBot.config.isEnableSnipeCommand() && event.getMessage().getContentRaw().startsWith("<@!" + SnipeChanBot.jda.getSelfUser().getId() + ">")) {
-			event.getMessage().reply("My prefix is `" + SnipeChanBot.config.getPrefix() + "`, do `" + SnipeChanBot.config.getPrefix() + "sniped` for a sniped message and `" + SnipeChanBot.config.getPrefix() + "snipe` for latest sniped message!").queue();
+		
+		if(SnipeChanBot.config.isEnableSnipeCommand() && event.getMessage().getContentRaw().contains(SnipeChanBot.jda.getSelfUser().getId())) {
+			event.getMessage().reply("My prefix is `" + SnipeChanBot.config.getPrefix() + "`, do `" + SnipeChanBot.config.getPrefix() + "sniped <index>` for a sniped message, `" + SnipeChanBot.config.getPrefix() + "snipelist` for a list of snipes, and `" + SnipeChanBot.config.getPrefix() + "snipe` for latest sniped message!").queue();
 			return;
 		}
 
-		if(event.getMessage().getContentRaw().startsWith(SnipeChanBot.config.getPrefix() + "sniped")) {
+		if(event.getMessage().getContentRaw().toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "sniped")) {
 			try {
 				int index = SnipeChanBot.snipedCache.size()-1 - Integer.parseInt(event.getMessage().getContentRaw().substring((SnipeChanBot.config.getPrefix() + "sniped").length()+1));
 				if(index > SnipeChanBot.config.getMaxSnipedCache() || index < 0) {
@@ -57,7 +58,28 @@ public class NewMessage extends ListenerAdapter {
 			}catch(Exception e) {
 				event.getMessage().reply("Invalid number: [0 to " + (SnipeChanBot.snipedCache.size()-1) + "]").queue();
 			}
-		}else if(event.getMessage().getContentRaw().startsWith(SnipeChanBot.config.getPrefix() + "snipe")) {
+		}else if(event.getMessage().getContentRaw().toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "snipelist")) {
+			int index = SnipeChanBot.snipedCache.size()-1;
+			if(index == -1) {
+				event.getMessage().reply("Nothing in sniped cache").queue();
+			}else {
+				StringBuilder list = new StringBuilder();
+				for(MessageInfo mi : SnipeChanBot.snipedCache) {
+					StringBuilder temp = new StringBuilder();
+					temp.append("SNIPE LIST");
+					temp.append("\n--------------------");
+					MessageEmbed em = mi.getEmbed();
+					temp.append("\nAuthor: " + em.getAuthor().getName());
+					temp.append("\nContent:");
+					temp.append("\n" + em.getDescription());
+					temp.append("\nInfo:");
+					temp.append("\n" + em.getFooter().getText());
+					temp.append("\n============================================================");
+					list.append(temp);
+				}
+				event.getMessage().reply(list.toString().getBytes(), "Snipes.txt").queue();
+			}
+		}else if(event.getMessage().getContentRaw().toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "snipe")) {
 			int index = SnipeChanBot.snipedCache.size()-1;
 			if(index == -1) {
 				event.getMessage().reply("Nothing in sniped cache").queue();

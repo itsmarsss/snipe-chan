@@ -42,8 +42,8 @@ public class EditedMessage extends ListenerAdapter {
 				.setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
 				.setDescription(originalMessage.getMember().getAsMention() + "'s message has been Edited")
 				.setFooter(
-						"Message Sent/Edited â€¢ " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
-						"\nMessage Edited â€¢ " + new java.util.Date().toGMTString());
+						"Message Sent/Edited • " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
+						"\nMessage Edited • " + new java.util.Date().toGMTString());
 		if(SnipeChanBot.config.isSnipeEditedFiles() && SnipeChanBot.config.isSnipeEditedMessages()) {
 			if(!event.getMessage().getContentRaw().isBlank()) {
 				emb.appendDescription("\n\n**Original Message:** " + originalMessage.getContentRaw())

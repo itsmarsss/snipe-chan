@@ -42,15 +42,15 @@ public class EditedMessage extends ListenerAdapter {
 				.setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
 				.setDescription(originalMessage.getMember().getAsMention() + "'s message has been Edited")
 				.setFooter(
-						"Message Sent/Edited • " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
-						"\nMessage Edited • " + new java.util.Date().toGMTString());
+						"Message Sent/Edited â€¢ " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
+						"\nMessage Edited â€¢ " + new java.util.Date().toGMTString());
 		if(SnipeChanBot.config.isSnipeEditedFiles() && SnipeChanBot.config.isSnipeEditedMessages()) {
 			if(!event.getMessage().getContentRaw().isBlank()) {
 				emb.appendDescription("\n\n**Original Message:** " + originalMessage.getContentRaw())
 				.appendDescription("\n**Current Message:** " + event.getMessage().getContentRaw());
 			}
 			if(originalMessage.getAttachments().size() > 0) {
-				emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachments");
+				emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachment(s)");
 				addButton = true;
 			}
 			if(SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
@@ -58,7 +58,7 @@ public class EditedMessage extends ListenerAdapter {
 			SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
 		}else if(SnipeChanBot.config.isSnipeEditedFiles()) {
 			if(originalMessage.getAttachments().size() > 0) {
-				emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachments");
+				emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachment(s)");
 				if(SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
 					SnipeChanBot.snipedCache.remove(0);
 				SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));

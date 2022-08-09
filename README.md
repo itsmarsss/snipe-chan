@@ -67,7 +67,7 @@ NOTE: Feel free to suggest any features you want!
 <img src="/assets/image2.png" alt="Icon" </img>
 </h1>
 
-### Wvrs!11!1
+<!---### Wvrs!11!1
 <h1 align="center">
 <img src="/assets/image3.png" alt="Icon" width="200" height="200" </img>
 </h1>
@@ -76,4 +76,4 @@ NOTE: Feel free to suggest any features you want!
 </h1>
 
 ## Video Demonstrations
-*In the process of making*
+*In the process of making*--->

@@ -53,14 +53,14 @@ Snipe Chan was created  in early 2021 because some guy wouldn't stop deleting me
 
 NOTE: Feel free to suggest any features you want!
 
-## Images
+<!---## Images
 ### Bot Messages
 <h1 align="center">
 <img src="/assets/image0.png" alt="Icon" width="3184" </img>
 </h1>
 <h1 align="center">
 <img src="/assets/image1.png" alt="Icon" width="3184" </img>
-</h1>
+</h1>--->
 
 ### Console
 <h1 align="center">

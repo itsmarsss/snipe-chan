@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Message.Attachment;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
@@ -41,8 +42,8 @@ public class DeletedMessage extends ListenerAdapter {
 				.setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
 				.setDescription(originalMessage.getMember().getAsMention() + "'s message has been deleted")
 				.setFooter(
-						"Message Sent • " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
-						"\nMessage Deleted • " + new java.util.Date().toGMTString());
+						"Message Sent â€¢ " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
+						"\nMessage Deleted â€¢ " + new java.util.Date().toGMTString());
 		if(SnipeChanBot.config.isSnipeDeletedFiles() && SnipeChanBot.config.isSnipeDeletedMessages()) {
 			if(!originalMessage.getContentRaw().isBlank()) {
 				emb.appendDescription("\n\n**Message Deleted:** " + originalMessage.getContentRaw());
@@ -71,6 +72,8 @@ public class DeletedMessage extends ListenerAdapter {
 			}
 		}
 		emb.appendDescription("\n\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_");
+		MessageBuilder mes = new MessageBuilder()
+				.setEmbeds(emb.build());
 		if(SnipeChanBot.config.isSendSnipeNotifs()) {
 			MessageAction ma = event.getChannel().sendMessageEmbeds(emb.build());
 			if(addButton) {
@@ -94,11 +97,12 @@ public class DeletedMessage extends ListenerAdapter {
 				}catch(Exception e) {}
 
 				ma.setActionRows(collection);
+				mes.setActionRows(collection);
 			}
 			ma.queue();
 		}
 		try{
-			SnipeChanBot.jda.getTextChannelById(SnipeChanBot.config.getSnipeDeletedLogsID()).sendMessageEmbeds(emb.build()).queue();
+			SnipeChanBot.jda.getTextChannelById(SnipeChanBot.config.getSnipeDeletedLogsID()).sendMessage(mes.build()).queue();
 		}catch(Exception e) {
 			if(!SnipeChanBot.config.getSnipeDeletedLogsID().isBlank()) {
 				System.out.println("______________________________________________________");

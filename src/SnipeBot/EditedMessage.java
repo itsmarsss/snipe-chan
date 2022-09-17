@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Message.Attachment;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
@@ -42,8 +43,8 @@ public class EditedMessage extends ListenerAdapter {
 				.setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
 				.setDescription(originalMessage.getMember().getAsMention() + "'s message has been Edited")
 				.setFooter(
-						"Message Sent/Edited • " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
-						"\nMessage Edited • " + new java.util.Date().toGMTString());
+						"Message Sent/Edited â€¢ " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
+						"\nMessage Edited â€¢ " + new java.util.Date().toGMTString());
 		if(SnipeChanBot.config.isSnipeEditedFiles() && SnipeChanBot.config.isSnipeEditedMessages()) {
 			if(!event.getMessage().getContentRaw().isBlank()) {
 				emb.appendDescription("\n\n**Original Message:** " + originalMessage.getContentRaw())
@@ -74,6 +75,8 @@ public class EditedMessage extends ListenerAdapter {
 			}
 		}
 		emb.appendDescription("\n\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_");
+		MessageBuilder mes = new MessageBuilder()
+				.setEmbeds(emb.build());
 		if(SnipeChanBot.config.isSendSnipeNotifs()) {
 			MessageAction ma = event.getChannel().sendMessageEmbeds(emb.build());
 			if(addButton) {
@@ -97,11 +100,12 @@ public class EditedMessage extends ListenerAdapter {
 				}catch(Exception e) {}
 
 				ma.setActionRows(collection);
+				mes.setActionRows(collection);
 			}
 			ma.queue();
 		}
 		try{
-			SnipeChanBot.jda.getTextChannelById(SnipeChanBot.config.getSnipeEditedLogsID()).sendMessageEmbeds(emb.build()).queue();
+			SnipeChanBot.jda.getTextChannelById(SnipeChanBot.config.getSnipeEditedLogsID()).sendMessage(mes.build()).queue();
 		}catch(Exception e) {
 			if(!SnipeChanBot.config.getSnipeEditedLogsID().isBlank()) {
 				System.out.println("______________________________________________________");

@@ -31,7 +31,7 @@ Snipe Chan was created  in early 2021 because some guy wouldn't stop deleting me
 9. Go into the config.yml file, and change "1234567890" next to "serverID" to the copied ID from Step 8
 10. If you want the bot to log deleted/edited messages then right click the channel, click [Copy ID]
 11. Go into the config.yml file, and change "1234567890" next to "snipeDeletedLogsID" or "snipeEditedLogsID" to the copied ID from Step 10
-12. Open command prompt/terminal and type `java -jar <drag the .jar file into the window>` and press enter
+12. Open command prompt/terminal and type `java -jar <drag the .jar file into the window OR paste .jar file path>` and press enter
 13. Follow the instructions given by the program
 14. If there are issues that you cannot solve, please create an issue at [[Issue]](https://github.com/itsmarsss/Snipe-Chan/issues)
 

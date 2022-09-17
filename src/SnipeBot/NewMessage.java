@@ -18,7 +18,9 @@ public class NewMessage extends ListenerAdapter {
 		if(!event.getGuild().getId().equals(SnipeChanBot.config.getServerID()))
 			return;
 		
-		if(SnipeChanBot.config.isEnableSnipeCommand() && event.getMessage().getContentRaw().contains(SnipeChanBot.jda.getSelfUser().getId())) {
+		if((SnipeChanBot.config.isEnableSnipeCommand() && event.getMessage().getContentRaw().contains(SnipeChanBot.jda.getSelfUser().getId()))
+				||
+				((SnipeChanBot.config.isEnableSnipeCommand() && event.getMessage().getContentRaw().startsWith(SnipeChanBot.config.getPrefix()+"help")))) {
 			event.getMessage().reply("My prefix is `" + SnipeChanBot.config.getPrefix() + "`, do `" + SnipeChanBot.config.getPrefix() + "sniped <index>` for a sniped message, `" + SnipeChanBot.config.getPrefix() + "snipelist` for a list of snipes, and `" + SnipeChanBot.config.getPrefix() + "snipe` for latest sniped message!").queue();
 			return;
 		}

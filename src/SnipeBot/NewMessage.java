@@ -17,7 +17,7 @@ public class NewMessage extends ListenerAdapter {
 	public void onMessageReceived(MessageReceivedEvent event) {
 		if(!event.getGuild().getId().equals(SnipeChanBot.config.getServerID()))
 			return;
-		
+
 		if((SnipeChanBot.config.isEnableSnipeCommand() && event.getMessage().getContentRaw().contains(SnipeChanBot.jda.getSelfUser().getId()))
 				||
 				((SnipeChanBot.config.isEnableSnipeCommand() && event.getMessage().getContentRaw().startsWith(SnipeChanBot.config.getPrefix()+"help")))) {
@@ -74,6 +74,10 @@ public class NewMessage extends ListenerAdapter {
 					temp.append("\nAuthor: " + em.getAuthor().getName());
 					temp.append("\nContent:");
 					temp.append("\n" + em.getDescription());
+					temp.append("\nAttachment(s):");
+					for(int i = 0; i < mi.getMessage().getAttachments().size(); i++) {
+						temp.append("\n#"+(i+1)+": "+mi.getMessage().getAttachments().get(i).getUrl());
+					}
 					temp.append("\nInfo:");
 					temp.append("\n" + em.getFooter().getText());
 					temp.append("\n============================================================");

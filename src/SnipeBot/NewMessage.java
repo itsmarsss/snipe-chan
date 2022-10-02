@@ -128,7 +128,7 @@ public class NewMessage extends ListenerAdapter {
 			Button nextButton = Button.primary("next-"+(param+1), "Next \u27A1");
 			Button deleteButton = Button.secondary("delete", "Delete");
 			Message message = new MessageBuilder()
-					.setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #" + param + ": " + mi.get(param).getEmbed().getTitle()).build())
+					.setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #" + param + " of " + (mi.size()-1)).build())
 					.setActionRows(ActionRow.of(prevButton, nextButton, deleteButton))
 					.build();
 

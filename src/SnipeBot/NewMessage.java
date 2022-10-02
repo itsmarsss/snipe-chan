@@ -113,29 +113,25 @@ public class NewMessage extends ListenerAdapter {
 	}
 
 	private void viewSnipe(String raw, MessageReceivedEvent event) {
-		//try {
+		try {
 			ArrayList<MessageInfo> mi = SnipeChanBot.snipedCache;
 			int param = 0;
 			if(raw.length() > (SnipeChanBot.config.getPrefix() + "snipelist").length()) {
 				param = Integer.parseInt(raw.substring((SnipeChanBot.config.getPrefix() + "snipelist").length()).trim());
 			}
-			
-			
-
-			//DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy • hh:mm");
 
 			Button prevButton = Button.primary("prev-"+(param-1), "\u2B05 Prev");
 			Button nextButton = Button.primary("next-"+(param+1), "Next \u27A1");
 			Button deleteButton = Button.secondary("delete", "Delete");
 			Message message = new MessageBuilder()
-					.setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #" + param + " of " + (mi.size()-1)).build())
+					.setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size()-1) + "*:").build())
 					.setActionRows(ActionRow.of(prevButton, nextButton, deleteButton))
 					.build();
 
 			event.getMessage().reply(message).queue();
-//		}catch(Exception e) {
-//			event.getMessage().reply("Invalid page index.").queue();
-//		}
+		}catch(Exception e) {
+			event.getMessage().reply("Invalid page index.").queue();
+		}
 
 
 

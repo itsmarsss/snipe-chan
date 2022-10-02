@@ -42,8 +42,8 @@ public class DeletedMessage extends ListenerAdapter {
 				.setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
 				.setDescription(originalMessage.getMember().getAsMention() + "'s message has been deleted")
 				.setFooter(
-						"Message Sent • " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
-						"\nMessage Deleted • " + new java.util.Date().toGMTString());
+						"Message Sent \u2022 " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
+						"\nMessage Deleted \u2022 " + new java.util.Date().toGMTString());
 		if(SnipeChanBot.config.isSnipeDeletedFiles() && SnipeChanBot.config.isSnipeDeletedMessages()) {
 			if(!originalMessage.getContentRaw().isBlank()) {
 				emb.appendDescription("\n\n**Message Deleted:** " + originalMessage.getContentRaw());

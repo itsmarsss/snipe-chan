@@ -3,6 +3,7 @@ package SnipeBot;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message.Attachment;
@@ -127,7 +128,7 @@ public class NewMessage extends ListenerAdapter {
 			Button nextButton = Button.primary("next-"+(param+1), "Next \u27A1");
 			Button deleteButton = Button.secondary("delete", "Delete");
 			Message message = new MessageBuilder()
-					.setEmbeds(mi.get(param).getEmbed())
+					.setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #" + param + ": " + mi.get(param).getEmbed().getTitle()).build())
 					.setActionRows(ActionRow.of(prevButton, nextButton, deleteButton))
 					.build();
 

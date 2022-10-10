@@ -34,7 +34,7 @@ public class SnipeChanBot {
 	static Config config;
 	static JDA jda;
 
-	private static final String version = "1.5.2";
+	private static final String version = "1.5.3";
 	private static String parent;
 	private static final EnumSet<GatewayIntent> intent = EnumSet.of(GatewayIntent.GUILD_MESSAGES);
 	public static void main(String[] args) throws UnsupportedEncodingException, URISyntaxException, FileNotFoundException, LoginException, InterruptedException {

@@ -17,9 +17,9 @@ import net.dv8tion.jda.api.requests.restaction.MessageAction;
 public class NewMessage extends ListenerAdapter {
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		
+
 		String raw = event.getMessage().getContentRaw();
-		
+
 		if(!event.getGuild().getId().equals(SnipeChanBot.config.getServerID()))
 			return;
 
@@ -100,6 +100,17 @@ public class NewMessage extends ListenerAdapter {
 				}
 				ma.queue();
 			}
+		}else if(raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "version")) {
+			event.getMessage().replyEmbeds(new EmbedBuilder()
+					.setTitle(SnipeChanBot.version)
+					.setDescription(SnipeChanBot.versionCheck()
+							.replaceAll("#", "")
+							.replace("This program is up to date!", "__**This program is up to date!**__")
+							.replace("[There is a newer version of Snipe Chan]", "__**[There is a newer version of Snipe Chan]**__")
+							.replace("Author's Note:", "**Author's Note:**")
+							.replace("New version:", "**New version:**"))
+					.build())
+			.queue();
 		}
 
 
@@ -137,20 +148,20 @@ public class NewMessage extends ListenerAdapter {
 
 
 
-//		StringBuilder list = new StringBuilder();
-//		for(MessageInfo mi : SnipeChanBot.snipedCache) {
-//			StringBuilder temp = new StringBuilder();
-//			temp.append("SNIPE LIST");
-//			temp.append("\n--------------------");
-//			MessageEmbed em = mi.getEmbed();
-//			temp.append("\nAuthor: " + em.getAuthor().getName());
-//			temp.append("\nContent:");
-//			temp.append("\n" + em.getDescription());
-//			temp.append("\nInfo:");
-//			temp.append("\n" + em.getFooter().getText());
-//			temp.append("\n============================================================");
-//			list.append(temp);
-//		}
-//		event.getMessage().reply(list.toString().getBytes(), "Snipes.txt").queue();
+		//		StringBuilder list = new StringBuilder();
+		//		for(MessageInfo mi : SnipeChanBot.snipedCache) {
+		//			StringBuilder temp = new StringBuilder();
+		//			temp.append("SNIPE LIST");
+		//			temp.append("\n--------------------");
+		//			MessageEmbed em = mi.getEmbed();
+		//			temp.append("\nAuthor: " + em.getAuthor().getName());
+		//			temp.append("\nContent:");
+		//			temp.append("\n" + em.getDescription());
+		//			temp.append("\nInfo:");
+		//			temp.append("\n" + em.getFooter().getText());
+		//			temp.append("\n============================================================");
+		//			list.append(temp);
+		//		}
+		//		event.getMessage().reply(list.toString().getBytes(), "Snipes.txt").queue();
 	}
 }

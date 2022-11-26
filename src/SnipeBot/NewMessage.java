@@ -124,13 +124,13 @@ public class NewMessage extends ListenerAdapter {
             } catch (Exception e) {
                 event.getMessage().reply("Invalid snipe index.").queue();
             }
-        } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "clearsnipe")) {
+        } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "clear")) {
             if (!event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
                 event.getMessage().reply("You do not have `MESSAGE MANAGE` permission.").queue();
                 return;
             }
             SnipeChanBot.snipedCache.clear();
-            event.getMessage().reply("Snipe list has been cleared").queue();
+            event.getMessage().reply("Snipe list has been cleared.").queue();
         }
 
 

@@ -28,13 +28,13 @@ public class ButtonListener extends ListenerAdapter {
             } else if (id.startsWith("remove-")) {
                 if (!event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
                     e.reply("You do not have `MESSAGE MANAGE` permission.").setEphemeral(true).queue();
+                    return;
                 }
                 String param = id.replace("remove-", "");
 
-                ArrayList<MessageInfo> mi = SnipeChanBot.snipedCache;
-                for (int i = 0; i < mi.size(); i++) {
-                    if (mi.get(i).getMessage().getId().equals(param)) {
-                        mi.remove(i);
+                for (int i = 0; i < SnipeChanBot.snipedCache.size(); i++) {
+                    if (SnipeChanBot.snipedCache.get(i).getMessage().getId().equals(param)) {
+                        SnipeChanBot.snipedCache.remove(i);
                         e.reply("Snipe #" + i + "successfully removed.").setEphemeral(true).queue();
                         break;
                     }

@@ -28,8 +28,8 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class SnipeChanBot {
-	static ArrayList <Message> messageCache = new ArrayList <Message>();
-	static ArrayList <MessageInfo> snipedCache = new ArrayList <MessageInfo>();
+	static ArrayList <Message> messageCache = new ArrayList <>();
+	static ArrayList <MessageInfo> snipedCache = new ArrayList <>();
 
 	static Config config;
 	static JDA jda;

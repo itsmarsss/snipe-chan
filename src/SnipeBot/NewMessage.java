@@ -38,9 +38,9 @@ public class NewMessage extends ListenerAdapter {
 
 				MessageAction ma = event.getMessage().replyEmbeds(SnipeChanBot.snipedCache.get(index).getEmbed());
 				if(SnipeChanBot.snipedCache.get(index).getMessage().getAttachments().size() > 0) {
-					Collection<ActionRow> collection = new ArrayList<ActionRow>();
-					Collection<Button> collection1 = new ArrayList<Button>();
-					Collection<Button> collection2 = new ArrayList<Button>();
+					Collection<ActionRow> collection = new ArrayList<>();
+					Collection<Button> collection1 = new ArrayList<>();
+					Collection<Button> collection2 = new ArrayList<>();
 					int filecount = 0;
 					for(Attachment i : SnipeChanBot.snipedCache.get(index).getMessage().getAttachments()) {
 						if(filecount < 5) {
@@ -77,9 +77,9 @@ public class NewMessage extends ListenerAdapter {
 			}else {
 				MessageAction ma = event.getMessage().replyEmbeds(SnipeChanBot.snipedCache.get(index).getEmbed());
 				if(SnipeChanBot.snipedCache.get(index).getMessage().getAttachments().size() > 0) {
-					Collection<ActionRow> collection = new ArrayList<ActionRow>();
-					Collection<Button> collection1 = new ArrayList<Button>();
-					Collection<Button> collection2 = new ArrayList<Button>();
+					Collection<ActionRow> collection = new ArrayList<>();
+					Collection<Button> collection1 = new ArrayList<>();
+					Collection<Button> collection2 = new ArrayList<>();
 					int filecount = 0;
 					for(Attachment i : SnipeChanBot.snipedCache.get(index).getMessage().getAttachments()) {
 						if(filecount < 5) {

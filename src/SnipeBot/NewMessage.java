@@ -120,7 +120,7 @@ public class NewMessage extends ListenerAdapter {
                     param = Integer.parseInt(raw.substring((SnipeChanBot.config.getPrefix() + "remove").length()).trim());
                 }
                 SnipeChanBot.snipedCache.remove(param);
-                event.getMessage().reply("Snipe index #" + param + "has been removed.").queue();
+                event.getMessage().reply("Snipe index **#" + param + "** successfully removed.").queue();
             } catch (Exception e) {
                 event.getMessage().reply("Invalid snipe index.").queue();
             }
@@ -156,7 +156,7 @@ public class NewMessage extends ListenerAdapter {
             Button prevButton = Button.primary("prev-" + (param - 1), "\u2B05 Prev");
             Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
             Button hideButton = Button.secondary("hide", "Hide List");
-            Button removeButton = Button.secondary("remove", "Remove Snipe");
+            Button removeButton = Button.danger("remove-" + mi.get(param).getMessage().getId(), "Remove Snipe");
             Message message = new MessageBuilder()
                     .setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size() - 1) + "*:").build())
                     .setActionRows(ActionRow.of(prevButton, nextButton, hideButton, removeButton))

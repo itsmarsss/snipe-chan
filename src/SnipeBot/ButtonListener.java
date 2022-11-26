@@ -32,12 +32,21 @@ public class ButtonListener extends ListenerAdapter {
                 }
                 String param = id.replace("remove-", "");
 
+                boolean removed = false;
+                int in = 0;
+
                 for (int i = 0; i < SnipeChanBot.snipedCache.size(); i++) {
                     if (SnipeChanBot.snipedCache.get(i).getMessage().getId().equals(param)) {
                         SnipeChanBot.snipedCache.remove(i);
-                        e.reply("Snipe #" + i + "successfully removed.").setEphemeral(true).queue();
+                        removed = true;
+                        in = i;
                         break;
                     }
+                }
+                if (removed) {
+                    e.reply("Snipe **#" + in + "** successfully removed.").setEphemeral(true).queue();
+                } else {
+                    e.reply("Snipe **MSG ID: " + param + "** not found. *(Possibly already removed)*").setEphemeral(true).queue();
                 }
             } else if (id.startsWith("next-")) {
 
@@ -49,7 +58,7 @@ public class ButtonListener extends ListenerAdapter {
                     Button prevButton = Button.primary("prev-" + (param - 1), "\u2B05 Prev");
                     Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
                     Button hideButton = Button.secondary("hide", "Hide List");
-                    Button removeButton = Button.secondary("remove", "Remove Snipe");
+                    Button removeButton = Button.danger("remove-" + mi.get(param).getMessage().getId(), "Remove Snipe");
                     Message message = new MessageBuilder()
                             .setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size() - 1) + "*:").build())
                             .setActionRows(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
@@ -70,10 +79,11 @@ public class ButtonListener extends ListenerAdapter {
                 try {
                     Button prevButton = Button.primary("prev-" + (param - 1), "\u2B05 Prev");
                     Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
-                    Button deleteButton = Button.secondary("delete", "Delete");
+                    Button hideButton = Button.secondary("hide", "Hide List");
+                    Button removeButton = Button.danger("remove-" + mi.get(param).getMessage().getId(), "Remove Snipe");
                     Message message = new MessageBuilder()
                             .setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size() - 1) + "*:").build())
-                            .setActionRows(ActionRow.of(prevButton, nextButton, deleteButton))
+                            .setActionRows(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
                             .build();
 
                     e.deferEdit().queue();

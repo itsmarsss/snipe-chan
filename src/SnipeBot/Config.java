@@ -1,26 +1,26 @@
 package SnipeBot;
 
 public class Config {
-	private String botToken;
-	private String serverID;
-	private String prefix;
-	
-	private boolean snipeDeletedMessages;
-	private boolean snipeDeletedFiles;
-	private boolean snipeEditedMessages;
-	private boolean snipeEditedFiles;
-	private boolean sendSnipeNotifs;
-	private boolean snipeNonhumans;
-	private boolean snipeMessageManagers;
-	private boolean enableSnipeCommand;
-	
-	private int maxMessageCache;
-	private int maxSnipedCache;
-	
-	private String snipeDeletedLogsID;
-	private String snipeEditedLogsID;
-	
-	public Config() {
+    private String botToken;
+    private String serverID;
+    private String prefix;
+
+    private boolean snipeDeletedMessages;
+    private boolean snipeDeletedFiles;
+    private boolean snipeEditedMessages;
+    private boolean snipeEditedFiles;
+    private boolean sendSnipeNotifs;
+    private boolean snipeNonhumans;
+    private boolean snipeMessageManagers;
+    private boolean enableSnipeCommand;
+
+    private int maxMessageCache;
+    private int maxSnipedCache;
+
+    private String snipeDeletedLogsID;
+    private String snipeEditedLogsID;
+
+    public Config() {
 //			String bt, 
 //			String sid, 
 //			boolean sdm, 
@@ -35,7 +35,7 @@ public class Config {
 //			int msc,
 //			String sdlid,
 //			String selid) {
-		
+
 //		botToken = bt;
 //		serverID = sid;
 //		
@@ -53,138 +53,138 @@ public class Config {
 //		
 //		snipeDeletedLogsID = sdlid;
 //		snipeEditedLogsID = selid;
-	}
+    }
 
-	public String getBotToken() {
-		return botToken;
-	}
+    public String getBotToken() {
+        return botToken;
+    }
 
-	public void setbotToken(String botToken) {
-		this.botToken = botToken;
-	}
-	
-	public String getServerID() {
-		return serverID;
-	}
+    public void setbotToken(String botToken) {
+        this.botToken = botToken;
+    }
 
-	public void setServerID(String serverID) {
-		this.serverID = serverID;
-	}
+    public String getServerID() {
+        return serverID;
+    }
 
-	public String getPrefix() {
-		return prefix;
-	}
+    public void setServerID(String serverID) {
+        this.serverID = serverID;
+    }
 
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
-	}
+    public String getPrefix() {
+        return prefix;
+    }
 
-	public boolean isSnipeDeletedMessages() {
-		return snipeDeletedMessages;
-	}
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
-	public void setSnipeDeletedMessages(boolean snipeDeletedMessages) {
-		this.snipeDeletedMessages = snipeDeletedMessages;
-	}
+    public boolean isSnipeDeletedMessages() {
+        return snipeDeletedMessages;
+    }
 
-	public boolean isSnipeDeletedFiles() {
-		return snipeDeletedFiles;
-	}
+    public void setSnipeDeletedMessages(boolean snipeDeletedMessages) {
+        this.snipeDeletedMessages = snipeDeletedMessages;
+    }
 
-	public void setSnipeDeletedFiles(boolean snipeDeletedFiles) {
-		this.snipeDeletedFiles = snipeDeletedFiles;
-	}
+    public boolean isSnipeDeletedFiles() {
+        return snipeDeletedFiles;
+    }
 
-	public boolean isSnipeEditedMessages() {
-		return snipeEditedMessages;
-	}
+    public void setSnipeDeletedFiles(boolean snipeDeletedFiles) {
+        this.snipeDeletedFiles = snipeDeletedFiles;
+    }
 
-	public void setSnipeEditedMessages(boolean snipeEditedMessages) {
-		this.snipeEditedMessages = snipeEditedMessages;
-	}
+    public boolean isSnipeEditedMessages() {
+        return snipeEditedMessages;
+    }
 
-	public boolean isSnipeEditedFiles() {
-		return snipeEditedFiles;
-	}
+    public void setSnipeEditedMessages(boolean snipeEditedMessages) {
+        this.snipeEditedMessages = snipeEditedMessages;
+    }
 
-	public void setSnipeEditedFiles(boolean snipeEditedFiles) {
-		this.snipeEditedFiles = snipeEditedFiles;
-	}
+    public boolean isSnipeEditedFiles() {
+        return snipeEditedFiles;
+    }
 
-	public boolean isSendSnipeNotifs() {
-		return sendSnipeNotifs;
-	}
+    public void setSnipeEditedFiles(boolean snipeEditedFiles) {
+        this.snipeEditedFiles = snipeEditedFiles;
+    }
 
-	public void setSendSnipeNotifs(boolean sendSnipeNotifs) {
-		this.sendSnipeNotifs = sendSnipeNotifs;
-	}
+    public boolean isSendSnipeNotifs() {
+        return sendSnipeNotifs;
+    }
 
-	public boolean isSnipeNonhumans() {
-		return snipeNonhumans;
-	}
+    public void setSendSnipeNotifs(boolean sendSnipeNotifs) {
+        this.sendSnipeNotifs = sendSnipeNotifs;
+    }
 
-	public void setSnipeNonhumans(boolean snipeNonhumans) {
-		this.snipeNonhumans = snipeNonhumans;
-	}
+    public boolean isSnipeNonhumans() {
+        return snipeNonhumans;
+    }
 
-	public boolean isSnipeMessageManagers() {
-		return snipeMessageManagers;
-	}
+    public void setSnipeNonhumans(boolean snipeNonhumans) {
+        this.snipeNonhumans = snipeNonhumans;
+    }
 
-	public void setSnipeMessageManagers(boolean snipeMessageManagers) {
-		this.snipeMessageManagers = snipeMessageManagers;
-	}
+    public boolean isSnipeMessageManagers() {
+        return snipeMessageManagers;
+    }
 
-	public boolean isEnableSnipeCommand() {
-		return enableSnipeCommand;
-	}
+    public void setSnipeMessageManagers(boolean snipeMessageManagers) {
+        this.snipeMessageManagers = snipeMessageManagers;
+    }
 
-	public void setEnableSnipeCommand(boolean enableSnipeCommand) {
-		this.enableSnipeCommand = enableSnipeCommand;
-	}
+    public boolean isEnableSnipeCommand() {
+        return enableSnipeCommand;
+    }
 
-	public int getMaxMessageCache() {
-		return maxMessageCache;
-	}
+    public void setEnableSnipeCommand(boolean enableSnipeCommand) {
+        this.enableSnipeCommand = enableSnipeCommand;
+    }
 
-	public void setMaxMessageCache(int maxMessageCache) {
-		this.maxMessageCache = maxMessageCache;
-	}
-	
-	public int getMaxSnipedCache() {
-		return maxSnipedCache;
-	}
+    public int getMaxMessageCache() {
+        return maxMessageCache;
+    }
 
-	public void setMaxSnipedCache(int maxSnipedCache) {
-		this.maxSnipedCache = maxSnipedCache;
-	}
+    public void setMaxMessageCache(int maxMessageCache) {
+        this.maxMessageCache = maxMessageCache;
+    }
 
-	public String getSnipeDeletedLogsID() {
-		return snipeDeletedLogsID;
-	}
+    public int getMaxSnipedCache() {
+        return maxSnipedCache;
+    }
 
-	public void setSnipeDeletedLogsID(String snipeDeletedLogsID) {
-		this.snipeDeletedLogsID = snipeDeletedLogsID;
-	}
+    public void setMaxSnipedCache(int maxSnipedCache) {
+        this.maxSnipedCache = maxSnipedCache;
+    }
 
-	public String getSnipeEditedLogsID() {
-		return snipeEditedLogsID;
-	}
+    public String getSnipeDeletedLogsID() {
+        return snipeDeletedLogsID;
+    }
 
-	public void setSnipeEditedLogsID(String snipeEditedLogsID) {
-		this.snipeEditedLogsID = snipeEditedLogsID;
-	}
+    public void setSnipeDeletedLogsID(String snipeDeletedLogsID) {
+        this.snipeDeletedLogsID = snipeDeletedLogsID;
+    }
 
-	public boolean isValid() {
-		if(botToken.isBlank())
-			return false;
-		
-		if(serverID.isBlank())
-			return false;
-		
-		if(prefix.isBlank())
-			return false;
-		
-		return true;
-	}
+    public String getSnipeEditedLogsID() {
+        return snipeEditedLogsID;
+    }
+
+    public void setSnipeEditedLogsID(String snipeEditedLogsID) {
+        this.snipeEditedLogsID = snipeEditedLogsID;
+    }
+
+    public boolean isValid() {
+        if (botToken.isBlank())
+            return false;
+
+        if (serverID.isBlank())
+            return false;
+
+        if (prefix.isBlank())
+            return false;
+
+        return true;
+    }
 }

@@ -1,24 +1,5 @@
 package SnipeBot;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.Scanner;
-
-import javax.security.auth.login.LoginException;
-
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -26,6 +7,17 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+
+import javax.security.auth.login.LoginException;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.Scanner;
 
 public class SnipeChanBot {
     static ArrayList<Message> messageCache = new ArrayList<>();
@@ -38,7 +30,7 @@ public class SnipeChanBot {
     private static String parent;
     private static final EnumSet<GatewayIntent> intent = EnumSet.of(GatewayIntent.GUILD_MESSAGES);
 
-    public static void main(String[] args) throws UnsupportedEncodingException, URISyntaxException, FileNotFoundException, LoginException, InterruptedException {
+    public static void main(String[] args) throws URISyntaxException, InterruptedException {
         System.out.println(" ____  _   _ ___ ____  _____ ____ _   _    _    _   _ ");
         System.out.println("/ ___|| \\ | |_ _|  _ \\| ____/ ___| | | |  / \\  | \\ | |");
         System.out.println("\\___ \\|  \\| || || |_) |  _|| |   | |_| | / _ \\ |  \\| |");
@@ -54,7 +46,7 @@ public class SnipeChanBot {
         System.out.println();
         System.out.println("Note: This program will only run for 1 Discord Server, if you have multiple Discord Servers that you want this program to work on, then you will need to run multiple copies of this program in different directories (Make sure to set Server ID in each config.yml)");
         System.out.println();
-        System.out.println("Warning[1]: This program will use up alot of computer ram if you make the setCache value extremely high");
+        System.out.println("Warning[1]: This program will use up a lot of computer ram if you make the setCache value extremely high");
         System.out.println("Warning[2]: Use this program at your own risk, I (the creator of this program) will not be liable for any issues that it causes to your Discord Server or computer (or mental health?)");
         System.out.println();
         System.out.println("Version:" + versionCheck());
@@ -125,8 +117,8 @@ public class SnipeChanBot {
     }
 
     static String versionCheck() {
-        URL url = null;
-        String newest = "";
+        URL url;
+        String newest;
         String note = "Author's Note: ";
         try {
             url = new URL("https://raw.githubusercontent.com/itsmarsss/Snipe-Chan/main/newestversion");
@@ -134,7 +126,7 @@ public class SnipeChanBot {
             uc = url.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(uc.getInputStream()));
             newest = reader.readLine();
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null)
                 note += line + "\n";
 
@@ -159,7 +151,7 @@ public class SnipeChanBot {
     private static boolean readConfigYML() {
         InputStream is;
         try {
-            is = new FileInputStream(new File(parent + "/config.yml"));
+            is = new FileInputStream(parent + "/config.yml");
             Yaml yml = new Yaml(new Constructor(Config.class));
             config = yml.load(is);
             if (config.getBotToken().isBlank() || config.getServerID().isBlank()) {

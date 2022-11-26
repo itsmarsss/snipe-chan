@@ -1,5 +1,5 @@
 <h1 align="center">
-<img src="/assets/image.png" alt="Icon" width="100" height="100"</img>
+<img src="/assets/image.png" alt="Icon" width="100" height="100">
 <br>
 Snipe Chan
 <br>
@@ -63,15 +63,15 @@ NOTE: Feel free to suggest any features you want!
 
 ### Console
 <h1 align="center">
-<img src="/assets/image2.png" alt="Icon"</img>
+<img src="/assets/image2.png" alt="Icon">
 </h1>
 
 <!---### Wvrs!11!1
 <h1 align="center">
-<img src="/assets/image3.png" alt="Icon" width="200" height="200" </img>
+<img src="/assets/image3.png" alt="Icon" width="200" height="200">
 </h1>
 <h1 align="center">
-<img src="/assets/image4.png" alt="Icon" width="367" height="336" </img>
+<img src="/assets/image4.png" alt="Icon" width="367" height="336">
 </h1>
 
 ## Video Demonstrations

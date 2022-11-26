@@ -113,6 +113,24 @@ public class NewMessage extends ListenerAdapter {
                                     .replace("New version:", "**New version:**"))
                             .build())
                     .queue();
+        } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "remove")) {
+            try {
+                int param = 0;
+                if (raw.length() > (SnipeChanBot.config.getPrefix() + "remove").length()) {
+                    param = Integer.parseInt(raw.substring((SnipeChanBot.config.getPrefix() + "remove").length()).trim());
+                }
+                SnipeChanBot.snipedCache.remove(param);
+                event.getMessage().reply("Snipe index #" + param + "has been removed.").queue();
+            } catch (Exception e) {
+                event.getMessage().reply("Invalid snipe index.").queue();
+            }
+        } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "clearsnipe")) {
+            if (!event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+                event.getMessage().reply("You do not have `MESSAGE MANAGE` permission.").queue();
+                return;
+            }
+            SnipeChanBot.snipedCache.clear();
+            event.getMessage().reply("Snipe list has been cleared").queue();
         }
 
 

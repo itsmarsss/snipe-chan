@@ -1,8 +1,12 @@
 package SnipeBot;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.SimpleTimeZone;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
@@ -16,7 +20,6 @@ import net.dv8tion.jda.api.requests.restaction.MessageAction;
 
 public class DeletedMessage extends ListenerAdapter {
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onMessageDelete(MessageDeleteEvent event) {
 		if(!event.getGuild().getId().equals(SnipeChanBot.config.getServerID()))
@@ -38,12 +41,18 @@ public class DeletedMessage extends ListenerAdapter {
 		Message originalMessage = SnipeChanBot.messageCache.get(messageIndex);
 		SnipeChanBot.messageCache.remove(messageIndex);
 
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		sdf.setTimeZone(new SimpleTimeZone(0, "GMT"));
+		sdf.applyPattern("dd MMM yyyy HH:mm:ss z");
+		Date date = new Date();
+
 		EmbedBuilder emb = new EmbedBuilder()
 				.setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
 				.setDescription(originalMessage.getMember().getAsMention() + "'s message has been deleted")
 				.setFooter(
 						"Message Sent \u2022 " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) + 
-						"\nMessage Deleted \u2022 " + new java.util.Date().toGMTString());
+						"\nMessage Deleted \u2022 " + sdf.format(date));
+		emb.appendDescription("\n\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_");
 		if(SnipeChanBot.config.isSnipeDeletedFiles() && SnipeChanBot.config.isSnipeDeletedMessages()) {
 			if(!originalMessage.getContentRaw().isBlank()) {
 				emb.appendDescription("\n\n**Message Deleted:** " + originalMessage.getContentRaw());
@@ -54,13 +63,11 @@ public class DeletedMessage extends ListenerAdapter {
 			}
 			if(SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
 				SnipeChanBot.snipedCache.remove(0);
-			SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
 		}else if(SnipeChanBot.config.isSnipeDeletedFiles()) {
 			if(originalMessage.getAttachments().size() > 0) {
 				emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachment(s)");
 				if(SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
 					SnipeChanBot.snipedCache.remove(0);
-				SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
 				addButton = true;
 			}
 		}else if(SnipeChanBot.config.isSnipeDeletedMessages()) {
@@ -68,18 +75,17 @@ public class DeletedMessage extends ListenerAdapter {
 				emb.appendDescription("\n\n**Message Deleted:** " + originalMessage.getContentRaw());
 				if(SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
 					SnipeChanBot.snipedCache.remove(0);
-				SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
 			}
 		}
-		emb.appendDescription("\n\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_");
+		SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
 		MessageBuilder mes = new MessageBuilder()
 				.setEmbeds(emb.build());
 		if(SnipeChanBot.config.isSendSnipeNotifs()) {
 			MessageAction ma = event.getChannel().sendMessageEmbeds(emb.build());
 			if(addButton) {
-				Collection<ActionRow> collection = new ArrayList<ActionRow>();
-				Collection<Button> collection1 = new ArrayList<Button>();
-				Collection<Button> collection2 = new ArrayList<Button>();
+				Collection<ActionRow> collection = new ArrayList<>();
+				Collection<Button> collection1 = new ArrayList<>();
+				Collection<Button> collection2 = new ArrayList<>();
 				int filecount = 0;
 				for(Attachment i : originalMessage.getAttachments()) {
 					if(filecount < 5) {

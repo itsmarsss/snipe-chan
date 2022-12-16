@@ -148,7 +148,7 @@ public class NewMessage extends ListenerAdapter {
     private void viewSnipe(String raw, MessageReceivedEvent event) {
         try {
             ArrayList<MessageInfo> mi = SnipeChanBot.snipedCache;
-            int param = 0;
+            int param = mi.size() - 1;
             if (raw.length() > (SnipeChanBot.config.getPrefix() + "snipelist").length()) {
                 param = Integer.parseInt(raw.substring((SnipeChanBot.config.getPrefix() + "snipelist").length()).trim());
             }

@@ -50,35 +50,49 @@ public class EditedMessage extends ListenerAdapter {
                 .setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
                 .setDescription(originalMessage.getMember().getAsMention() + "'s message has been Edited")
                 .setFooter(
-                        "Message Sent/Edited \u2022 " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) +
+                        "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014" +
+                                "\nMessage Sent/Edited \u2022 " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) +
                                 "\nMessage Edited \u2022 " + sdf.format(date));
         if (SnipeChanBot.config.isSnipeEditedFiles() && SnipeChanBot.config.isSnipeEditedMessages()) {
             if (!event.getMessage().getContentRaw().isBlank()) {
-                emb.appendDescription("\n\n**Original Message:** " + originalMessage.getContentRaw())
-                        .appendDescription("\n**Current Message:** " + event.getMessage().getContentRaw());
+                String msg1 = originalMessage.getContentRaw();
+                if (msg1.length() >= 1024)
+                    msg1 = msg1.substring(0, 1021) + "...";
+
+                String msg2 = event.getMessage().getContentRaw();
+                if (msg2.length() >= 1024)
+                    msg2 = msg2.substring(0, 1021) + "...";
+                emb.addField("**Original Message:**", msg1, true)
+                        .addField("**Current Message:**", msg2, true);
             }
             if (originalMessage.getAttachments().size() > 0) {
-                emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachment(s)");
+                emb.addField("**Other:**", originalMessage.getAttachments().size() + " attachment(s)", false);
                 addButton = true;
             }
             if (SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
                 SnipeChanBot.snipedCache.remove(0);
         } else if (SnipeChanBot.config.isSnipeEditedFiles()) {
             if (originalMessage.getAttachments().size() > 0) {
-                emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachment(s)");
+                emb.addField("**Other:**", originalMessage.getAttachments().size() + " attachment(s)", false);
                 if (SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
                     SnipeChanBot.snipedCache.remove(0);
                 addButton = true;
             }
         } else if (SnipeChanBot.config.isSnipeEditedMessages()) {
             if (!originalMessage.getContentRaw().isBlank()) {
-                emb.appendDescription("\n\n**Original Message:** " + originalMessage.getContentRaw())
-                        .appendDescription("\n**Current Message:** " + event.getMessage().getContentRaw());
+                String msg1 = originalMessage.getContentRaw();
+                if (msg1.length() >= 1024)
+                    msg1 = msg1.substring(0, 1021) + "...";
+
+                String msg2 = event.getMessage().getContentRaw();
+                if (msg2.length() >= 1024)
+                    msg2 = msg2.substring(0, 1021) + "...";
+                emb.addField("**Original Message:**", msg1, true)
+                        .addField("**Current Message:**", msg2, true);
                 if (SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
                     SnipeChanBot.snipedCache.remove(0);
             }
         }
-        emb.appendDescription("\n\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_");
         SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
         MessageBuilder mes = new MessageBuilder()
                 .setEmbeds(emb.build());

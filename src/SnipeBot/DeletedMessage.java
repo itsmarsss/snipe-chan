@@ -49,33 +49,39 @@ public class DeletedMessage extends ListenerAdapter {
                 .setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
                 .setDescription(originalMessage.getMember().getAsMention() + "'s message has been deleted")
                 .setFooter(
-                        "Message Sent \u2022 " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) +
+                        "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014" +
+                                "\nMessage Sent \u2022 " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) +
                                 "\nMessage Deleted \u2022 " + sdf.format(date));
         if (SnipeChanBot.config.isSnipeDeletedFiles() && SnipeChanBot.config.isSnipeDeletedMessages()) {
             if (!originalMessage.getContentRaw().isBlank()) {
-                emb.appendDescription("\n\n**Message Deleted:** " + originalMessage.getContentRaw());
+                String msg = originalMessage.getContentRaw();
+                if(msg.length() >= 1024)
+                    msg = msg.substring(0, 1021) + "...";
+                emb.addField("**Message Deleted:**", msg, true);
             }
             if (originalMessage.getAttachments().size() > 0) {
-                emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachment(s)");
+                emb.addField("**Other:**", originalMessage.getAttachments().size() + " attachment(s)", false);
                 addButton = true;
             }
             if (SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
                 SnipeChanBot.snipedCache.remove(0);
         } else if (SnipeChanBot.config.isSnipeDeletedFiles()) {
             if (originalMessage.getAttachments().size() > 0) {
-                emb.appendDescription("\n\n" + originalMessage.getAttachments().size() + " attachment(s)");
+                emb.addField("**Other:**", originalMessage.getAttachments().size() + " attachment(s)", false);
                 if (SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
                     SnipeChanBot.snipedCache.remove(0);
                 addButton = true;
             }
         } else if (SnipeChanBot.config.isSnipeDeletedMessages()) {
             if (!originalMessage.getContentRaw().isBlank()) {
-                emb.appendDescription("\n\n**Message Deleted:** " + originalMessage.getContentRaw());
+                String msg = originalMessage.getContentRaw();
+                if(msg.length() >= 1024)
+                    msg = msg.substring(0, 1021) + "...";
+                emb.addField("**Message Deleted:**", msg, true);
                 if (SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
                     SnipeChanBot.snipedCache.remove(0);
             }
         }
-        emb.appendDescription("\n\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_");
         SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
         MessageBuilder mes = new MessageBuilder()
                 .setEmbeds(emb.build());

@@ -119,7 +119,7 @@ public class SnipeChanBot {
     static String versionCheck() {
         URL url;
         String newest;
-        String note = "Author's Note: ";
+        StringBuilder note = new StringBuilder("Author's Note: ");
         try {
             url = new URL("https://raw.githubusercontent.com/itsmarsss/Snipe-Chan/main/newestversion");
             URLConnection uc;
@@ -128,10 +128,10 @@ public class SnipeChanBot {
             newest = reader.readLine();
             String line;
             while ((line = reader.readLine()) != null)
-                note += line + "\n";
+                note.append(line).append("\n");
 
-            if (note.equals("Author's Note: "))
-                note = "";
+            if (note.toString().equals("Author's Note: "))
+                note = new StringBuilder();
 
         } catch (Exception e) {
             return "Unable to check for version and creator's note";

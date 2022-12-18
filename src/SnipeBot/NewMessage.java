@@ -87,7 +87,7 @@ public class NewMessage extends ListenerAdapter {
                         String link = i.getUrl();
                         if (link.length() > 512) {
                             link = "https://www.generatormix.com/random-gif-generator?safe=on";
-                            name = "[ \uF6C8 Link too long ]";
+                            name = "[Link too long]";
                         }
                         if (filecount < 5) {
                             collection1.add(Button.link(link, name));

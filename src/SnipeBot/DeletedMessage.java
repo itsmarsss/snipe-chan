@@ -55,7 +55,7 @@ public class DeletedMessage extends ListenerAdapter {
         if (SnipeChanBot.config.isSnipeDeletedFiles() && SnipeChanBot.config.isSnipeDeletedMessages()) {
             if (!originalMessage.getContentRaw().isBlank()) {
                 String msg = originalMessage.getContentRaw();
-                if(msg.length() >= 1024)
+                if (msg.length() >= 1024)
                     msg = msg.substring(0, 1021) + "...";
                 emb.addField("**Message Deleted:**", msg, true);
             }
@@ -75,7 +75,7 @@ public class DeletedMessage extends ListenerAdapter {
         } else if (SnipeChanBot.config.isSnipeDeletedMessages()) {
             if (!originalMessage.getContentRaw().isBlank()) {
                 String msg = originalMessage.getContentRaw();
-                if(msg.length() >= 1024)
+                if (msg.length() >= 1024)
                     msg = msg.substring(0, 1021) + "...";
                 emb.addField("**Message Deleted:**", msg, true);
                 if (SnipeChanBot.snipedCache.size() >= SnipeChanBot.config.getMaxSnipedCache())
@@ -93,10 +93,16 @@ public class DeletedMessage extends ListenerAdapter {
                 Collection<Button> collection2 = new ArrayList<>();
                 int filecount = 0;
                 for (Attachment i : originalMessage.getAttachments()) {
+                    String name = (i.getFileName().length() > 80 ? i.getFileName().substring(0, 77) + "..." : i.getFileName());
+                    String link = i.getUrl();
+                    if (link.length() > 512) {
+                        link = "https://www.generatormix.com/random-gif-generator?safe=on";
+                        name = "[ \uF6C8 Link too long ]";
+                    }
                     if (filecount < 5) {
-                        collection1.add(Button.link(i.getUrl(), i.getFileName()));
+                        collection1.add(Button.link(link, name));
                     } else {
-                        collection2.add(Button.link(i.getUrl(), i.getFileName()));
+                        collection2.add(Button.link(link, name));
                     }
                     filecount++;
                 }

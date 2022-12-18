@@ -104,10 +104,16 @@ public class EditedMessage extends ListenerAdapter {
                 Collection<Button> collection2 = new ArrayList<>();
                 int filecount = 0;
                 for (Attachment i : originalMessage.getAttachments()) {
+                    String name = (i.getFileName().length() > 80 ? i.getFileName().substring(0, 77) + "..." : i.getFileName());
+                    String link = i.getUrl();
+                    if (link.length() > 512) {
+                        link = "https://www.generatormix.com/random-gif-generator?safe=on";
+                        name = "[ \uF6C8 Link too long ]";
+                    }
                     if (filecount < 5) {
-                        collection1.add(Button.link(i.getUrl(), i.getFileName()));
+                        collection1.add(Button.link(link, name));
                     } else {
-                        collection2.add(Button.link(i.getUrl(), i.getFileName()));
+                        collection2.add(Button.link(link, name));
                     }
                     filecount++;
                 }

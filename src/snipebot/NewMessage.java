@@ -1,4 +1,4 @@
-package SnipeBot;
+package snipebot;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,41 +29,43 @@ public class NewMessage extends ListenerAdapter {
         }
 
         if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "sniped")) {
+            int index;
             try {
-                int index = SnipeChanBot.snipedCache.size() - 1 - Integer.parseInt(raw.substring((SnipeChanBot.config.getPrefix() + "sniped").length() + 1));
-                if (index > SnipeChanBot.config.getMaxSnipedCache() || index < 0) {
-                    event.getMessage().reply("Invalid number: [0 to " + (SnipeChanBot.snipedCache.size() - 1) + "]").queue();
-                    return;
-                }
-
-                MessageAction ma = event.getMessage().replyEmbeds(SnipeChanBot.snipedCache.get(index).getEmbed());
-                if (SnipeChanBot.snipedCache.get(index).getMessage().getAttachments().size() > 0) {
-                    Collection<ActionRow> collection = new ArrayList<>();
-                    Collection<Button> collection1 = new ArrayList<>();
-                    Collection<Button> collection2 = new ArrayList<>();
-                    int filecount = 0;
-                    for (Attachment i : SnipeChanBot.snipedCache.get(index).getMessage().getAttachments()) {
-                        if (filecount < 5) {
-                            collection1.add(Button.link(i.getUrl(), i.getFileName()));
-                        } else {
-                            collection2.add(Button.link(i.getUrl(), i.getFileName()));
-                        }
-                        filecount++;
-                    }
-                    ActionRow row1 = ActionRow.of(collection1);
-                    collection.add(row1);
-                    try {
-                        ActionRow row2 = ActionRow.of(collection2);
-                        collection.add(row2);
-                    } catch (Exception e) {
-                    }
-
-                    ma.setActionRows(collection);
-                }
-                ma.queue();
+                index = SnipeChanBot.snipedCache.size() - 1 - Integer.parseInt(raw.substring((SnipeChanBot.config.getPrefix() + "sniped").length() + 1));
             } catch (Exception e) {
                 event.getMessage().reply("Invalid number: [0 to " + (SnipeChanBot.snipedCache.size() - 1) + "]").queue();
+                return;
             }
+            if (index >= SnipeChanBot.snipedCache.size() || index < 0) {
+                event.getMessage().reply("Invalid number: [0 to " + (SnipeChanBot.snipedCache.size() - 1) + "]").queue();
+                return;
+            }
+
+            MessageAction ma = event.getMessage().replyEmbeds(SnipeChanBot.snipedCache.get(index).getEmbed());
+            if (SnipeChanBot.snipedCache.get(index).getMessage().getAttachments().size() > 0) {
+                Collection<ActionRow> collection = new ArrayList<>();
+                Collection<Button> collection1 = new ArrayList<>();
+                Collection<Button> collection2 = new ArrayList<>();
+                int filecount = 0;
+                for (Attachment i : SnipeChanBot.snipedCache.get(index).getMessage().getAttachments()) {
+                    if (filecount < 5) {
+                        collection1.add(Button.link(i.getUrl(), i.getFileName()));
+                    } else {
+                        collection2.add(Button.link(i.getUrl(), i.getFileName()));
+                    }
+                    filecount++;
+                }
+                ActionRow row1 = ActionRow.of(collection1);
+                collection.add(row1);
+
+                if (collection2.size() != 0) {
+                    ActionRow row2 = ActionRow.of(collection2);
+                    collection.add(row2);
+                }
+
+                ma = ma.setActionRows(collection);
+            }
+            ma.queue();
         } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "snipelist")) {
             int index = SnipeChanBot.snipedCache.size() - 1;
             if (index == -1) {
@@ -98,13 +100,13 @@ public class NewMessage extends ListenerAdapter {
                     }
                     ActionRow row1 = ActionRow.of(collection1);
                     collection.add(row1);
-                    try {
+
+                    if (collection2.size() != 0) {
                         ActionRow row2 = ActionRow.of(collection2);
                         collection.add(row2);
-                    } catch (Exception e) {
                     }
 
-                    ma.setActionRows(collection);
+                    ma = ma.setActionRows(collection);
                 }
                 ma.queue();
             }
@@ -120,16 +122,21 @@ public class NewMessage extends ListenerAdapter {
                             .build())
                     .queue();
         } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "remove")) {
-            try {
-                int param = 0;
-                if (raw.length() > (SnipeChanBot.config.getPrefix() + "remove").length()) {
-                    param = Integer.parseInt(raw.substring((SnipeChanBot.config.getPrefix() + "remove").length()).trim());
+            int index = -1;
+            if (raw.length() > (SnipeChanBot.config.getPrefix() + "remove").length()) {
+                try {
+                    index = Integer.parseInt(raw.substring((SnipeChanBot.config.getPrefix() + "remove").length()).trim());
+                } catch (Exception e) {
+                    event.getMessage().reply("Invalid snipe index.").queue();
+                    return;
                 }
-                SnipeChanBot.snipedCache.remove(param);
-                event.getMessage().reply("Snipe index **#" + param + "** successfully removed.").queue();
-            } catch (Exception e) {
-                event.getMessage().reply("Invalid snipe index.").queue();
             }
+            if (index >= SnipeChanBot.snipedCache.size() || index < 0) {
+                event.getMessage().reply("Invalid number: [0 to " + (SnipeChanBot.snipedCache.size() - 1) + "]").queue();
+                return;
+            }
+            SnipeChanBot.snipedCache.remove(index);
+            event.getMessage().reply("Snipe index **#" + index + "** successfully removed.").queue();
         } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "clear")) {
             if (!event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
                 event.getMessage().reply("You do not have `MESSAGE MANAGE` permission.").queue();
@@ -152,42 +159,33 @@ public class NewMessage extends ListenerAdapter {
     }
 
     private void viewSnipe(String raw, MessageReceivedEvent event) {
-        try {
-            ArrayList<MessageInfo> mi = SnipeChanBot.snipedCache;
-            int param = mi.size() - 1;
-            if (raw.length() > (SnipeChanBot.config.getPrefix() + "snipelist").length()) {
+        ArrayList<MessageInfo> mi = SnipeChanBot.snipedCache;
+        int param = mi.size() - 1;
+        if (raw.length() > (SnipeChanBot.config.getPrefix() + "snipelist").length()) {
+            try {
                 param = Integer.parseInt(raw.substring((SnipeChanBot.config.getPrefix() + "snipelist").length()).trim());
+            } catch (Exception e) {
+                event.getMessage().reply("Invalid page index.").queue();
             }
-
-            Button prevButton = Button.primary("prev-" + (param - 1), "\u2B05 Prev");
-            Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
-            Button hideButton = Button.secondary("hide", "Hide List");
-            Button removeButton = Button.danger("remove-" + mi.get(param).getMessage().getId(), "Remove Snipe");
-            Message message = new MessageBuilder()
-                    .setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size() - 1) + "*:").build())
-                    .setActionRows(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
-                    .build();
-
-            event.getMessage().reply(message).queue();
-        } catch (Exception e) {
-            event.getMessage().reply("Invalid page index.").queue();
         }
 
+        if (param < 0 || param >= mi.size()) {
+            event.getMessage().reply("Invalid page index.").queue();
+            return;
+        }
 
-        //		StringBuilder list = new StringBuilder();
-        //		for(MessageInfo mi : SnipeChanBot.snipedCache) {
-        //			StringBuilder temp = new StringBuilder();
-        //			temp.append("SNIPE LIST");
-        //			temp.append("\n--------------------");
-        //			MessageEmbed em = mi.getEmbed();
-        //			temp.append("\nAuthor: " + em.getAuthor().getName());
-        //			temp.append("\nContent:");
-        //			temp.append("\n" + em.getDescription());
-        //			temp.append("\nInfo:");
-        //			temp.append("\n" + em.getFooter().getText());
-        //			temp.append("\n============================================================");
-        //			list.append(temp);
-        //		}
-        //		event.getMessage().reply(list.toString().getBytes(), "Snipes.txt").queue();
+        Button prevButton = Button.primary("prev-" + (param - 1), "\u2B05 Prev");
+        Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
+        Button hideButton = Button.secondary("hide", "Hide List");
+        Button removeButton = Button.danger("remove-" + mi.get(param).getMessage().getId(), "Remove Snipe");
+        Message message = new MessageBuilder()
+                .setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size() - 1) + "*:").build())
+                .setActionRows(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
+                .build();
+
+        event.getMessage().
+                reply(message).
+                queue();
+
     }
 }

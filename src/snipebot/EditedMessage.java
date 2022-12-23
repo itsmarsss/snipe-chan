@@ -1,4 +1,4 @@
-package SnipeBot;
+package snipebot;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Message.Attachment;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
@@ -119,24 +120,24 @@ public class EditedMessage extends ListenerAdapter {
                 }
                 ActionRow row1 = ActionRow.of(collection1);
                 collection.add(row1);
-                try {
+                if (collection2.size() != 0) {
                     ActionRow row2 = ActionRow.of(collection2);
                     collection.add(row2);
-                } catch (Exception e) {
                 }
 
-                ma.setActionRows(collection);
+                ma = ma.setActionRows(collection);
                 mes.setActionRows(collection);
             }
             ma.queue();
         }
-        try {
-            SnipeChanBot.jda.getTextChannelById(SnipeChanBot.config.getSnipeEditedLogsID()).sendMessage(mes.build()).queue();
-        } catch (Exception e) {
+        final TextChannel LOGS_CHANNEL = SnipeChanBot.jda.getTextChannelById(SnipeChanBot.config.getSnipeEditedLogsID());
+        if (LOGS_CHANNEL == null) {
             if (!SnipeChanBot.config.getSnipeEditedLogsID().isBlank()) {
                 System.out.println("______________________________________________________");
                 System.out.println("Given edited message log channel ID is invalid.");
             }
+        } else {
+            LOGS_CHANNEL.sendMessage(mes.build()).queue();
         }
     }
 }

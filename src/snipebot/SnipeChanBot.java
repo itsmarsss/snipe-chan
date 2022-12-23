@@ -1,4 +1,4 @@
-package SnipeBot;
+package snipebot;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -20,8 +20,8 @@ import java.util.EnumSet;
 import java.util.Scanner;
 
 public class SnipeChanBot {
-    static ArrayList<Message> messageCache = new ArrayList<>();
-    static ArrayList<MessageInfo> snipedCache = new ArrayList<>();
+    static final ArrayList<Message> messageCache = new ArrayList<>();
+    static final ArrayList<MessageInfo> snipedCache = new ArrayList<>();
 
     static Config config;
     static JDA jda;
@@ -154,10 +154,7 @@ public class SnipeChanBot {
             is = new FileInputStream(parent + "/config.yml");
             Yaml yml = new Yaml(new Constructor(Config.class));
             config = yml.load(is);
-            if (config.getBotToken().isBlank() || config.getServerID().isBlank()) {
-                return false;
-            }
-            return true;
+            return !config.getBotToken().isBlank() && !config.getServerID().isBlank();
         } catch (Exception e) {
             return false;
         }

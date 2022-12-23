@@ -1,4 +1,4 @@
-package SnipeBot;
+package snipebot;
 
 import java.util.ArrayList;
 
@@ -10,11 +10,12 @@ import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.Button;
+import org.jetbrains.annotations.NotNull;
 
 public class ButtonListener extends ListenerAdapter {
     private ButtonClickEvent e;
 
-    public void onButtonClick(ButtonClickEvent event) {
+    public void onButtonClick(@NotNull ButtonClickEvent event) {
         try {
             if (!event.getGuild().getId().equals(SnipeChanBot.config.getServerID()))
                 return;
@@ -54,7 +55,10 @@ public class ButtonListener extends ListenerAdapter {
 
                 ArrayList<MessageInfo> mi = SnipeChanBot.snipedCache;
 
-                try {
+                if(param >= mi.size()) {
+                    e.reply("No next page.").setEphemeral(true).queue();
+                    return;
+                }
                     Button prevButton = Button.primary("prev-" + (param - 1), "\u2B05 Prev");
                     Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
                     Button hideButton = Button.secondary("hide", "Hide List");
@@ -66,9 +70,6 @@ public class ButtonListener extends ListenerAdapter {
 
                     e.deferEdit().queue();
                     e.getMessage().editMessage(message).queue();
-                } catch (Exception e) {
-                    this.e.reply("No next page.").setEphemeral(true).queue();
-                }
 
             } else if (id.startsWith("prev-")) {
 
@@ -76,21 +77,21 @@ public class ButtonListener extends ListenerAdapter {
 
                 ArrayList<MessageInfo> mi = SnipeChanBot.snipedCache;
 
-                try {
-                    Button prevButton = Button.primary("prev-" + (param - 1), "\u2B05 Prev");
-                    Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
-                    Button hideButton = Button.secondary("hide", "Hide List");
-                    Button removeButton = Button.danger("remove-" + mi.get(param).getMessage().getId(), "Remove Snipe");
-                    Message message = new MessageBuilder()
-                            .setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size() - 1) + "*:").build())
-                            .setActionRows(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
-                            .build();
-
-                    e.deferEdit().queue();
-                    e.getMessage().editMessage(message).queue();
-                } catch (Exception e) {
-                    this.e.reply("No previous page.").setEphemeral(true).queue();
+                if (param < 0) {
+                    e.reply("No previous page.").setEphemeral(true).queue();
+                    return;
                 }
+                Button prevButton = Button.primary("prev-" + (param - 1), "\u2B05 Prev");
+                Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
+                Button hideButton = Button.secondary("hide", "Hide List");
+                Button removeButton = Button.danger("remove-" + mi.get(param).getMessage().getId(), "Remove Snipe");
+                Message message = new MessageBuilder()
+                        .setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size() - 1) + "*:").build())
+                        .setActionRows(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
+                        .build();
+
+                e.deferEdit().queue();
+                e.getMessage().editMessage(message).queue();
             }
         } catch (Exception e) {
             this.e.reply("Request unsuccessful *(Hint: Embed possibly removed?)*").setEphemeral(true).queue();

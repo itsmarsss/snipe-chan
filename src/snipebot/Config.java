@@ -1,4 +1,4 @@
-package SnipeBot;
+package snipebot;
 
 public class Config {
     private String botToken;
@@ -182,9 +182,6 @@ public class Config {
         if (serverID.isBlank())
             return false;
 
-        if (prefix.isBlank())
-            return false;
-
-        return true;
+        return !prefix.isBlank();
     }
 }

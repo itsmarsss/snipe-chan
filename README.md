@@ -6,7 +6,7 @@ Snipe Chan
 </h1>
 
 ## NOTICE
-> :warning: :warning: :warning: **WARNING:** This project is no longer maintained; there may be bugs. Feel free to fork this repository, pull requests *may* be accepted. :warning: :warning: :warning:
+> :warning: :warning: :warning: **WARNING:** This project is no longer maintained; there may be bugs and issues. Feel free to fork this repository, pull requests *may* be accepted. :warning: :warning: :warning:
 
 **What is Snipe Chan?** -
  Snipe Chan is a Discord Bot that snipes messages, you will have to run your own snipe bot with the code provided because of the limitations of Discord TOS.
@@ -50,12 +50,12 @@ Snipe Chan was created  in early 2021 because some guy wouldn't stop deleting me
 - `[prefix]clear` - clears cache
 - `[prefix]version` - check for newer versions
 
-## Upcoming Features
+<!---## Upcoming Features
 - Editable status and status message
 
 NOTE: Feel free to suggest any features you want!
 
-<!---## Images
+## Images
 ### Bot Messages
 <h1 align="center">
 <img src="/assets/image0.png" alt="Icon" width="3184" </img>

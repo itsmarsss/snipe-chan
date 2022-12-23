@@ -1,4 +1,4 @@
-package SnipeBot;
+package snipebot;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;

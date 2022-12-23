@@ -1,9 +1,10 @@
-package SnipeBot;
+package snipebot;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Message.Attachment;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
@@ -108,24 +109,25 @@ public class DeletedMessage extends ListenerAdapter {
                 }
                 ActionRow row1 = ActionRow.of(collection1);
                 collection.add(row1);
-                try {
+
+                if (collection2.size() != 0) {
                     ActionRow row2 = ActionRow.of(collection2);
                     collection.add(row2);
-                } catch (Exception e) {
                 }
 
-                ma.setActionRows(collection);
+                ma = ma.setActionRows(collection);
                 mes.setActionRows(collection);
             }
             ma.queue();
         }
-        try {
-            SnipeChanBot.jda.getTextChannelById(SnipeChanBot.config.getSnipeDeletedLogsID()).sendMessage(mes.build()).queue();
-        } catch (Exception e) {
+        final TextChannel LOGS_CHANNEL = SnipeChanBot.jda.getTextChannelById(SnipeChanBot.config.getSnipeDeletedLogsID());
+        if (LOGS_CHANNEL == null) {
             if (!SnipeChanBot.config.getSnipeDeletedLogsID().isBlank()) {
                 System.out.println("______________________________________________________");
                 System.out.println("Given deleted message log channel ID is invalid.");
             }
+        } else {
+            LOGS_CHANNEL.sendMessage(mes.build()).queue();
         }
     }
 }

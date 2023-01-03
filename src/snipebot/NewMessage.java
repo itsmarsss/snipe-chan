@@ -151,19 +151,19 @@ public class NewMessage extends ListenerAdapter {
         } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "help")) {
             StringBuilder help = new StringBuilder();
             help.append("**__Commands__**")
-                    .append("\n**Main (Some commands may be disabled)**")
+                    .append("\n\n**Main *(Some may be disabled)***")
                     .append("\n`" + SnipeChanBot.config.getPrefix() + "help` - this menu")
+                    .append("\n`" + SnipeChanBot.config.getPrefix() + "version` - check for newer versions")
                     .append("\n`" + SnipeChanBot.config.getPrefix() + "snipe` - shows the latest snipe")
                     .append("\n`" + SnipeChanBot.config.getPrefix() + "sniped` - shows a snipe in sniped cache")
                     .append("\n`" + SnipeChanBot.config.getPrefix() + "snipelist [index | nothing]` - shows interactive snipe list (Prev | Next | Hide | Remove)")
-                    .append("\n`Prev` - browse previous snipe")
-                    .append("\n`Next` - browse next snipe")
-                    .append("\n`Hide List` - hide embed")
-                    .append("\n`Remove Snipe` - remove from cache")
-                    .append("\n**__Message Manage Permission__**")
+                    .append("\n\t`Prev` - browse previous snipe")
+                    .append("\n\t`Next` - browse next snipe")
+                    .append("\n\t`Hide List` - hide embed")
+                    .append("\n\t`Remove Snipe` - remove from cache")
+                    .append("\n\n**Message Manage Permission**")
                     .append("\n`" + SnipeChanBot.config.getPrefix() + "remove [index]` - removes index from cache")
-                    .append("\n`" + SnipeChanBot.config.getPrefix() + "clear` - clears cache")
-                    .append("\n`" + SnipeChanBot.config.getPrefix() + "version` - check for newer versions");
+                    .append("\n`" + SnipeChanBot.config.getPrefix() + "clear` - clears cache");
 
             event.getMessage().reply(help.toString()).queue();
         }

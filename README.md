@@ -43,6 +43,7 @@ Snipe Chan was created  in early 2021 because some guy wouldn't stop deleting me
 - Snipe files
 - Sniped cache
 - Editable settings in config.yml
+- `[prefix]help` - help menu
 - `[prefix]snipe` - shows the latest snipe
 - `[prefix]sniped [index]` - shows a snipe in sniped cache
 - `[prefix]snipelist [index | nothing]` - shows interactive snipe list (Prev | Next | Hide | Remove)

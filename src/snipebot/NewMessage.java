@@ -24,7 +24,7 @@ public class NewMessage extends ListenerAdapter {
             return;
 
         if (SnipeChanBot.config.isEnableSnipeCommand() && raw.contains(SnipeChanBot.jda.getSelfUser().getId())) {
-            event.getMessage().reply("My prefix is `" + SnipeChanBot.config.getPrefix() + "`, do `" + SnipeChanBot.config.getPrefix() + "sniped <index>` for a sniped message, `" + SnipeChanBot.config.getPrefix() + "snipelist` for a list of snipes, and `" + SnipeChanBot.config.getPrefix() + "snipe` for latest sniped message!").queue();
+            event.getMessage().reply("My prefix is `" + SnipeChanBot.config.getPrefix() + "`, do `" + SnipeChanBot.config.getPrefix() + "help` for a list of my commands!").queue();
             return;
         }
 
@@ -148,6 +148,20 @@ public class NewMessage extends ListenerAdapter {
             }
             SnipeChanBot.snipedCache.clear();
             event.getMessage().reply("Snipe list has been cleared.").queue();
+        } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "help")) {
+            StringBuilder help = new StringBuilder();
+            help.append("**__Commands__**")
+                    .append("\n**Main (Some commands may be disabled)**")
+                    .append("\n`" + SnipeChanBot.config.getPrefix() + "help` - this menu")
+                    .append("\n`" + SnipeChanBot.config.getPrefix() + "snipe` - shows the latest snipe")
+                    .append("\n`" + SnipeChanBot.config.getPrefix() + "sniped` - shows a snipe in sniped cache")
+                    .append("\n`" + SnipeChanBot.config.getPrefix() + "snipelist [index | nothing]` - shows interactive snipe list (Prev | Next | Hide | Remove)")
+                    .append("\n**__Message Manage Permission__**")
+                    .append("\n`" + SnipeChanBot.config.getPrefix() + "remove [index]` - removes index from cache")
+                    .append("\n`" + SnipeChanBot.config.getPrefix() + "clear` - clears cache")
+                    .append("\n`" + SnipeChanBot.config.getPrefix() + "version` - check for newer versions");
+
+            event.getMessage().reply(help.toString()).queue();
         }
 
 

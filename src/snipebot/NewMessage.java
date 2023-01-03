@@ -122,6 +122,10 @@ public class NewMessage extends ListenerAdapter {
                             .build())
                     .queue();
         } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "remove")) {
+            if (!event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+                event.getMessage().reply("You do not have `MESSAGE MANAGE` permission.").queue();
+                return;
+            }
             int index = -1;
             if (raw.length() > (SnipeChanBot.config.getPrefix() + "remove").length()) {
                 try {

@@ -47,6 +47,10 @@ Snipe Chan was created  in early 2021 because some guy wouldn't stop deleting me
 - `[prefix]snipe` - shows the latest snipe
 - `[prefix]sniped [index]` - shows a snipe in sniped cache
 - `[prefix]snipelist [index | nothing]` - shows interactive snipe list (Prev | Next | Hide | Remove)
+  - `[Prev]` - browse previous snipe
+  - `[Next]` - browse next snipe
+  - `[Hide List]` - hide embed
+  - `[Remove Snipe]` - remove from cache
 - `[prefix]remove [index]` - removes index from cache
 - `[prefix]clear` - clears cache
 - `[prefix]version` - check for newer versions

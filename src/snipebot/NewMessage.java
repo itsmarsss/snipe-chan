@@ -156,7 +156,7 @@ public class NewMessage extends ListenerAdapter {
                     .append("\n`" + SnipeChanBot.config.getPrefix() + "version` - check for newer versions")
                     .append("\n`" + SnipeChanBot.config.getPrefix() + "snipe` - shows the latest snipe")
                     .append("\n`" + SnipeChanBot.config.getPrefix() + "sniped` - shows a snipe in sniped cache")
-                    .append("\n`" + SnipeChanBot.config.getPrefix() + "snipelist [index | nothing]` - shows interactive snipe list (Prev | Next | Hide | Remove)")
+                    .append("\n`" + SnipeChanBot.config.getPrefix() + "snipelist [index | nothing]` - shows interactive snipe list")
                     .append("\n\t`Prev` - browse previous snipe")
                     .append("\n\t`Next` - browse next snipe")
                     .append("\n\t`Hide List` - hide embed")

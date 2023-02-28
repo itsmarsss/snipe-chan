@@ -90,10 +90,12 @@ public class SnipeChanBot {
             System.out.println("\t- Make sure to enable MESSAGE CONTENT INTENT");
             System.exit(0);
         }
-        jda.getPresence().setActivity(Activity.watching("for disappearing messages..."));
-        System.out.println("Setting status message...");
-        jda.getPresence().setStatus(OnlineStatus.DO_NOT_DISTURB);
+
         System.out.println("Setting status...");
+        jda.getPresence().setStatus(config.getParsedStatus());
+
+        System.out.println("Setting status message...");
+        jda.getPresence().setActivity(Activity.of(config.getParsedActivity(), config.getParsedName(), config.getParsedUrl()));
 
         System.out.println("Checking server ID...");
         boolean found = false;
@@ -114,6 +116,8 @@ public class SnipeChanBot {
         jda.addEventListener(new NewMessage());
         jda.addEventListener(new ButtonListener());
         System.out.println("Done!");
+
+
     }
 
     static String versionCheck() {

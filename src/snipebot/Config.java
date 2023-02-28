@@ -1,5 +1,8 @@
 package snipebot;
 
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
+
 public class Config {
     private String botToken;
     private String serverID;
@@ -19,6 +22,12 @@ public class Config {
 
     private String snipeDeletedLogsID;
     private String snipeEditedLogsID;
+
+
+    private String status;
+    private String activity;
+    private String name;
+    private String url;
 
     public Config() {
 //			String bt, 
@@ -59,7 +68,7 @@ public class Config {
         return botToken;
     }
 
-    public void setbotToken(String botToken) {
+    public void setBotToken(String botToken) {
         this.botToken = botToken;
     }
 
@@ -175,6 +184,39 @@ public class Config {
         this.snipeEditedLogsID = snipeEditedLogsID;
     }
 
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getActivity() {
+        return activity;
+    }
+
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public boolean isValid() {
         if (botToken.isBlank())
             return false;
@@ -183,5 +225,60 @@ public class Config {
             return false;
 
         return !prefix.isBlank();
+    }
+
+    public OnlineStatus getParsedStatus() {
+        if(status == null) {
+            return OnlineStatus.DO_NOT_DISTURB;
+        }
+
+        switch(status.toLowerCase()) {
+            case "online":
+                return OnlineStatus.ONLINE;
+            case "idle":
+                return OnlineStatus.IDLE;
+            default:
+                return OnlineStatus.DO_NOT_DISTURB;
+        }
+    }
+
+    public Activity.ActivityType getParsedActivity() {
+        if(activity == null) {
+            return Activity.ActivityType.WATCHING;
+        }
+
+        switch(activity.toLowerCase()) {
+            case "playing":
+                return Activity.ActivityType.PLAYING;
+            case "competing":
+                return Activity.ActivityType.COMPETING;
+            case "listening":
+                return Activity.ActivityType.LISTENING;
+            case "streaming":
+                return Activity.ActivityType.STREAMING;
+            default:
+                return Activity.ActivityType.WATCHING;
+        }
+    }
+
+    public String getParsedName() {
+        if(name == null) {
+            return "for disappearing messages...";
+        }
+        if(name.isBlank()) {
+            return "for disappearing messages...";
+        }
+        return name;
+    }
+
+    public String getParsedUrl() {
+        if(url == null) {
+            return "https://www.twitch.tv/Twitch";
+        }
+
+        if(getParsedActivity() == Activity.ActivityType.STREAMING) {
+            return url;
+        }
+        return "https://www.twitch.tv/Twitch";
     }
 }

@@ -2,7 +2,6 @@ package snipebot;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
@@ -26,7 +25,7 @@ public class SnipeChanBot {
     static Config config;
     static JDA jda;
 
-    static final String version = "1.6.1";
+    static final String version = "1.6.2";
     private static String parent;
     private static final EnumSet<GatewayIntent> intent = EnumSet.of(GatewayIntent.GUILD_MESSAGES);
 

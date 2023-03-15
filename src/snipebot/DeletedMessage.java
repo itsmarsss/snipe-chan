@@ -44,7 +44,8 @@ public class DeletedMessage extends ListenerAdapter {
 
         EmbedBuilder emb = new EmbedBuilder()
                 .setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
-                .setDescription(originalMessage.getMember().getAsMention() + "'s message has been deleted")
+                .setDescription(originalMessage.getMember().getAsMention() + "'s message has been deleted in channel " + originalMessage.getChannel().getAsMention())
+                .appendDescription("\n[[jump to  message](" + originalMessage.getJumpUrl() + ")]")
                 .setFooter(
                         "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014" +
                                 "\nMessage Sent \u2022 " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) +

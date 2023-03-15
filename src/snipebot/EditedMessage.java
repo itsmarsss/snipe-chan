@@ -45,7 +45,8 @@ public class EditedMessage extends ListenerAdapter {
 
         EmbedBuilder emb = new EmbedBuilder()
                 .setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
-                .setDescription(originalMessage.getMember().getAsMention() + "'s message has been Edited")
+                .setDescription(originalMessage.getMember().getAsMention() + "'s message has been edited in channel " + originalMessage.getChannel().getAsMention())
+                .appendDescription("\n[[jump to  message](" + originalMessage.getJumpUrl() + ")]")
                 .setFooter(
                         "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014" +
                                 "\nMessage Sent/Edited \u2022 " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) +

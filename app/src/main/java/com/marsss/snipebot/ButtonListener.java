@@ -1,4 +1,4 @@
-package snipebot;
+package com.marsss.snipebot;
 
 import java.util.ArrayList;
 

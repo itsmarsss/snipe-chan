@@ -148,7 +148,8 @@ public class SnipeChanBot {
                     "\n" + note;
         }
         return " This program is up to date!" +
-                "\n" + note;
+                "\n" + note +
+                "\n[https://github.com/itsmarsss/Snipe-Chan/releases]";
     }
 
     private static boolean readConfigYML() {

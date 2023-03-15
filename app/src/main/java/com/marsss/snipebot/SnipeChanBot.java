@@ -31,7 +31,7 @@ public class SnipeChanBot {
             GatewayIntent.GUILD_EMOJIS_AND_STICKERS,
             GatewayIntent.MESSAGE_CONTENT);
 
-    public static void main(String[] args) throws URISyntaxException, InterruptedException {
+    public static void main(String[] args) throws URISyntaxException {
         System.out.println(" ____  _   _ ___ ____  _____ ____ _   _    _    _   _ ");
         System.out.println("/ ___|| \\ | |_ _|  _ \\| ____/ ___| | | |  / \\  | \\ | |");
         System.out.println("\\___ \\|  \\| || || |_) |  _|| |   | |_| | / _ \\ |  \\| |");

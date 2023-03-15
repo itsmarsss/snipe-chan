@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-import javax.security.auth.login.LoginException;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -27,7 +26,10 @@ public class SnipeChanBot {
 
     static final String version = "1.6.3";
     private static String parent;
-    private static final EnumSet<GatewayIntent> intent = EnumSet.of(GatewayIntent.GUILD_MESSAGES);
+    private static final EnumSet<GatewayIntent> intent = EnumSet.of(
+            GatewayIntent.GUILD_MESSAGES,
+            GatewayIntent.GUILD_EMOJIS_AND_STICKERS,
+            GatewayIntent.MESSAGE_CONTENT);
 
     public static void main(String[] args) throws URISyntaxException, InterruptedException {
         System.out.println(" ____  _   _ ___ ____  _____ ____ _   _    _    _   _ ");
@@ -83,7 +85,7 @@ public class SnipeChanBot {
             System.out.println("Connecting to Discord...");
             System.out.println("Validating token...");
             jda.awaitReady();
-        } catch (LoginException e) {
+        } catch (Exception e) {
             System.out.println("______________________________________________________");
             System.out.println("Given token is invalid.");
             System.out.println("\t- Make sure to enable MESSAGE CONTENT INTENT");
@@ -157,7 +159,7 @@ public class SnipeChanBot {
         try {
             is = new FileInputStream(parent + "/config.yml");
             Yaml yml = new Yaml(new Constructor(Config.class));
-            config = yml.load(is);
+            config = (Config) yml.load(is);
             return !config.getBotToken().isBlank() && !config.getServerID().isBlank();
         } catch (Exception e) {
             return false;

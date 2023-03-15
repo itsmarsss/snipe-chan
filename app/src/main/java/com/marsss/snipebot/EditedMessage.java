@@ -1,15 +1,15 @@
 package com.marsss.snipebot;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Message.Attachment;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.Button;
-import net.dv8tion.jda.api.requests.restaction.MessageAction;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
+import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -92,10 +92,10 @@ public class EditedMessage extends ListenerAdapter {
             }
         }
         SnipeChanBot.snipedCache.add(new MessageInfo(emb.build(), originalMessage));
-        MessageBuilder mes = new MessageBuilder()
+        MessageCreateBuilder mes = new MessageCreateBuilder()
                 .setEmbeds(emb.build());
         if (SnipeChanBot.config.isSendSnipeNotifs()) {
-            MessageAction ma = event.getChannel().sendMessageEmbeds(emb.build());
+            MessageCreateAction ma = event.getChannel().sendMessageEmbeds(emb.build());
             if (addButton) {
                 Collection<ActionRow> collection = new ArrayList<>();
                 Collection<Button> collection1 = new ArrayList<>();
@@ -122,8 +122,8 @@ public class EditedMessage extends ListenerAdapter {
                     collection.add(row2);
                 }
 
-                ma = ma.setActionRows(collection);
-                mes.setActionRows(collection);
+                ma = ma.setComponents(collection);
+                mes.setComponents(collection);
             }
             ma.queue();
         }

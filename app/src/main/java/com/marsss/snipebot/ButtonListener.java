@@ -1,21 +1,21 @@
 package com.marsss.snipebot;
 
-import java.util.ArrayList;
-
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
+import net.dv8tion.jda.api.utils.messages.MessageEditData;
 import org.jetbrains.annotations.NotNull;
 
-public class ButtonListener extends ListenerAdapter {
-    private ButtonClickEvent e;
+import java.util.ArrayList;
 
-    public void onButtonClick(@NotNull ButtonClickEvent event) {
+public class ButtonListener extends ListenerAdapter {
+    private ButtonInteractionEvent e;
+
+    public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
         try {
             if (!event.getGuild().getId().equals(SnipeChanBot.config.getServerID()))
                 return;
@@ -63,9 +63,9 @@ public class ButtonListener extends ListenerAdapter {
                     Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
                     Button hideButton = Button.secondary("hide", "Hide List");
                     Button removeButton = Button.danger("remove-" + mi.get(param).getMessage().getId(), "Remove Snipe");
-                    Message message = new MessageBuilder()
+                    MessageEditData message = new MessageEditBuilder()
                             .setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size() - 1) + "*:").build())
-                            .setActionRows(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
+                            .setComponents(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
                             .build();
 
                     e.deferEdit().queue();
@@ -85,9 +85,9 @@ public class ButtonListener extends ListenerAdapter {
                 Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
                 Button hideButton = Button.secondary("hide", "Hide List");
                 Button removeButton = Button.danger("remove-" + mi.get(param).getMessage().getId(), "Remove Snipe");
-                Message message = new MessageBuilder()
+                MessageEditData message = new MessageEditBuilder()
                         .setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size() - 1) + "*:").build())
-                        .setActionRows(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
+                        .setComponents(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
                         .build();
 
                 e.deferEdit().queue();

@@ -1,18 +1,18 @@
 package com.marsss.snipebot;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message.Attachment;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.Button;
-import net.dv8tion.jda.api.requests.restaction.MessageAction;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
+import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class NewMessage extends ListenerAdapter {
     @Override
@@ -41,7 +41,7 @@ public class NewMessage extends ListenerAdapter {
                 return;
             }
 
-            MessageAction ma = event.getMessage().replyEmbeds(SnipeChanBot.snipedCache.get(index).getEmbed());
+            MessageCreateAction ma = event.getMessage().replyEmbeds(SnipeChanBot.snipedCache.get(index).getEmbed());
             if (SnipeChanBot.snipedCache.get(index).getMessage().getAttachments().size() > 0) {
                 Collection<ActionRow> collection = new ArrayList<>();
                 Collection<Button> collection1 = new ArrayList<>();
@@ -63,7 +63,7 @@ public class NewMessage extends ListenerAdapter {
                     collection.add(row2);
                 }
 
-                ma = ma.setActionRows(collection);
+                ma = ma.setComponents(collection);
             }
             ma.queue();
         } else if (raw.toLowerCase().startsWith(SnipeChanBot.config.getPrefix() + "snipelist")) {
@@ -78,7 +78,7 @@ public class NewMessage extends ListenerAdapter {
             if (index == -1) {
                 event.getMessage().reply("Nothing in sniped cache").queue();
             } else {
-                MessageAction ma = event.getMessage().replyEmbeds(SnipeChanBot.snipedCache.get(index).getEmbed());
+                MessageCreateAction ma = event.getMessage().replyEmbeds(SnipeChanBot.snipedCache.get(index).getEmbed());
                 if (SnipeChanBot.snipedCache.get(index).getMessage().getAttachments().size() > 0) {
                     Collection<ActionRow> collection = new ArrayList<>();
                     Collection<Button> collection1 = new ArrayList<>();
@@ -106,7 +106,7 @@ public class NewMessage extends ListenerAdapter {
                         collection.add(row2);
                     }
 
-                    ma = ma.setActionRows(collection);
+                    ma = ma.setComponents(collection);
                 }
                 ma.queue();
             }
@@ -200,9 +200,9 @@ public class NewMessage extends ListenerAdapter {
         Button nextButton = Button.primary("next-" + (param + 1), "Next \u27A1");
         Button hideButton = Button.secondary("hide", "Hide List");
         Button removeButton = Button.danger("remove-" + mi.get(param).getMessage().getId(), "Remove Snipe");
-        Message message = new MessageBuilder()
+        MessageCreateData message = new MessageCreateBuilder()
                 .setEmbeds(new EmbedBuilder(mi.get(param).getEmbed()).setTitle("Snipe #*" + param + "* of *" + (mi.size() - 1) + "*:").build())
-                .setActionRows(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
+                .setComponents(ActionRow.of(prevButton, nextButton, hideButton, removeButton))
                 .build();
 
         event.getMessage().

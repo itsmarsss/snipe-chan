@@ -11,12 +11,11 @@ import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
 
-import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.SimpleTimeZone;
 
 public class DeletedMessage extends ListenerAdapter {
 
@@ -41,9 +40,6 @@ public class DeletedMessage extends ListenerAdapter {
         Message originalMessage = SnipeChanBot.messageCache.get(messageIndex);
         SnipeChanBot.messageCache.remove(messageIndex);
 
-        SimpleDateFormat sdf = new SimpleDateFormat();
-        sdf.setTimeZone(new SimpleTimeZone(0, "GMT"));
-        sdf.applyPattern("dd MMM yyyy HH:mm:ss z");
         Date date = new Date();
 
         EmbedBuilder emb = new EmbedBuilder()
@@ -52,7 +48,7 @@ public class DeletedMessage extends ListenerAdapter {
                 .setFooter(
                         "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014" +
                                 "\nMessage Sent \u2022 " + originalMessage.getTimeCreated().format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5) +
-                                "\nMessage Deleted \u2022 " + sdf.format(date));
+                                "\nMessage Deleted \u2022 " + date.toInstant().atOffset(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5));
         if (SnipeChanBot.config.isSnipeDeletedFiles() && SnipeChanBot.config.isSnipeDeletedMessages()) {
             if (!originalMessage.getContentRaw().isBlank()) {
                 String msg = originalMessage.getContentRaw();

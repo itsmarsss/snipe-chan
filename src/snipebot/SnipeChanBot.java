@@ -25,7 +25,7 @@ public class SnipeChanBot {
     static Config config;
     static JDA jda;
 
-    static final String version = "1.6.2";
+    static final String version = "1.6.3";
     private static String parent;
     private static final EnumSet<GatewayIntent> intent = EnumSet.of(GatewayIntent.GUILD_MESSAGES);
 

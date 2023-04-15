@@ -77,6 +77,11 @@ NOTE: Feel free to suggest any features you want!
 <img src="/assets/image2.png" alt="Icon">
 </h1>
 
+## Video Demonstration
+<p align="center">Video Demonstration: https://www.youtube.com/watch?v=HKuxogE5IYw</p>
+
+[![Image Link](https://img.youtube.com/vi/HKuxogE5IYw/maxresdefault.jpg)](https://www.youtube.com/watch?v=HKuxogE5IYw)
+
 <!---### Wvrs!11!1
 <h1 align="center">
 <img src="/assets/image3.png" alt="Icon" width="200" height="200">
@@ -85,7 +90,3 @@ NOTE: Feel free to suggest any features you want!
 <img src="/assets/image4.png" alt="Icon" width="367" height="336">
 </h1>
 
-## Video Demonstration
-<p align="center">Video Demonstration: https://www.youtube.com/watch?v=HKuxogE5IYw</p>
-
-[![Image Link](https://img.youtube.com/vi/HKuxogE5IYw/maxresdefault.jpg)](https://www.youtube.com/watch?v=HKuxogE5IYw)

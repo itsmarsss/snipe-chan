@@ -87,8 +87,5 @@ NOTE: Feel free to suggest any features you want!
 
 ### Wvrs!11!1
 <h1 align="center">
-<img src="/assets/image3.png" alt="Icon" width="200" height="200">
-</h1>
-<h1 align="center">
 <img src="/assets/image4.png" alt="Icon" width="367" height="336">
 </h1>

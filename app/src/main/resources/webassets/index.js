@@ -1,6 +1,6 @@
 const config = document.getElementsByClassName('snipe-config')[0];
 
-const question_queue = document.getElementById('snipe-list');
+const snipe_list = document.getElementById('snipe-list');
 
 const prefix = document.getElementById('prefix');
 
@@ -20,6 +20,7 @@ const snipedeletedlogsid = document.getElementById('snipedeletedlogsid');
 const snipeeditedlogsid = document.getElementById('snipeeditedlogsid');
 
 prefix.addEventListener('input', alertConfig);
+
 snipedeletedmessages.addEventListener('change', alertConfig);
 snipedeletedfiles.addEventListener('change', alertConfig);
 snipeeditedmessages.addEventListener('change', alertConfig);
@@ -28,8 +29,10 @@ sendsnipenotifs.addEventListener('change', alertConfig);
 snipenonhumans.addEventListener('change', alertConfig);
 snipemessagemanagers.addEventListener('change', alertConfig);
 enablesnipecommand.addEventListener('change', alertConfig);
+
 maxmessagecache.addEventListener('input', alertConfig);
 maxsnipecache.addEventListener('input', alertConfig);
+
 snipedeletedlogsid.addEventListener('input', alertConfig);
 snipeeditedlogsid.addEventListener('input', alertConfig);
 
@@ -104,52 +107,69 @@ function setConfig() {
     });
 }
 
-function getQueue() {
-    httpGetAsync(`/api/v1/getqueue`, null, (res) => {
+function getSnipeList() {
+    httpGetAsync(`/api/v1/getsnipelist`, null, (res) => {
         console.log(res);
 
         const data = JSON.parse(res);
 
-        question_queue.innerHTML = "";
+        snipe_list.innerHTML = "";
 
-        if (data.queue.length == 0) {
-            question_queue.innerHTML = "Nothing to see here.";
+        if (data.cache.length == 0) {
+            snipe_list.innerHTML = "Nothing to see here.";
         }
 
-        for (let i in data.queue) {
+        for (let i in data.cache) {
 
-            const q = data.queue[i];
-
-            const date = new Date(q.time);
-
-            const ques = (q.poll ? "Poll: " : "Question: ") + q.question;
+            const c = data.queue[i];
 
             var card = `
 
-<div class="question" style = "border-left: 5px solid ${qotdColor}">
+<div class="snipe">
     <div class="main">
-        <div class="header">
-            <h3><b>Added by: ${q.user}</b></h3>
+        <div class="author">
+            <img
+                src="${c.avatarurl}">
+            <h4>${c.user}</h4>
         </div>
-        <div class="title">
-            <h2><b>${ques}</b></h2>
+
+        <hr>
+        <hr style="background-color: transparent">
+
+        <div class="contents">
+            <div class="from">
+                <b>Message Edited:</b><br>
+                ${c.from}
+            </div>
+
+            <div class="to">
+                <b>Message Edited:</b><br>
+                ${c.to}
+            </div>
+
+            <div class="other">
+                <b>Message Other:</b><br>
+                ${c.other}
+            </div>
         </div>
-        <div class="description">
-            <h4>Footer: <i>${q.footer}</i></h4>
-        </div>
-        <div class="footer">
-            <h4>Added on: ${formatDate(date)}</h4>
+
+        <hr>
+        <hr style="background-color: transparent">
+
+        <div class="time">
+            <h4>${c.time}</h4>
         </div>
     </div>
 
     <div class="aside">
-        <button class="delete" title="Remove" onclick="deleteQOTD('queue','${q.uuid}')">&#128465;&#65039;</button>
+        <button class="delete" title="Remove" onclick="deleteSnipe('${c.msgid}')">&#128465;&#65039;
+        </button>
     </div>
-</div >
+</div>
 
             `;
 
-            question_queue.innerHTML += card;
+            snipe_list.innerHTML += card;
         }
     });
 }
@@ -197,3 +217,4 @@ function formatDate(date) {
 }
 
 getConfig();
+getSnipeList();

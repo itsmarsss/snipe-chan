@@ -237,12 +237,28 @@ public class Webserver {
                     """);
 
             for (MessageInfo q : cache) {
+
+                String from = "";
+                try{
+                    from = q.getEmbed().getFields().get(0).getValue();
+                }catch(Exception e) {}
+
+                String to = "";
+                try{
+                    to = q.getEmbed().getFields().get(1).getValue();
+                }catch(Exception e) {}
+
+                String other = "";
+                try{
+                    other = q.getEmbed().getFields().get(2).getValue();
+                }catch(Exception e) {}
+
                 data.append(String.format(template,
                         q.getMessage().getAuthor().getAsTag(),
-                        q.getEmbed().getFields().get(0).getValue(),
-                        q.getEmbed().getFields().get(1).getValue(),
-                        q.getEmbed().getFields().get(2).getValue(),
-                        q.getEmbed().getFooter(),
+                        from,
+                        to,
+                        other,
+                        q.getEmbed().getFooter().getText(),
                         convertToJSON(q.getMessage().getAttachments()),
                         q.getMessage().getAuthor().getAvatarUrl(),
                         q.getMessage().getId()));

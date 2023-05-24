@@ -1,5 +1,6 @@
 package com.marsss.snipebot;
 
+import com.marsss.snipebot.ui.ConsoleMirror;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -9,7 +10,10 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -31,7 +35,28 @@ public class SnipeChanBot {
             GatewayIntent.GUILD_EMOJIS_AND_STICKERS,
             GatewayIntent.MESSAGE_CONTENT);
 
+    private static boolean head = true;
+
     public static void main(String[] args) throws URISyntaxException {
+        if (args.length > 0) {
+            if (args[0].equalsIgnoreCase("--nohead")) {
+                head = false;
+            }
+        }
+        if (head) {
+            System.out.println("Loading UI...");
+
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                System.out.println("Failed to set look and feel");
+                System.out.println("\tYou can ignore this");
+            }
+
+            new ConsoleMirror();
+        }
+
         System.out.println(" ____  _   _ ___ ____  _____ ____ _   _    _    _   _ ");
         System.out.println("/ ___|| \\ | |_ _|  _ \\| ____/ ___| | | |  / \\  | \\ | |");
         System.out.println("\\___ \\|  \\| || || |_) |  _|| |   | |_| | / _ \\ |  \\| |");
@@ -54,32 +79,72 @@ public class SnipeChanBot {
         System.out.println();
         parent = new File(SnipeChanBot.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent();
         System.out.println("Path: " + parent);
+
+        boolean parentPass = true;
         if (parent == null) {
             System.out.println("______________________________________________________");
             System.out.println("Unable to obtain path.");
-            System.exit(0);
+
+            if (!head) {
+                System.exit(0);
+            }
+            parentPass = false;
         }
+
+        if (parentPass) {
+            readConfig();
+        }
+    }
+
+    static void readConfig() {
         System.out.println();
+        boolean configPass = true;
         if (!readConfigYML()) {
             System.out.println("______________________________________________________");
             System.out.println("There was an error with config.yml");
             System.out.println("\t1. Make sure config.yml template exists");
             System.out.println("\t2. Make sure config.yml values are correctly inputted");
-            System.exit(0);
+            if (!head) {
+                System.exit(0);
+            }
+            configPass = false;
         }
+
+        if (configPass) {
+            validate();
+        }
+    }
+
+    static void validate() {
+        boolean validPass = true;
         if (!config.isValid()) {
             System.out.println("______________________________________________________");
             System.out.println("There was an error with config.yml");
             System.out.println("\t1. Make sure config.yml template exists");
             System.out.println("\t2. Make sure config.yml values are correctly inputted");
-            System.exit(0);
+            if (!head) {
+                System.exit(0);
+            }
+            validPass = false;
         }
+
+        if (validPass) {
+            prompt();
+        }
+    }
+
+    static void prompt() {
         System.out.println("~ Successfully read config.yml ~");
         System.out.println();
         System.out.println("** Press [enter] to start the bot **");
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
         sc.close();
+        start();
+    }
+
+    public static void start() {
+        boolean setupPass = true;
         try {
             jda = JDABuilder.createDefault(config.getBotToken(), intent).build();
             System.out.println("Connecting to Discord...");
@@ -89,9 +154,18 @@ public class SnipeChanBot {
             System.out.println("______________________________________________________");
             System.out.println("Given token is invalid.");
             System.out.println("\t- Make sure to enable MESSAGE CONTENT INTENT");
-            System.exit(0);
+            if (!head) {
+                System.exit(0);
+            }
+            setupPass = false;
         }
 
+        if (setupPass) {
+            activate();
+        }
+    }
+
+    static void activate() {
         System.out.println("Setting status...");
         jda.getPresence().setStatus(config.getParsedStatus());
 
@@ -105,12 +179,24 @@ public class SnipeChanBot {
                 found = true;
             }
         }
+
+        boolean serverIDPass = true;
         if (!found) {
             System.out.println("______________________________________________________");
             System.out.println("Given server ID is invalid.");
-            System.exit(0);
+
+            if (!head) {
+                System.exit(0);
+            }
+            serverIDPass = false;
         }
 
+        if (serverIDPass) {
+            complete();
+        }
+    }
+
+    static void complete() {
         System.out.println("Adding listeners...");
         jda.addEventListener(new EditedMessage());
         jda.addEventListener(new DeletedMessage());
@@ -118,7 +204,30 @@ public class SnipeChanBot {
         jda.addEventListener(new ButtonListener());
         System.out.println("Done!");
 
+        setupWebpage();
+    }
 
+    private static Webserver server;
+
+    static void setupWebpage() {
+        System.out.println();
+        System.out.println("Starting Webserver...");
+        try {
+            server = new Webserver();
+            server.startServer();
+
+            System.out.println("Webpage setup completed!");
+            System.out.println("\tOn port: " + server.getPort());
+
+            System.out.println();
+            System.out.println("Opening control panel...");
+
+            controlPanel();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to start Webserver.");
+            System.out.println("\tError message: " + e.getMessage());
+        }
     }
 
     static String versionCheck() {
@@ -166,16 +275,57 @@ public class SnipeChanBot {
         }
     }
 
+    public static void remove(String msgid) {
+        for (int i = 0; i < snipedCache.size(); i++) {
+            if (snipedCache.get(i).getMessage().getId().equals(msgid)) {
+                snipedCache.remove(i);
+                return;
+            }
+        }
+    }
+
+    public static void stop() {
+        if (jda == null) {
+            System.out.println("Bot already Stopped.");
+            return;
+        }
+        System.out.println("Terminating connection with Discord...");
+        jda.shutdownNow();
+        jda = null;
+        System.out.println("Connection terminated!");
+
+        System.out.println("Closing server...");
+        server.terminate();
+        server = null;
+        System.out.println("Server closed!");
+
+        System.out.println("Bot Stopped.");
+    }
+
+    public static void controlPanel() {
+        if (server == null) {
+            System.out.println("Click [Start] first.");
+            return;
+        }
+
+        try {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI("http://localhost:" + server.getPort()));
+            }
+            System.out.println("Successfully sent user to control panel...");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to open website.");
+            System.out.println("\tVisit http://localhost:" + server.getPort() + " to access control panel.");
+        }
+    }
+
     public static String getVersion() {
         return version;
     }
 
     public static JDA getJDA() {
         return jda;
-    }
-
-    public static void controlPanel() {
-
     }
 
     public static String getParent() {

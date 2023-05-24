@@ -1,31 +1,20 @@
 const config = document.getElementsByClassName('qotd-config')[0];
 
-const modal = document.getElementById('modal');
-const nauthor = document.getElementById('nauthor');
-const nquestion = document.getElementById('nquestion');
-const nfooter = document.getElementById('nfooter');
-const ntype = document.getElementById('nquestiontype');
-
-const queue = document.getElementById('queue');
-const review = document.getElementById('review');
-
 const question_queue = document.getElementById('question-queue');
-const question_review = document.getElementById('question-review');
 
 const prefix = document.getElementById('prefix');
-const qotdchannel = document.getElementById('qotdchannel');
-const managerreview = document.getElementById('managerreview');
-const reviewchannel = document.getElementById('reviewchannel');
-const embedcolor = document.getElementById('embedcolor');
-const trivia = document.getElementById('trivia');
-const paused = document.getElementById('paused');
 
-const permissionrole = document.getElementById('permissionrole');
-const managerrole = document.getElementById('managerrole');
+const snipedeletedmessages = document.getElementById('snipedeletedmessages');
+const snipedeletedfiles = document.getElementById('snipedeletedfiles');
+const snipeeditedmessages = document.getElementById('snipeeditedmessages');
+const snipeeditedfiles = document.getElementById('snipeeditedfiles');
+const sendsnipenotifs = document.getElementById('sendsnipenotifs');
+const snipenonhumans = document.getElementById('snipenonhumans');
+const snipemessagemanagers = document.getElementById('snipemessagemanagers');
+const enablesnipecommand = document.getElementById('enablesnipecommand');
 
-const overlay = document.getElementById('overlay');
-
-const list_title_text = document.getElementById('list-title-text');
+const maxmessagecache = document.getElementById('maxmessagecache');
+const maxsnipecache = document.getElementById('maxsnipecache');
 
 var qotdColor = "#000";
 
@@ -114,16 +103,12 @@ queue.addEventListener("click", function () {
     question_queue.style.display = "block";
     question_review.style.display = "none";
 
-    list_title_text.innerHTML = "Queue:";
-
     getQueue();
 });
 
 review.addEventListener("click", function () {
     question_queue.style.display = "none";
     question_review.style.display = "block";
-
-    list_title_text.innerHTML = "Review:";
 
     getReview();
 });

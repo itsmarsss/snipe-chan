@@ -31,6 +31,11 @@ body {
     border: 3px solid #2b2d31;
 }
 
+img {
+    border-radius: 50%;
+    width: 24px;
+}
+
 hr {
     margin: 0px;
     margin-top: 22.178px;
@@ -262,12 +267,15 @@ button:active {
     background: #ff000061;
 }
 
-.header {
-    top: 0px;
+.author {
+    display: flex;
+    gap: 10px;
 }
 
-.footer {
-    bottom: 0px;
+.contents {
+    display: flex;
+    gap: 30px;
+    align-content: space-evenly;
 }
 
 .fade-in {

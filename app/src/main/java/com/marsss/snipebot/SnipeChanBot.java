@@ -9,7 +9,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import java.awt.*;
 import java.io.*;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -121,6 +123,9 @@ public class SnipeChanBot {
 
     }
 
+
+    private static Webserver server;
+
     static String versionCheck() {
         URL url;
         String newest;
@@ -166,4 +171,33 @@ public class SnipeChanBot {
         }
     }
 
+    public static void controlPanel() {
+        if (server == null) {
+            System.out.println("Click [Start] first.");
+            return;
+        }
+
+        try {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI("http://localhost:" + server.getPort()));
+            }
+            System.out.println("Successfully sent user to control panel...");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to open website.");
+            System.out.println("\tVisit http://localhost:" + server.getPort() + " to access control panel.");
+        }
+    }
+
+    public static String getVersion() {
+        return version;
+    }
+
+    public static JDA getJDA() {
+        return jda;
+    }
+
+    public static String getParent() {
+        return parent;
+    }
 }

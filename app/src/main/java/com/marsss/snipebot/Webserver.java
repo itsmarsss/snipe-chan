@@ -170,6 +170,7 @@ public class Webserver {
                 System.out.println("\t" + body);
 
                 SnipeChanBot.config.setPrefix((String) data.get("prefix"));
+
                 SnipeChanBot.config.setSnipeDeletedMessages((boolean) data.get("snipedeletedmessages"));
                 SnipeChanBot.config.setSnipeDeletedFiles((boolean) data.get("snipedeletedfiles"));
                 SnipeChanBot.config.setSnipeEditedMessages((boolean) data.get("snipeeditedmessages"));
@@ -178,8 +179,10 @@ public class Webserver {
                 SnipeChanBot.config.setSnipeNonhumans((boolean) data.get("snipenonhumans"));
                 SnipeChanBot.config.setSnipeMessageManagers((boolean) data.get("snipemessagemanagers"));
                 SnipeChanBot.config.setEnableSnipeCommand((boolean) data.get("enablesnipecommand"));
+
                 SnipeChanBot.config.setMaxMessageCache((int) data.get("maxmessagecache"));
                 SnipeChanBot.config.setMaxSnipedCache((int) data.get("maxsnipecache"));
+
                 SnipeChanBot.config.setSnipeDeletedLogsID((String) data.get("snipedeletedlogsid"));
                 SnipeChanBot.config.setSnipeEditedLogsID((String) data.get("snipeeditedlogsid"));
 
@@ -212,9 +215,11 @@ public class Webserver {
 
                     {
                         "type": "%s",
+                        "user": "%s",
                         "from": "%s",
                         "to": "%s",
-                        "user": "%s",
+                        "time": "%s",
+                        "link": [%s],
                         "avatarurl": "%s",
                         "msgid": "%s"
                     },

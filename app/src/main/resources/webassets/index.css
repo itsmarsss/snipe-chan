@@ -221,7 +221,7 @@ button:active {
     transition: 200ms;
 }
 
-.question {
+.snipe {
     display: flex;
     margin: auto;
     margin-bottom: 20px;
@@ -229,15 +229,16 @@ button:active {
     border-radius: 15px;
     padding: 20px;
     overflow: hidden;
+    border-left: 5px solid #4f545c;
     box-shadow: #5a5a6433 0px 4px 12px;
 }
 
-.question * {
+.snipe * {
     position: relative;
 }
 
-.question:hover .delete,
-.question.hover .delete {
+.snipe:hover .delete,
+.snipe.hover .delete {
     transform: translateX(0);
 }
 

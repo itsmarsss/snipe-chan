@@ -132,15 +132,15 @@ public class Webserver {
                                 "managerrole": "%s"
                             }
                             """,
-                    SnipeChanBot.config.getPrefix(),
-                    SnipeChanBot.config.getChannelID(),
-                    SnipeChanBot.config.getManagerReview(),
-                    SnipeChanBot.config.getReviewChannel(),
-                    SnipeChanBot.config.getQOTDColor(),
-                    SnipeChanBot.config.getTrivia(),
-                    SnipeChanBot.isPaused(),
-                    SnipeChanBot.config.getPermRoleID(),
-                    SnipeChanBot.config.getManagerRoleID());
+                    SnipeChanBot.config.getPrefix());//,
+                    //SnipeChanBot.config.getChannelID(),
+                    //SnipeChanBot.config.getManagerReview(),
+                    //SnipeChanBot.config.getReviewChannel(),
+                    //SnipeChanBot.config.getQOTDColor(),
+                    //SnipeChanBot.config.getTrivia(),
+                    //SnipeChanBot.isPaused(),
+                    //SnipeChanBot.config.getPermRoleID(),
+                    //SnipeChanBot.config.getManagerRoleID());
 
             he.sendResponseHeaders(200, response.length());
             OutputStream os = he.getResponseBody();
@@ -163,15 +163,15 @@ public class Webserver {
                 System.out.println("\t" + body);
 
                 SnipeChanBot.config.setPrefix((String) data.get("prefix"));
-                SnipeChanBot.config.setChannelID((String) data.get("qotdchannel"));
-                SnipeChanBot.config.setManagerReview(Boolean.parseBoolean((String) data.get("managerreview")));
-                SnipeChanBot.config.setReviewChannel((String) data.get("reviewchannel"));
-                SnipeChanBot.config.setQOTDColor((String) data.get("embedcolor"));
-                SnipeChanBot.config.setTrivia(Boolean.parseBoolean((String) data.get("trivia")));
-                SnipeChanBot.setPaused(Boolean.parseBoolean((String) data.get("paused")));
-
-                SnipeChanBot.config.setPermRoleID((String) data.get("permissionrole"));
-                SnipeChanBot.config.setManagerRoleID((String) data.get("managerrole"));
+//                SnipeChanBot.config.setChannelID((String) data.get("qotdchannel"));
+//                SnipeChanBot.config.setManagerReview(Boolean.parseBoolean((String) data.get("managerreview")));
+//                SnipeChanBot.config.setReviewChannel((String) data.get("reviewchannel"));
+//                SnipeChanBot.config.setQOTDColor((String) data.get("embedcolor"));
+//                SnipeChanBot.config.setTrivia(Boolean.parseBoolean((String) data.get("trivia")));
+//                SnipeChanBot.setPaused(Boolean.parseBoolean((String) data.get("paused")));
+//
+//                SnipeChanBot.config.setPermRoleID((String) data.get("permissionrole"));
+//                SnipeChanBot.config.setManagerRoleID((String) data.get("managerrole"));
 
                 String response = "Success";
                 he.sendResponseHeaders(200, response.length());

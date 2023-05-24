@@ -51,21 +51,21 @@ public class ConsoleMirror extends JFrame {
         Button editButton = new Button("config.yml", new Color(78, 80, 88), new Color(65, 68, 74), new Color(78, 80, 88));
         editButton.addActionListener(actionEvent -> {
             System.out.println();
-            ProcessBuilder pb = new ProcessBuilder("Notepad.exe", SnipeChanBot.getParent() + "/config.yml");
+
             try {
-                pb.start();
+                Desktop.getDesktop().edit(new File(SnipeChanBot.getParent() + "/config.yml"));
 
                 System.out.println("You will need to restart the program for new changes to take place.");
                 JOptionPane.showMessageDialog(null,
                         "You will need to restart the program for new changes to take place.",
                         "Snipe Bot Warning",
                         JOptionPane.WARNING_MESSAGE);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("Notepad.exe not found:");
+                System.out.println("Error encountered not found:");
                 System.out.println("\tUnable to open: " + SnipeChanBot.getParent() + "/config.yml");
                 JOptionPane.showMessageDialog(null,
-                        "Notepad.exe not found: Unable to open: " + SnipeChanBot.getParent() + "/config.yml",
+                        e.getMessage(),
                         "Snipe Bot Error",
                         JOptionPane.ERROR_MESSAGE);
             }

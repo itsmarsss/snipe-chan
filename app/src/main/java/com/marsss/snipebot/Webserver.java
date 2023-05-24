@@ -9,6 +9,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.UUID;
@@ -35,17 +36,13 @@ public class Webserver {
         server.createContext("/index.css", new CSS());
         server.createContext("/api/v1/getconfig", new GetConfig());
         server.createContext("/api/v1/setconfig", new SetConfig());
-        server.createContext("/api/v1/getqueue", new GetQueue());
-        server.createContext("/api/v1/getreview", new GetReview());
+        server.createContext("/api/v1/snipelist", new SnipeList());
         server.createContext("/api/v1/delete", new Delete());
-        server.createContext("/api/v1/approve", new Approve());
-        server.createContext("/api/v1/postnext", new PostNext());
-        server.createContext("/api/v1/newpost", new NewPost());
         server.setExecutor(null);
         server.start();
         port = server.getAddress().getPort();
 
-        html = loadFile("webassets/index.html").replace("0.0.0", QOTDBot.getVersion());
+        html = loadFile("webassets/index.html").replace("0.0.0", SnipeChanBot.getVersion());
         js = loadFile("webassets/index.js");
         css = loadFile("webassets/index.css");
 
@@ -135,15 +132,15 @@ public class Webserver {
                                 "managerrole": "%s"
                             }
                             """,
-                    QOTDBot.config.getPrefix(),
-                    QOTDBot.config.getChannelID(),
-                    QOTDBot.config.getManagerReview(),
-                    QOTDBot.config.getReviewChannel(),
-                    QOTDBot.config.getQOTDColor(),
-                    QOTDBot.config.getTrivia(),
-                    QOTDBot.isPaused(),
-                    QOTDBot.config.getPermRoleID(),
-                    QOTDBot.config.getManagerRoleID());
+                    SnipeChanBot.config.getPrefix(),
+                    SnipeChanBot.config.getChannelID(),
+                    SnipeChanBot.config.getManagerReview(),
+                    SnipeChanBot.config.getReviewChannel(),
+                    SnipeChanBot.config.getQOTDColor(),
+                    SnipeChanBot.config.getTrivia(),
+                    SnipeChanBot.isPaused(),
+                    SnipeChanBot.config.getPermRoleID(),
+                    SnipeChanBot.config.getManagerRoleID());
 
             he.sendResponseHeaders(200, response.length());
             OutputStream os = he.getResponseBody();
@@ -162,19 +159,19 @@ public class Webserver {
             try {
                 data = (JSONObject) parser.parse(body);
                 System.out.println();
-                System.out.println("QOTD Bot config has been updated:");
+                System.out.println("SnipeBot config has been updated:");
                 System.out.println("\t" + body);
 
-                QOTDBot.config.setPrefix((String) data.get("prefix"));
-                QOTDBot.config.setChannelID((String) data.get("qotdchannel"));
-                QOTDBot.config.setManagerReview(Boolean.parseBoolean((String) data.get("managerreview")));
-                QOTDBot.config.setReviewChannel((String) data.get("reviewchannel"));
-                QOTDBot.config.setQOTDColor((String) data.get("embedcolor"));
-                QOTDBot.config.setTrivia(Boolean.parseBoolean((String) data.get("trivia")));
-                QOTDBot.setPaused(Boolean.parseBoolean((String) data.get("paused")));
+                SnipeChanBot.config.setPrefix((String) data.get("prefix"));
+                SnipeChanBot.config.setChannelID((String) data.get("qotdchannel"));
+                SnipeChanBot.config.setManagerReview(Boolean.parseBoolean((String) data.get("managerreview")));
+                SnipeChanBot.config.setReviewChannel((String) data.get("reviewchannel"));
+                SnipeChanBot.config.setQOTDColor((String) data.get("embedcolor"));
+                SnipeChanBot.config.setTrivia(Boolean.parseBoolean((String) data.get("trivia")));
+                SnipeChanBot.setPaused(Boolean.parseBoolean((String) data.get("paused")));
 
-                QOTDBot.config.setPermRoleID((String) data.get("permissionrole"));
-                QOTDBot.config.setManagerRoleID((String) data.get("managerrole"));
+                SnipeChanBot.config.setPermRoleID((String) data.get("permissionrole"));
+                SnipeChanBot.config.setManagerRoleID((String) data.get("managerrole"));
 
                 String response = "Success";
                 he.sendResponseHeaders(200, response.length());
@@ -194,23 +191,21 @@ public class Webserver {
         }
     }
 
-    private static class GetQueue implements HttpHandler {
+    private static class SnipeList implements HttpHandler {
         @Override
         public void handle(HttpExchange he) throws IOException {
             System.out.println("Queue queried");
 
-            HashMap<String, Question> questions = QOTDBot.getQueueWithUUID();
-            LinkedList<String> uuids = QOTDBot.getUUIDs();
+            ArrayList<MessageInfo> cache = SnipeChanBot.snipedCache;
 
             final String template = """
                                         
                     {
-                        "question": "%s",
-                        "footer": "%s",
-                        "user": "%s",
+                        "author": "%s",
+                        "from": "%s",
+                        "to": "%s",
                         "time": %s,
-                        "poll": %s,
-                        "uuid": "%s"
+                        "type": "%s"
                     },
                     """;
 
@@ -221,56 +216,8 @@ public class Webserver {
                     "queue":[
                     """);
 
-            for (String uuid : uuids) {
-                Question q = questions.get(uuid);
-                data.append(String.format(template,
-                        q.getQuestion(),
-                        q.getFooter(),
-                        q.getAuthor(),
-                        q.getMillis(),
-                        q.isPoll(),
-                        uuid));
-            }
-
-            data.append("]}");
-
-            String response = replaceLast(data.toString(), ",", "");
-            he.sendResponseHeaders(200, response.length());
-            OutputStream os = he.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
-        }
-    }
-
-    private static class GetReview implements HttpHandler {
-        @Override
-        public void handle(HttpExchange he) throws IOException {
-            System.out.println("Review queried");
-
-            HashMap<String, Question> questions = QOTDBot.getReviewWithUUID();
-            LinkedList<String> uuids = QOTDBot.getReviewUUIDs();
-
-            final String template = """
-                                        
-                    {
-                        "question": "%s",
-                        "footer": "%s",
-                        "user": "%s",
-                        "time": %s,
-                        "poll": %s,
-                        "uuid": "%s"
-                    },
-                    """;
-
-            StringBuilder data = new StringBuilder();
-
-            data.append("""
-                    {
-                    "review":[
-                    """);
-
-            for (String uuid : uuids) {
-                Question q = questions.get(uuid);
+            for (MessageInfo q : cache) {
+                MessageInfo q = questions.get(uuid);
                 data.append(String.format(template,
                         q.getQuestion(),
                         q.getFooter(),
@@ -300,18 +247,14 @@ public class Webserver {
             try {
                 data = (JSONObject) parser.parse(body);
                 System.out.println();
-                System.out.println("QOTD Bot post has been requested to be deleted:");
+                System.out.println("SnipeBot cached item has been requested to be deleted:");
 
                 String type = (String) data.get("type");
-                String uuid = (String) data.get("uuid");
+                String msgid = (String) data.get("msgid");
 
-                System.out.println("\t" + uuid);
+                System.out.println("\t" + msgid);
 
-                if (type.equals("queue")) {
-                    QOTDBot.remove(uuid);
-                } else {
-                    QOTDBot.deny(uuid);
-                }
+                SnipeChanBot.remove(msgid);
 
                 String response = "Success";
 
@@ -330,95 +273,6 @@ public class Webserver {
                 os.close();
             }
 
-        }
-    }
-
-    private class Approve implements HttpHandler {
-        @Override
-        public void handle(HttpExchange he) throws IOException {
-            String body = readRequestBody(he.getRequestBody());
-
-            JSONParser parser = new JSONParser();
-            JSONObject data;
-            try {
-                data = (JSONObject) parser.parse(body);
-                System.out.println();
-                System.out.println("QOTD Bot post has been requested to be approved:");
-
-                String uuid = (String) data.get("uuid");
-
-                System.out.println("\t" + uuid);
-
-                QOTDBot.approve(uuid);
-
-                String response = "Success";
-                he.sendResponseHeaders(200, response.length());
-                OutputStream os = he.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
-            } catch (ParseException e) {
-                e.printStackTrace();
-                System.out.println("Unable to read POST (GET) JSON");
-
-                String response = "Failed";
-                he.sendResponseHeaders(200, response.length());
-                OutputStream os = he.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
-            }
-        }
-    }
-
-    private class PostNext implements HttpHandler {
-        @Override
-        public void handle(HttpExchange he) throws IOException {
-            QOTDBot.postQOTD();
-
-            String response = "Success";
-            he.sendResponseHeaders(200, response.length());
-            OutputStream os = he.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
-        }
-    }
-
-    private class NewPost implements HttpHandler {
-        @Override
-        public void handle(HttpExchange he) throws IOException {
-            String body = readRequestBody(he.getRequestBody());
-
-            JSONParser parser = new JSONParser();
-            JSONObject data;
-            try {
-                data = (JSONObject) parser.parse(body);
-                System.out.println();
-                System.out.println("QOTD Bot new post has been requested:");
-                System.out.println("\t" + body);
-
-                String author = (String) data.get("author");
-                String question = (String) data.get("question");
-                String footer = (String) data.get("footer");
-                boolean poll = data.get("type").equals("poll");
-
-                Question newq = new Question(question, footer, author, poll);
-
-                QOTDBot.add(newq);
-
-                String response = "Success";
-                he.sendResponseHeaders(200, response.length());
-                OutputStream os = he.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
-            } catch (ParseException e) {
-                e.printStackTrace();
-                System.out.println("Unable to read POST (GET) JSON");
-
-                String response = "Failed";
-                he.sendResponseHeaders(200, response.length());
-                OutputStream os = he.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
-            }
         }
     }
 

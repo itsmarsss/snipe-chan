@@ -10,7 +10,7 @@ import java.net.URL;
 public class ConsoleMirror extends JFrame {
 
     public ConsoleMirror() {
-        super("QOTD Bot Console v" + QOTDBot.getVersion());
+        super("QOTD Bot Console v" + SnipeChanBot.getVersion());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JTextArea textArea = new JTextArea();
@@ -32,26 +32,26 @@ public class ConsoleMirror extends JFrame {
 
         Button startButton = new Button("Start", new Color(88, 101, 242), new Color(71, 82, 196), new Color(60, 69, 165));
         startButton.addActionListener(actionEvent -> {
-            if(QOTDBot.getJDA() != null) {
+            if(SnipeChanBot.getJDA() != null) {
                 System.out.println("Bot already Started.");
                 return;
             }
-            QOTDBot.start();
+            SnipeChanBot.start();
         });
         buttonPanel.add(startButton);
 
         Button endButton = new Button("Stop", new Color(242, 63, 66), new Color(198, 36, 36), new Color(161, 40, 40));
-        endButton.addActionListener(actionEvent -> QOTDBot.stop());
+        endButton.addActionListener(actionEvent -> SnipeChanBot.stop());
         buttonPanel.add(endButton);
 
         Button siteButton = new Button("Control Panel", new Color(36, 128, 70), new Color(26, 99, 52), new Color(21, 86, 43));
-        siteButton.addActionListener(actionEvent -> QOTDBot.controlPanel());
+        siteButton.addActionListener(actionEvent -> SnipeChanBot.controlPanel());
         buttonPanel.add(siteButton);
 
         Button editButton = new Button("config.yml", new Color(78, 80, 88), new Color(65, 68, 74), new Color(78, 80, 88));
         editButton.addActionListener(actionEvent -> {
             System.out.println();
-            ProcessBuilder pb = new ProcessBuilder("Notepad.exe", QOTDBot.getParent() + "/config.yml");
+            ProcessBuilder pb = new ProcessBuilder("Notepad.exe", SnipeChanBot.getParent() + "/config.yml");
             try {
                 pb.start();
 
@@ -63,9 +63,9 @@ public class ConsoleMirror extends JFrame {
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Notepad.exe not found:");
-                System.out.println("\tUnable to open: " + QOTDBot.getParent() + "/config.yml");
+                System.out.println("\tUnable to open: " + SnipeChanBot.getParent() + "/config.yml");
                 JOptionPane.showMessageDialog(null,
-                        "Notepad.exe not found: Unable to open: " + QOTDBot.getParent() + "/config.yml",
+                        "Notepad.exe not found: Unable to open: " + SnipeChanBot.getParent() + "/config.yml",
                         "QOTD BOT Error",
                         JOptionPane.ERROR_MESSAGE);
             }

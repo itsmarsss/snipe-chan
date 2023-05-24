@@ -25,6 +25,7 @@ public class Webserver {
     public int getPort() {
         return port;
     }
+
     public void terminate() {
         server.stop(0);
     }
@@ -121,26 +122,35 @@ public class Webserver {
             String response = String.format("""
                             {
                                 "prefix": "%s",
-                                "qotdchannel": "%s",
-                                "managerreview": "%s",
-                                "reviewchannel": "%s",
-                                "embedcolor": "#%s",
-                                "trivia": "%s",
-                                "paused": "%s",
-
-                                "permissionrole": "%s",
-                                "managerrole": "%s"
+                                "snipedeletedmessages"": "%s",
+                                "snipedeletedfiles"": "%s",
+                                "snipeeditedmessages"": "%s",
+                                "snipeeditedfiles"": "%s",
+                                "sendsnipenotifs"": "%s",
+                                "snipenonhumans"": "%s",
+                                "snipemessagemanagers"": "%s",
+                                "enablesnipecommand"": "%s",
+                                
+                                "maxmessagecache"": "%s",
+                                "maxsnipecache"": "%s",
+                                
+                                "snipedeletedlogsid"": "%s",
+                                "snipeeditedlogsid"": "%s"
                             }
                             """,
-                    SnipeChanBot.config.getPrefix());//,
-                    //SnipeChanBot.config.getChannelID(),
-                    //SnipeChanBot.config.getManagerReview(),
-                    //SnipeChanBot.config.getReviewChannel(),
-                    //SnipeChanBot.config.getQOTDColor(),
-                    //SnipeChanBot.config.getTrivia(),
-                    //SnipeChanBot.isPaused(),
-                    //SnipeChanBot.config.getPermRoleID(),
-                    //SnipeChanBot.config.getManagerRoleID());
+                    SnipeChanBot.config.getPrefix(),
+                    SnipeChanBot.config.isSnipeDeletedMessages(),
+                    SnipeChanBot.config.isSnipeDeletedFiles(),
+                    SnipeChanBot.config.isSnipeEditedMessages(),
+                    SnipeChanBot.config.isSnipeEditedFiles(),
+                    SnipeChanBot.config.isSendSnipeNotifs(),
+                    SnipeChanBot.config.isSnipeNonhumans(),
+                    SnipeChanBot.config.isSnipeMessageManagers(),
+                    SnipeChanBot.config.isEnableSnipeCommand(),
+                    SnipeChanBot.config.getMaxMessageCache(),
+                    SnipeChanBot.config.getMaxSnipedCache(),
+                    SnipeChanBot.config.getSnipeDeletedLogsID(),
+                    SnipeChanBot.config.getSnipeEditedLogsID());
 
             he.sendResponseHeaders(200, response.length());
             OutputStream os = he.getResponseBody();
@@ -163,15 +173,18 @@ public class Webserver {
                 System.out.println("\t" + body);
 
                 SnipeChanBot.config.setPrefix((String) data.get("prefix"));
-//                SnipeChanBot.config.setChannelID((String) data.get("qotdchannel"));
-//                SnipeChanBot.config.setManagerReview(Boolean.parseBoolean((String) data.get("managerreview")));
-//                SnipeChanBot.config.setReviewChannel((String) data.get("reviewchannel"));
-//                SnipeChanBot.config.setQOTDColor((String) data.get("embedcolor"));
-//                SnipeChanBot.config.setTrivia(Boolean.parseBoolean((String) data.get("trivia")));
-//                SnipeChanBot.setPaused(Boolean.parseBoolean((String) data.get("paused")));
-//
-//                SnipeChanBot.config.setPermRoleID((String) data.get("permissionrole"));
-//                SnipeChanBot.config.setManagerRoleID((String) data.get("managerrole"));
+                SnipeChanBot.config.setSnipeDeletedMessages((boolean) data.get("snipedeletedmessages"));
+                SnipeChanBot.config.setSnipeDeletedFiles((boolean) data.get("snipedeletedfiles"));
+                SnipeChanBot.config.setSnipeEditedMessages((boolean) data.get("snipeeditedmessages"));
+                SnipeChanBot.config.setSnipeEditedFiles((boolean) data.get("snipeeditedfiles"));
+                SnipeChanBot.config.setSendSnipeNotifs((boolean) data.get("sendsnipenotifs"));
+                SnipeChanBot.config.setSnipeNonhumans((boolean) data.get("snipenonhumans"));
+                SnipeChanBot.config.setSnipeMessageManagers((boolean) data.get("snipemessagemanagers"));
+                SnipeChanBot.config.setEnableSnipeCommand((boolean) data.get("enablesnipecommand"));
+                SnipeChanBot.config.setMaxMessageCache((int) data.get("maxmessagecache"));
+                SnipeChanBot.config.setMaxSnipedCache((int) data.get("maxsnipecache"));
+                SnipeChanBot.config.setSnipeDeletedLogsID((String) data.get("snipedeletedlogsid"));
+                SnipeChanBot.config.setSnipeEditedLogsID((String) data.get("snipeeditedlogsid"));
 
                 String response = "Success";
                 he.sendResponseHeaders(200, response.length());

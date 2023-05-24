@@ -3,6 +3,7 @@ package com.marsss.snipebot;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import net.dv8tion.jda.api.entities.Message;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -10,6 +11,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Webserver {
 
@@ -216,12 +218,12 @@ public class Webserver {
             final String template = """
 
                     {
-                        "type": "%s",
                         "user": "%s",
                         "from": "%s",
                         "to": "%s",
+                        "other": "%s",
                         "time": "%s",
-                        "link": [%s],
+                        "links": [%s],
                         "avatarurl": "%s",
                         "msgid": "%s"
                     },
@@ -236,10 +238,12 @@ public class Webserver {
 
             for (MessageInfo q : cache) {
                 data.append(String.format(template,
-                        q.getMessage().getId(),
-                        q.getEmbed().getFields().get(0).getValue(),
-                        q.getMessage().getContentRaw(),
                         q.getMessage().getAuthor().getAsTag(),
+                        q.getEmbed().getFields().get(0).getValue(),
+                        q.getEmbed().getFields().get(1).getValue(),
+                        q.getEmbed().getFields().get(2).getValue(),
+                        q.getEmbed().getFooter(),
+                        convertToJSON(q.getMessage().getAttachments()),
                         q.getMessage().getAuthor().getAvatarUrl(),
                         q.getMessage().getId()));
             }
@@ -251,6 +255,14 @@ public class Webserver {
             OutputStream os = he.getResponseBody();
             os.write(response.getBytes());
             os.close();
+        }
+
+        private String convertToJSON(List<Message.Attachment> attachments) {
+            String links = "";
+            for(Message.Attachment att : attachments) {
+                links += "\"" + att + "\",";
+            }
+            return replaceLast(links, ",", "");
         }
     }
 

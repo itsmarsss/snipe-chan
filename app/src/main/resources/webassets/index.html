@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" type="image"
+          href="https://raw.githubusercontent.com/itsmarsss/Snipe-Chan/main/assets/image.png"/>
+    <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snipe Bot Control Panel v0.0.0</title>
+</head>
+
+<body>
+
+<div class="qotd-config">
+    <div class="config-title">
+        <h5>
+            <b>QOTD SETTINGS</b>
+        </h5>
+    </div>
+
+    <div class="manager-config">
+        <div class="prefix">
+            <h5>Prefix</h5>
+            <input type="text" placeholder="Prefix" id="prefix">
+        </div>
+        <div class="managerreview">
+            <h5>Manager Review</h5>
+            <select id="managerreview" name="Manager Review">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+        <div class="reviewchannel">
+            <h5>Review Channel</h5>
+            <input type="text" placeholder="Review Channel" id="reviewchannel">
+        </div>
+        <div class="embedcolor">
+            <h5>Embed Color</h5>
+            <input type="color" id="embedcolor">
+        </div>
+
+        <hr>
+
+        <div class="trivia">
+            <h5>Trivia Mode</h5>
+            <select id="trivia" name="Trivia Mode">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+        <div class="paused">
+            <h5>Pause</h5>
+            <select id="paused" name="Pause">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="admin-config">
+        <div class="permissionrole">
+            <h5>Permission Role</h5>
+            <input type="text" placeholder="Permission Role" id="permissionrole">
+        </div>
+        <div class="managerrole">
+            <h5>Manager Role</h5>
+            <input type="text" placeholder="Manager Role" id="managerrole">
+        </div>
+
+        <hr>
+
+        <div class="updateconfig">
+            <h5>Configuration</h5>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <button class="reset" onclick="getConfig()">Reset</button>
+        <button class="save" onclick="setConfig()">Save Changes</button>
+    </div>
+</div>
+
+<main>
+    <h1>Snipe Bot Control Panel v0.0.0</h1>
+    <div class="snipes" id="question-queue">
+        Nothing to see here.
+    </div>
+</main>
+</body>
+
+</html>
+
+<script type="text/javascript" src="index.js"></script>

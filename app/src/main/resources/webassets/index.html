@@ -16,43 +16,70 @@
 <div class="qotd-config">
     <div class="config-title">
         <h5>
-            <b>QOTD SETTINGS</b>
+            <b>SNIPE SETTINGS</b>
         </h5>
     </div>
 
-    <div class="manager-config">
+    <div class="general">
         <div class="prefix">
             <h5>Prefix</h5>
             <input type="text" placeholder="Prefix" id="prefix">
         </div>
-        <div class="managerreview">
-            <h5>Manager Review</h5>
-            <select id="managerreview" name="Manager Review">
-                <option value="true">true</option>
-                <option value="false">false</option>
-            </select>
-        </div>
-        <div class="reviewchannel">
-            <h5>Review Channel</h5>
-            <input type="text" placeholder="Review Channel" id="reviewchannel">
-        </div>
-        <div class="embedcolor">
-            <h5>Embed Color</h5>
-            <input type="color" id="embedcolor">
-        </div>
 
         <hr>
 
-        <div class="trivia">
-            <h5>Trivia Mode</h5>
-            <select id="trivia" name="Trivia Mode">
+        <div class="snipedeletedmessages">
+            <h5>Snipe Deleted Messages</h5>
+            <select id="snipedeletedmessages" name="Snipe Deleted Messages">
                 <option value="true">true</option>
                 <option value="false">false</option>
             </select>
         </div>
-        <div class="paused">
-            <h5>Pause</h5>
-            <select id="paused" name="Pause">
+        <div class="snipedeletedfiles">
+            <h5>Snipe Deleted Files</h5>
+            <select id="snipedeletedfiles" name="Snipe Deleted Files">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+        <div class="snipeeditedmessages">
+            <h5>Snipe Edited Messages</h5>
+            <select id="snipeeditedmessages" name="Snipe Edited Messages">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+        <div class="snipeeditedfiles">
+            <h5>Sniped Edited Files</h5>
+            <select id="snipeeditedfiles" name="Sniped Edited Files">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+        <div class="sendsnipenotifs">
+            <h5>Send Snipe Notification</h5>
+            <select id="sendsnipenotifs" name="Send Snipe Notification">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+        <div class="snipenonhumans">
+            <h5>Snipe Non-humans</h5>
+            <select id="snipenonhumans" name="Snipe Non-humans">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+        <div class="snipemessagemanagers">
+            <h5>Snipe Message Managers (manage message permission)</h5>
+            <select id="snipemessagemanagers" name="Snipe Message Managers">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+        <div class="enablesnipecommand">
+            <h5>Enable Snipe Command</h5>
+            <select id="enablesnipecommand" name="Enable Snipe Command">
                 <option value="true">true</option>
                 <option value="false">false</option>
             </select>
@@ -61,21 +88,32 @@
 
     <hr>
 
-    <div class="admin-config">
-        <div class="permissionrole">
-            <h5>Permission Role</h5>
-            <input type="text" placeholder="Permission Role" id="permissionrole">
+    <div class=caches">
+        <div class="maxmessagecache">
+            <h5>Max Message Cache</h5>
+            <input type="text" placeholder="Max Message Cache" id="maxmessagecache">
         </div>
-        <div class="managerrole">
-            <h5>Manager Role</h5>
-            <input type="text" placeholder="Manager Role" id="managerrole">
+        <div class="maxsnipecache">
+            <h5>Max Snipe Cache</h5>
+            <input type="text" placeholder="Max Snipe Cache" id="maxsnipecache">
         </div>
+    </div>
 
-        <hr>
-
-        <div class="updateconfig">
-            <h5>Configuration</h5>
+    <div class=channels">
+        <div class="snipedeletedlogsid">
+            <h5>Deleted Logs Channel ID</h5>
+            <input type="text" placeholder="Deleted Logs Channel ID" id="snipedeletedlogsid">
         </div>
+        <div class="snipeeditedlogsid">
+            <h5>Edited Logs Channel ID</h5>
+            <input type="text" placeholder="Edited Logs Channel ID" id="snipeeditedlogsid">
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="updateconfig">
+        <h5>Configuration</h5>
     </div>
 
     <div class="overlay" id="overlay">

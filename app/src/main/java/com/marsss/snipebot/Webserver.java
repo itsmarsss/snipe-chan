@@ -119,20 +119,20 @@ public class Webserver {
             String response = String.format("""
                             {
                                 "prefix": "%s",
-                                "snipedeletedmessages"": "%s",
-                                "snipedeletedfiles"": "%s",
-                                "snipeeditedmessages"": "%s",
-                                "snipeeditedfiles"": "%s",
-                                "sendsnipenotifs"": "%s",
-                                "snipenonhumans"": "%s",
-                                "snipemessagemanagers"": "%s",
-                                "enablesnipecommand"": "%s",
+                                "snipedeletedmessages": "%s",
+                                "snipedeletedfiles": "%s",
+                                "snipeeditedmessages": "%s",
+                                "snipeeditedfiles": "%s",
+                                "sendsnipenotifs": "%s",
+                                "snipenonhumans": "%s",
+                                "snipemessagemanagers": "%s",
+                                "enablesnipecommand": "%s",
                                 
-                                "maxmessagecache"": "%s",
-                                "maxsnipecache"": "%s",
+                                "maxmessagecache": "%s",
+                                "maxsnipecache": "%s",
                                 
-                                "snipedeletedlogsid"": "%s",
-                                "snipeeditedlogsid"": "%s"
+                                "snipedeletedlogsid": "%s",
+                                "snipeeditedlogsid": "%s"
                             }
                             """,
                     SnipeChanBot.config.getPrefix(),

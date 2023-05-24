@@ -60,11 +60,11 @@ function getConfig() {
         snipemessagemanagers.value = data.snipemessagemanagers;
         enablesnipecommand.value = data.enablesnipecommand;
 
-        maxmessagecache.value = data.enablesnipecommand;
-        maxsnipecache.value = data.enablesnipecommand;
+        maxmessagecache.value = data.maxmessagecache;
+        maxsnipecache.value = data.maxsnipecache;
 
-        snipedeletedlogsid.value = data.enablesnipecommand;
-        snipeeditedlogsid.value = data.enablesnipecommand;
+        snipedeletedlogsid.value = data.snipedeletedlogsid;
+        snipeeditedlogsid.value = data.snipeeditedlogsid;
 
         overlay.classList.add('slide-out');
         setTimeout(function () {

@@ -171,17 +171,17 @@ public class Webserver {
 
                 SnipeChanBot.config.setPrefix((String) data.get("prefix"));
 
-                SnipeChanBot.config.setSnipeDeletedMessages((boolean) data.get("snipedeletedmessages"));
-                SnipeChanBot.config.setSnipeDeletedFiles((boolean) data.get("snipedeletedfiles"));
-                SnipeChanBot.config.setSnipeEditedMessages((boolean) data.get("snipeeditedmessages"));
-                SnipeChanBot.config.setSnipeEditedFiles((boolean) data.get("snipeeditedfiles"));
-                SnipeChanBot.config.setSendSnipeNotifs((boolean) data.get("sendsnipenotifs"));
-                SnipeChanBot.config.setSnipeNonhumans((boolean) data.get("snipenonhumans"));
-                SnipeChanBot.config.setSnipeMessageManagers((boolean) data.get("snipemessagemanagers"));
-                SnipeChanBot.config.setEnableSnipeCommand((boolean) data.get("enablesnipecommand"));
+                SnipeChanBot.config.setSnipeDeletedMessages(Boolean.parseBoolean((String) data.get("snipedeletedmessages")));
+                SnipeChanBot.config.setSnipeDeletedFiles(Boolean.parseBoolean((String) data.get("snipedeletedfiles")));
+                SnipeChanBot.config.setSnipeEditedMessages(Boolean.parseBoolean((String) data.get("snipeeditedmessages")));
+                SnipeChanBot.config.setSnipeEditedFiles(Boolean.parseBoolean((String) data.get("snipeeditedfiles")));
+                SnipeChanBot.config.setSendSnipeNotifs(Boolean.parseBoolean((String) data.get("sendsnipenotifs")));
+                SnipeChanBot.config.setSnipeNonhumans(Boolean.parseBoolean((String) data.get("snipenonhumans")));
+                SnipeChanBot.config.setSnipeMessageManagers(Boolean.parseBoolean((String) data.get("snipemessagemanagers")));
+                SnipeChanBot.config.setEnableSnipeCommand(Boolean.parseBoolean((String) data.get("enablesnipecommand")));
 
-                SnipeChanBot.config.setMaxMessageCache((int) data.get("maxmessagecache"));
-                SnipeChanBot.config.setMaxSnipedCache((int) data.get("maxsnipecache"));
+                SnipeChanBot.config.setMaxMessageCache(Integer.parseInt((String) data.get("maxmessagecache")));
+                SnipeChanBot.config.setMaxSnipedCache(Integer.parseInt((String) data.get("maxsnipecache")));
 
                 SnipeChanBot.config.setSnipeDeletedLogsID((String) data.get("snipedeletedlogsid"));
                 SnipeChanBot.config.setSnipeEditedLogsID((String) data.get("snipeeditedlogsid"));

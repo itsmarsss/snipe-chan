@@ -1,6 +1,6 @@
-const config = document.getElementsByClassName('qotd-config')[0];
+const config = document.getElementsByClassName('snipe-config')[0];
 
-const question_queue = document.getElementById('question-queue');
+const question_queue = document.getElementById('snipe-list');
 
 const prefix = document.getElementById('prefix');
 
@@ -16,102 +16,33 @@ const enablesnipecommand = document.getElementById('enablesnipecommand');
 const maxmessagecache = document.getElementById('maxmessagecache');
 const maxsnipecache = document.getElementById('maxsnipecache');
 
-var qotdColor = "#000";
+const snipedeletedlogsid = document.getElementById('snipedeletedlogsid');
+const snipeeditedlogsid = document.getElementById('snipeeditedlogsid');
 
 prefix.addEventListener('input', alertConfig);
-qotdchannel.addEventListener('input', alertConfig);
-managerreview.addEventListener('change', alertConfig);
-reviewchannel.addEventListener('input', alertConfig);
-embedcolor.addEventListener('change', alertConfig);
-paused.addEventListener('change', alertConfig);
-trivia.addEventListener('change', alertConfig);
-permissionrole.addEventListener('input', alertConfig);
-managerrole.addEventListener('input', alertConfig);
+snipedeletedmessages.addEventListener('change', alertConfig);
+snipedeletedfiles.addEventListener('change', alertConfig);
+snipeeditedmessages.addEventListener('change', alertConfig);
+snipeeditedfiles.addEventListener('change', alertConfig);
+sendsnipenotifs.addEventListener('change', alertConfig);
+snipenonhumans.addEventListener('change', alertConfig);
+snipemessagemanagers.addEventListener('change', alertConfig);
+enablesnipecommand.addEventListener('change', alertConfig);
+maxmessagecache.addEventListener('input', alertConfig);
+maxsnipecache.addEventListener('input', alertConfig);
+snipedeletedlogsid.addEventListener('input', alertConfig);
+snipeeditedlogsid.addEventListener('input', alertConfig);
 
 function alertConfig() {
     overlay.style.position = "sticky";
     overlay.classList.add('slide-in');
 }
 
-function deleteQOTD(type, uuid) {
-    httpPostAsync(`/api/v1/delete`, `{"type":"${type}", "uuid":"${uuid}"}`, (res) => {
-        window.location = window.location.origin + (type === 'review' ? "?tab=review" : "");
-    });
-}
-
-function approveQOTD(uuid) {
-    httpPostAsync(`/api/v1/approve`, `{"uuid":"${uuid}"}`, (res) => {
-        window.location = window.location.origin + "?tab=review";
-    });
-}
-
-function postNext() {
-    httpGetAsync("/api/v1/postnext", null, (res) => {
-        if (res === "Success") {
-            alert("Next QOTD Posted!");
-        }
+function deleteSnipe(msgid) {
+    httpPostAsync(`/api/v1/delete`, `{"msgid":"${msgid}"}`, (res) => {
         window.location.reload();
     });
 }
-
-function showModal() {
-    modal.classList.add('fade-in');
-    modal.style.display = 'block';
-}
-
-function hideModal() {
-    modal.classList.add('fade-out');
-    setTimeout(function () {
-        modal.classList.remove('fade-in');
-        modal.classList.remove('fade-out');
-        modal.style.display = 'none';
-    }, 100);
-}
-
-function submitModal() {
-    const body = `
-    {
-        "author": "${nauthor.value}",
-        "question": "${nquestion.value}",
-        "footer": "${nfooter.value}",
-        "type": "${ntype.value}"
-    }
-    `;
-
-    console.log(body);
-    httpPostAsync(`/api/v1/newpost`, body, (res) => {
-        if (res === "Success") {
-            alert("New QOTD Added!");
-        }
-        window.location.reload();
-    });
-}
-
-modal.addEventListener("keypress", function (e) {
-    if (e.key === 'Escape') {
-        hideModal();
-    }
-});
-
-modal.addEventListener("click", function (e) {
-    if (e.target === e.currentTarget) {
-        hideModal();
-    }
-});
-
-queue.addEventListener("click", function () {
-    question_queue.style.display = "block";
-    question_review.style.display = "none";
-
-    getQueue();
-});
-
-review.addEventListener("click", function () {
-    question_queue.style.display = "none";
-    question_review.style.display = "block";
-
-    getReview();
-});
 
 function getConfig() {
     httpGetAsync("/api/v1/getconfig", null, (res) => {
@@ -120,17 +51,20 @@ function getConfig() {
         const data = JSON.parse(res);
 
         prefix.value = data.prefix;
-        qotdchannel.value = data.qotdchannel;
-        managerreview.value = data.managerreview;
-        reviewchannel.value = data.reviewchannel;
-        embedcolor.value = data.embedcolor;
-        trivia.value = data.trivia;
-        paused.value = data.paused;
+        snipedeletedmessages.value = data.snipedeletedmessages;
+        snipedeletedfiles.value = data.snipedeletedfiles;
+        snipeeditedmessages.value = data.snipeeditedmessages;
+        snipeeditedfiles.value = data.snipeeditedfiles;
+        sendsnipenotifs.value = data.sendsnipenotifs;
+        snipenonhumans.value = data.snipenonhumans;
+        snipemessagemanagers.value = data.snipemessagemanagers;
+        enablesnipecommand.value = data.enablesnipecommand;
 
-        permissionrole.value = data.permissionrole;
-        managerrole.value = data.managerrole;
+        maxmessagecache.value = data.enablesnipecommand;
+        maxsnipecache.value = data.enablesnipecommand;
 
-        qotdColor = data.embedcolor;
+        snipedeletedlogsid.value = data.enablesnipecommand;
+        snipeeditedlogsid.value = data.enablesnipecommand;
 
         overlay.classList.add('slide-out');
         setTimeout(function () {
@@ -146,15 +80,20 @@ function setConfig() {
     const body = `
         {
             "prefix": "${prefix.value}",
-            "qotdchannel": "${qotdchannel.value}",
-            "managerreview": "${managerreview.value}",
-            "reviewchannel": "${reviewchannel.value}",
-            "embedcolor": "${embedcolor.value}",
-            "trivia": "${trivia.value}",
-            "paused": "${paused.value}",
+            "snipedeletedmessages": "${snipedeletedmessages.value}",
+            "snipedeletedfiles": "${snipedeletedfiles.value}",
+            "snipeeditedmessages": "${snipeeditedmessages.value}",
+            "snipeeditedfiles": "${snipeeditedfiles.value}",
+            "sendsnipenotifs": "${sendsnipenotifs.value}",
+            "snipenonhumans": "${snipenonhumans.value}",
+            "snipemessagemanagers": "${snipemessagemanagers.value}",
+            "enablesnipecommand": "${enablesnipecommand.value}",
 
-            "permissionrole": "${permissionrole.value}",
-            "managerrole": "${managerrole.value}"
+            "maxmessagecache": "${maxmessagecache.value}",
+            "maxsnipecache": "${maxsnipecache.value}",
+
+            "snipedeletedlogsid": "${snipedeletedlogsid.value}",
+            "snipeeditedlogsid": "${snipeeditedlogsid.value}"
 
         }
         `;
@@ -215,57 +154,6 @@ function getQueue() {
     });
 }
 
-function getReview() {
-    httpGetAsync(`/api/v1/getreview`, null, (res) => {
-        console.log(res);
-
-        const data = JSON.parse(res);
-
-        question_review.innerHTML = "";
-
-        if (data.review.length == 0) {
-            question_review.innerHTML = "Nothing to see here.";
-        }
-
-        for (let i in data.review) {
-
-            const q = data.review[i];
-
-            const date = new Date(q.time);
-
-            const ques = (q.poll ? "Poll: " : "Question: ") + q.question;
-
-            var card = `
-
-<div class="question" style = "border-left: 5px solid ${qotdColor}">
-    <div class="main">
-        <div class="header">
-            <h3><b>Added by: ${q.user}</b></h3>
-        </div>
-        <div class="title">
-            <h2><b>${ques}</b></h2>
-        </div>
-        <div class="description">
-            <h4>Footer: <i>${q.footer}</i></h4>
-        </div>
-        <div class="footer">
-            <h4>Added on: ${formatDate(date)}</h4>
-        </div>
-    </div>
-
-    <div class="aside">
-        <button class="deny" id="deny" title="Deny" onclick="deleteQOTD('review','${q.uuid}')">&#10060;</button>
-        <button class="approve" id="approve" title="Approve" onclick="approveQOTD('${q.uuid}')">&#9989;</button>
-    </div>
-</div >
-
-            `;
-
-            question_review.innerHTML += card;
-        }
-    });
-}
-
 function httpGetAsync(url, body, callback) {
     console.log(url);
 
@@ -308,16 +196,4 @@ function formatDate(date) {
     return `${year} /${month}/${day} ${hours}:${minutes}:${seconds} `;
 }
 
-hideModal();
 getConfig();
-
-const urlParams = new URLSearchParams(window.location.search);
-const selectedTab = urlParams.get('tab');
-
-console.log(selectedTab);
-
-if (selectedTab === "review") {
-    review.click();
-} else {
-    queue.click();
-}

@@ -123,7 +123,6 @@ public class SnipeChanBot {
 
     }
 
-
     private static Webserver server;
 
     static String versionCheck() {

@@ -10,7 +10,7 @@ import java.net.URL;
 public class ConsoleMirror extends JFrame {
 
     public ConsoleMirror() {
-        super("QOTD Bot Console v" + SnipeChanBot.getVersion());
+        super("Snipe Bot Console v" + SnipeChanBot.getVersion());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JTextArea textArea = new JTextArea();
@@ -51,22 +51,22 @@ public class ConsoleMirror extends JFrame {
         Button editButton = new Button("config.yml", new Color(78, 80, 88), new Color(65, 68, 74), new Color(78, 80, 88));
         editButton.addActionListener(actionEvent -> {
             System.out.println();
-            ProcessBuilder pb = new ProcessBuilder("Notepad.exe", SnipeChanBot.getParent() + "/config.yml");
+
             try {
-                pb.start();
+                Desktop.getDesktop().edit(new File(SnipeChanBot.getParent() + "/config.yml"));
 
                 System.out.println("You will need to restart the program for new changes to take place.");
                 JOptionPane.showMessageDialog(null,
                         "You will need to restart the program for new changes to take place.",
-                        "QOTD BOT Warning",
+                        "Snipe Bot Warning",
                         JOptionPane.WARNING_MESSAGE);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("Notepad.exe not found:");
+                System.out.println("Error encountered not found:");
                 System.out.println("\tUnable to open: " + SnipeChanBot.getParent() + "/config.yml");
                 JOptionPane.showMessageDialog(null,
-                        "Notepad.exe not found: Unable to open: " + SnipeChanBot.getParent() + "/config.yml",
-                        "QOTD BOT Error",
+                        e.getMessage(),
+                        "Snipe Bot Error",
                         JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -76,7 +76,7 @@ public class ConsoleMirror extends JFrame {
 
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        ImageIcon icon = loadIconFromInternet("https://raw.githubusercontent.com/itsmarsss/QOTD-Bot/main/assets/image.png");
+        ImageIcon icon = loadIconFromInternet("https://raw.githubusercontent.com/itsmarsss/Snipe-Chan/main/assets/image.png");
         if (icon != null) {
             setIconImage(icon.getImage());
         }

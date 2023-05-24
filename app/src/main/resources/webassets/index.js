@@ -121,7 +121,7 @@ function getSnipeList() {
 
         for (let i in data.cache) {
 
-            const c = data.queue[i];
+            const c = data.cache[i];
 
             var card = `
 

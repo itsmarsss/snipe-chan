@@ -253,12 +253,17 @@ public class Webserver {
                     other = q.getEmbed().getFields().get(2).getValue();
                 }catch(Exception e) {}
 
+                String time = q.getEmbed().getFooter().getText();
+                time = time.substring(time.indexOf('\n')+1);
+                time = time.replaceAll("\n", "<br>");
+                time = time.replaceAll("\u2022", "&bull;");
+
                 data.append(String.format(template,
                         q.getMessage().getAuthor().getAsTag(),
                         from,
                         to,
                         other,
-                        q.getEmbed().getFooter().getText(),
+                        time,
                         convertToJSON(q.getMessage().getAttachments()),
                         q.getMessage().getAuthor().getAvatarUrl(),
                         q.getMessage().getId()));

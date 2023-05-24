@@ -10,7 +10,7 @@ import java.net.URL;
 public class ConsoleMirror extends JFrame {
 
     public ConsoleMirror() {
-        super("QOTD Bot Console v" + SnipeChanBot.getVersion());
+        super("Snipe Bot Console v" + SnipeChanBot.getVersion());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JTextArea textArea = new JTextArea();
@@ -58,7 +58,7 @@ public class ConsoleMirror extends JFrame {
                 System.out.println("You will need to restart the program for new changes to take place.");
                 JOptionPane.showMessageDialog(null,
                         "You will need to restart the program for new changes to take place.",
-                        "QOTD BOT Warning",
+                        "Snipe Bot Warning",
                         JOptionPane.WARNING_MESSAGE);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -66,7 +66,7 @@ public class ConsoleMirror extends JFrame {
                 System.out.println("\tUnable to open: " + SnipeChanBot.getParent() + "/config.yml");
                 JOptionPane.showMessageDialog(null,
                         "Notepad.exe not found: Unable to open: " + SnipeChanBot.getParent() + "/config.yml",
-                        "QOTD BOT Error",
+                        "Snipe Bot Error",
                         JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -76,7 +76,7 @@ public class ConsoleMirror extends JFrame {
 
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        ImageIcon icon = loadIconFromInternet("https://raw.githubusercontent.com/itsmarsss/QOTD-Bot/main/assets/image.png");
+        ImageIcon icon = loadIconFromInternet("https://raw.githubusercontent.com/itsmarsss/Snipe-Chan/main/assets/image.png");
         if (icon != null) {
             setIconImage(icon.getImage());
         }

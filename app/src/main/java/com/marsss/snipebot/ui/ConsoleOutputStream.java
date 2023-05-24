@@ -1,4 +1,4 @@
-package com.marsss.qotdbot.ui;
+package com.marsss.snipebot.ui;
 
 import javax.swing.*;
 import java.io.OutputStream;

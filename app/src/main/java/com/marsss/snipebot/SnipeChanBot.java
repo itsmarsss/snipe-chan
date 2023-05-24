@@ -166,4 +166,19 @@ public class SnipeChanBot {
         }
     }
 
+    public static String getVersion() {
+        return version;
+    }
+
+    public static JDA getJDA() {
+        return jda;
+    }
+
+    public static void controlPanel() {
+
+    }
+
+    public static String getParent() {
+        return parent;
+    }
 }

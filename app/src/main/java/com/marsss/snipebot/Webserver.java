@@ -10,9 +10,6 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.UUID;
 
 public class Webserver {
 

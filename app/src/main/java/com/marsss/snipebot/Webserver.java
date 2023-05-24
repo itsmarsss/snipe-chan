@@ -186,6 +186,8 @@ public class Webserver {
                 SnipeChanBot.config.setSnipeDeletedLogsID((String) data.get("snipedeletedlogsid"));
                 SnipeChanBot.config.setSnipeEditedLogsID((String) data.get("snipeeditedlogsid"));
 
+                SnipeChanBot.writeConfigYML();
+
                 String response = "Success";
                 he.sendResponseHeaders(200, response.length());
                 OutputStream os = he.getResponseBody();

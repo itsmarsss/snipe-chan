@@ -37,6 +37,71 @@ public class SnipeChanBot {
 
     private static boolean head = true;
 
+    private final static String template = """
+            # Input the bot token here, this can be found in Developers Portal > Applications > [Bot Profile] > Bot > Token > [Copy]
+            botToken: %s
+                   
+            # Turn on developers mode in Settings > Advanced > Developer Mode, right-click your Discord Server and click on [Copy ID]
+            serverID: %s
+                   
+            # Set a prefix here for the bot, this is what members use to get sniped messages (e.g. sc!sniped 1)
+            prefix: %s
+                   
+                   
+            # Set to true if you want to snipe deleted messages
+            snipeDeletedMessages: %s
+                   
+            # Set to true if you want to snipe deleted files
+            snipeDeletedFiles: %s
+                   
+            # Set to true if you want to snipe edited messages
+            snipeEditedMessages: %s
+                   
+            # Set to true if you want to snipe edited files
+            snipeEditedFiles: %s
+                   
+            # Set to true if you want the bot to send a message into chat when a message is deleted/edited
+            sendSnipeNotifs: %s
+                   
+            # Set to true if you want to snipe bots
+            snipeNonhumans: %s
+                   
+            # Set to true if you want to snipe messages sent from members with [Manage Messages] permission
+            snipeMessageManagers: %s
+                   
+            # Set to true if you want to enable the command to let members see previous sniped messages
+            enableSnipeCommand: %s
+                   
+                   
+            # Set the number of messages the bot will cache, just in case it gets deleted/edited
+            maxMessageCache: %s
+                   
+            # Set the number of sniped messages the bot will cache, for members to see previous sniped messages
+            maxSnipedCache: %s
+                   
+                   
+            # Set where deleted messages logs get sent, right click text channel and click on [Copy ID]
+            snipeDeletedLogsID: %s
+                   
+            # Set where edited messages logs get sent, right click text channel and click on [Copy ID]
+            snipeEditedLogsID: %s
+                   
+                   
+            # Rapid status/activity updates may cause temporary rate limits
+                   
+            # Set status -> Can be; donotdisturb/online/idle (defaults to donotdisturb)
+            status: %s
+                   
+            # Set activity type -> Can be; watching/playing/competing/listening/streaming (defaults to watching)
+            activity: %s
+                   
+            # Set activity name (defaults to "for disappearing messages...")
+            name: %s
+                   
+            # Set streaming URL (ignored unless activity: streaming); this must be a valid streaming site e.g. Twitch.tv
+            url: %s
+            """;
+
     public static void main(String[] args) throws URISyntaxException {
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("--nohead")) {
@@ -330,5 +395,60 @@ public class SnipeChanBot {
 
     public static String getParent() {
         return parent;
+    }
+
+    static boolean writeConfigYML() {
+        String token = config.getBotToken();
+        String serverID = config.getServerID();
+
+        String prefix = config.getPrefix();
+
+        boolean snipedeletedmessages = config.isSnipeDeletedMessages();
+        boolean snipedeletedfiles = config.isSnipeDeletedFiles();
+        boolean snipeeditedmessages = config.isSnipeEditedMessages();
+        boolean snipeeditedfiles = config.isSnipeEditedFiles();
+        boolean sendsnipenotifs = config.isSendSnipeNotifs();
+        boolean snipenonhumans = config.isSnipeNonhumans();
+        boolean snipemessagemanagers = config.isSnipeMessageManagers();
+        boolean enablesnipecommand = config.isEnableSnipeCommand();
+
+        int maxmessagecache = config.getMaxMessageCache();
+        int maxsnipedcache = config.getMaxSnipedCache();
+
+        String snipedeletedlogsid = config.getSnipeDeletedLogsID();
+        String snipeeditedlogsid = config.getSnipeEditedLogsID();
+
+        String status = config.getStatus();
+        String activity = config.getActivity();
+        String name = config.getName();
+        String url = config.getUrl();
+
+        try (FileWriter file = new FileWriter(parent + "/config.yml")) {
+            file.write(String.format(template,
+                    token,
+                    serverID,
+                    prefix,
+                    snipedeletedmessages,
+                    snipedeletedfiles,
+                    snipeeditedmessages,
+                    snipeeditedfiles,
+                    sendsnipenotifs,
+                    snipenonhumans,
+                    snipemessagemanagers,
+                    enablesnipecommand,
+                    maxmessagecache,
+                    maxsnipedcache,
+                    snipedeletedlogsid,
+                    snipeeditedlogsid,
+                    status,
+                    activity,
+                    name,
+                    url));
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

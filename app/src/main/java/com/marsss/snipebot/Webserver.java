@@ -228,7 +228,8 @@ public class Webserver {
                         "files": [%s],
                         "links": [%s],
                         "avatarurl": "%s",
-                        "msgid": "%s"
+                        "msgid": "%s",
+                        "msgurl": "%s"
                     },
                     """;
 
@@ -275,7 +276,8 @@ public class Webserver {
                         convertListToJSON(files),
                         convertListToJSON(links),
                         escapeJson(q.getMessage().getAuthor().getAvatarUrl()),
-                        escapeJson(q.getMessage().getId())));
+                        escapeJson(q.getMessage().getId()),
+                        escapeJson(q.getMessage().getJumpUrl())));
             }
 
             data.append("]}");

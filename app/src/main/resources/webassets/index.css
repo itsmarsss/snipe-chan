@@ -253,20 +253,29 @@ button:active {
 }
 
 .snipe:hover .delete,
-.snipe.hover .delete {
+.snipe:hover .jumpto {
     transform: translateX(0);
 }
 
-.delete {
+.delete,
+.jumpto {
     transform: translateX(100px);
     float: right;
     transition: 200ms;
-    background: transparent;
-    color: #ff0000;
-    border: 1px solid #ff0000;
     padding: 3px;
     border-radius: 5px;
     cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.jumpto {
+    margin-right: 5px;
+}
+
+.delete {
+    color: #ff0000;
+    border: 1px solid #ff0000;
+    background: transparent;
 }
 
 .delete:hover {

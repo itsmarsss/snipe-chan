@@ -178,6 +178,10 @@ function getSnipeList() {
     <div class="aside">
         <button class="delete" title="Remove" onclick="deleteSnipe('${c.msgid}')">&#128465;&#65039;
         </button>
+
+        <a href="${c.msgurl}" target="_blank">
+            <button class="jumpto" title="Jump To Message">&#128279;</button>
+        </a>
     </div>
 </div>
 

@@ -238,7 +238,6 @@ public class Webserver {
                     "cache":[
                     """);
 
-            System.out.println(1);
             for (MessageInfo q : cache) {
                 LinkedList<String> titles = new LinkedList<>();
                 LinkedList<String> values = new LinkedList<>();
@@ -246,14 +245,11 @@ public class Webserver {
                 for (int i = 0; i < 3; i++) {
                     try {
                         MessageEmbed.Field field = q.getEmbed().getFields().get(i);
-                        titles.add(field.getName());
-                        values.add(field.getValue());
-                        System.out.println(2 + "." + i);
+                        titles.add(convertToHtml(field.getName()));
+                        values.add(convertToHtml(field.getValue()));
                     } catch (Exception e) {
                     }
                 }
-
-                System.out.println(2);
 
                 String time = q.getEmbed().getFooter().getText();
                 time = time.substring(time.indexOf('\n') + 1);
@@ -269,7 +265,6 @@ public class Webserver {
                         q.getMessage().getAuthor().getAvatarUrl(),
                         q.getMessage().getId()));
             }
-            System.out.println(3);
 
             data.append("]}");
 
@@ -297,6 +292,18 @@ public class Webserver {
                 links += "\"" + att + "\",";
             }
             return replaceLast(links, ",", "");
+        }
+
+        public static String convertToHtml(String markdown) {
+            String html = markdown
+                    .replaceAll("\\*\\*(.*?)\\*\\*", "<strong>$1</strong>")
+                    .replaceAll("\\*(.*?)\\*", "<em>$1</em>")
+                    .replaceAll("__(.*?)__", "<strong>$1</strong>")
+                    .replaceAll("_(.*?)_", "<em>$1</em>")
+                    .replaceAll("`(.*?)`", "<code>$1</code>")
+                    .replaceAll("\n", "<br>");
+
+            return html;
         }
     }
 

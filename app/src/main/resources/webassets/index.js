@@ -97,13 +97,12 @@ function setConfig() {
 
             "snipedeletedlogsid": ${JSON.stringify(snipedeletedlogsid.value)},
             "snipeeditedlogsid": ${JSON.stringify(snipeeditedlogsid.value)}
-
         }
         `;
 
     console.log(body);
     httpPostAsync(`/api/v1/setconfig`, body, (res) => {
-        //window.location.reload();
+        window.location.reload();
     });
 }
 

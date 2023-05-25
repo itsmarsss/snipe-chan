@@ -225,6 +225,7 @@ public class Webserver {
                         "titles": [%s],
                         "values": [%s],
                         "time": "%s",
+                        "files": [%s],
                         "links": [%s],
                         "avatarurl": "%s",
                         "msgid": "%s"
@@ -251,6 +252,16 @@ public class Webserver {
                     }
                 }
 
+                LinkedList<String> files = new LinkedList<>();
+                LinkedList<String> links = new LinkedList<>();
+                for (Message.Attachment atts : q.getMessage().getAttachments()) {
+                    try {
+                        files.add(convertToHtml(atts.getFileName()));
+                        links.add(convertToHtml(atts.getUrl()));
+                    } catch (Exception e) {
+                    }
+                }
+
                 String time = q.getEmbed().getFooter().getText();
                 time = time.substring(time.indexOf('\n') + 1);
                 time = time.replaceAll("\n", "<br>");
@@ -261,7 +272,8 @@ public class Webserver {
                         convertListToJSON(titles),
                         convertListToJSON(values),
                         escapeJson(time),
-                        convertToJSON(q.getMessage().getAttachments()),
+                        convertListToJSON(files),
+                        convertListToJSON(links),
                         escapeJson(q.getMessage().getAuthor().getAvatarUrl()),
                         escapeJson(q.getMessage().getId())));
             }
@@ -282,14 +294,6 @@ public class Webserver {
                 vals += "\"" + escapeJson(val) + "\",";
             }
             return replaceLast(vals, ",", "");
-        }
-
-        private String convertToJSON(List<Message.Attachment> attachments) {
-            String links = "";
-            for (Message.Attachment att : attachments) {
-                links += "\"" + escapeJson(att.getUrl()) + "\",";
-            }
-            return replaceLast(links, ",", "");
         }
 
         public static String convertToHtml(String markdown) {

@@ -177,8 +177,6 @@ select {
 }
 
 button {
-    margin-top: 5px;
-    margin-bottom: 20px;
     outline: none;
     border: none;
     cursor: pointer;
@@ -288,6 +286,14 @@ button:active {
     display: flex;
     gap: 30px;
     align-content: space-evenly;
+}
+
+.attachments {
+    margin-top: 10px;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .fade-in {

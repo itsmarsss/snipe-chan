@@ -133,6 +133,19 @@ function getSnipeList() {
                 fields += field;
             }
 
+            var buttons = "";
+
+            for (let i in c.files) {
+                const button = `
+                <a href="${c.links[i]}" target="_blank">
+                    <button>
+                        ${c.files[i]}
+                    </button>
+                </a>
+                `
+                buttons += button;
+            }
+
             var card = `
 
 <div class="snipe">
@@ -155,6 +168,10 @@ function getSnipeList() {
 
         <div class="time">
             <h4>${c.time}</h4>
+        </div>
+
+        <div class="attachments">
+            ${buttons}
         </div>
     </div>
 

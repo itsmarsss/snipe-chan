@@ -82,7 +82,7 @@ function getConfig() {
 function setConfig() {
     const body = `
         {
-            "prefix": "${JSON.stringify(prefix.value)}",
+            "prefix": ${JSON.stringify(prefix.value)},
             "snipedeletedmessages": "${snipedeletedmessages.value}",
             "snipedeletedfiles": "${snipedeletedfiles.value}",
             "snipeeditedmessages": "${snipeeditedmessages.value}",
@@ -92,18 +92,18 @@ function setConfig() {
             "snipemessagemanagers": "${snipemessagemanagers.value}",
             "enablesnipecommand": "${enablesnipecommand.value}",
 
-            "maxmessagecache": "${JSON.stringify(maxmessagecache.value)}",
-            "maxsnipecache": "${JSON.stringify(maxsnipecache.value)}",
+            "maxmessagecache": ${JSON.stringify(maxmessagecache.value)},
+            "maxsnipecache": ${JSON.stringify(maxsnipecache.value)},
 
-            "snipedeletedlogsid": "${JSON.stringify(snipedeletedlogsid.value)}",
-            "snipeeditedlogsid": "${JSON.stringify(snipeeditedlogsid.value)}"
+            "snipedeletedlogsid": ${JSON.stringify(snipedeletedlogsid.value)},
+            "snipeeditedlogsid": ${JSON.stringify(snipeeditedlogsid.value)}
 
         }
         `;
 
     console.log(body);
     httpPostAsync(`/api/v1/setconfig`, body, (res) => {
-        window.location.reload();
+        //window.location.reload();
     });
 }
 

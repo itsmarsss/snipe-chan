@@ -201,7 +201,7 @@ public class SnipeChanBot {
     static void prompt() {
         System.out.println("~ Successfully read config.yml ~");
         System.out.println();
-        System.out.println("** Press [enter] to start the bot **");
+        System.out.println(head ? "** Click [Start] button to start the bot **" : "** Press [enter] to start the bot **");
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
         sc.close();

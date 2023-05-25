@@ -53,11 +53,11 @@ public class EditedMessage extends ListenerAdapter {
                                 "\nMessage Edited \u2022 " + date.toInstant().atOffset(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME).substring(5));
         if (SnipeChanBot.config.isSnipeEditedFiles() && SnipeChanBot.config.isSnipeEditedMessages()) {
             if (!event.getMessage().getContentRaw().isBlank()) {
-                String msg1 = originalMessage.getContentRaw();
+                String msg1 = originalMessage.getContentRaw().length() == 0 ? "N/A" : originalMessage.getContentRaw();
                 if (msg1.length() >= 1024)
                     msg1 = msg1.substring(0, 1021) + "...";
 
-                String msg2 = event.getMessage().getContentRaw();
+                String msg2 = event.getMessage().getContentRaw().length() == 0 ? "N/A" : event.getMessage().getContentRaw();
                 if (msg2.length() >= 1024)
                     msg2 = msg2.substring(0, 1021) + "...";
                 emb.addField("**Original Message:**", msg1, true)
@@ -78,11 +78,11 @@ public class EditedMessage extends ListenerAdapter {
             }
         } else if (SnipeChanBot.config.isSnipeEditedMessages()) {
             if (!originalMessage.getContentRaw().isBlank()) {
-                String msg1 = originalMessage.getContentRaw();
+                String msg1 = originalMessage.getContentRaw().length() == 0 ? "N/A" : originalMessage.getContentRaw();
                 if (msg1.length() >= 1024)
                     msg1 = msg1.substring(0, 1021) + "...";
 
-                String msg2 = event.getMessage().getContentRaw();
+                String msg2 = event.getMessage().getContentRaw().length() == 0 ? "N/A" : event.getMessage().getContentRaw();
                 if (msg2.length() >= 1024)
                     msg2 = msg2.substring(0, 1021) + "...";
                 emb.addField("**Original Message:**", msg1, true)

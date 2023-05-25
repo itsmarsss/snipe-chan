@@ -82,7 +82,7 @@ function getConfig() {
 function setConfig() {
     const body = `
         {
-            "prefix": "${prefix.value}",
+            "prefix": "${JSON.stringify(prefix.value)}",
             "snipedeletedmessages": "${snipedeletedmessages.value}",
             "snipedeletedfiles": "${snipedeletedfiles.value}",
             "snipeeditedmessages": "${snipeeditedmessages.value}",
@@ -92,11 +92,11 @@ function setConfig() {
             "snipemessagemanagers": "${snipemessagemanagers.value}",
             "enablesnipecommand": "${enablesnipecommand.value}",
 
-            "maxmessagecache": "${maxmessagecache.value}",
-            "maxsnipecache": "${maxsnipecache.value}",
+            "maxmessagecache": "${JSON.stringify(maxmessagecache.value)}",
+            "maxsnipecache": "${JSON.stringify(maxsnipecache.value)}",
 
-            "snipedeletedlogsid": "${snipedeletedlogsid.value}",
-            "snipeeditedlogsid": "${snipeeditedlogsid.value}"
+            "snipedeletedlogsid": "${JSON.stringify(snipedeletedlogsid.value)}",
+            "snipeeditedlogsid": "${JSON.stringify(snipeeditedlogsid.value)}"
 
         }
         `;

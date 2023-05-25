@@ -121,7 +121,7 @@ public class Webserver {
         public void handle(HttpExchange he) throws IOException {
             System.out.println("Config queried");
 
-            String response = String.format("""
+            String response = escapeJson(String.format("""
                             {
                                 "prefix": "%s",
                                 "snipedeletedmessages": "%s",
@@ -152,7 +152,7 @@ public class Webserver {
                     SnipeChanBot.config.getMaxMessageCache(),
                     SnipeChanBot.config.getMaxSnipedCache(),
                     SnipeChanBot.config.getSnipeDeletedLogsID(),
-                    SnipeChanBot.config.getSnipeEditedLogsID());
+                    SnipeChanBot.config.getSnipeEditedLogsID()));
 
             he.sendResponseHeaders(200, response.length());
             OutputStream os = he.getResponseBody();
@@ -268,9 +268,7 @@ public class Webserver {
 
             data.append("]}");
 
-            String response = replaceLast(data.toString(), ",", "");
-
-            System.out.println(response);
+            String response = escapeJson(replaceLast(data.toString(), ",", ""));
 
             he.sendResponseHeaders(200, response.length());
             OutputStream os = he.getResponseBody();
@@ -300,6 +298,7 @@ public class Webserver {
                     .replaceAll("\\*(.*?)\\*", "<em>$1</em>")
                     .replaceAll("__(.*?)__", "<strong>$1</strong>")
                     .replaceAll("_(.*?)_", "<em>$1</em>")
+                    .replaceAll("```(.*?)```", "<code-block>$1</code-block>")
                     .replaceAll("`(.*?)`", "<code>$1</code>")
                     .replaceAll("\n", "<br>");
 
@@ -358,5 +357,48 @@ public class Webserver {
 
     public static String replaceLast(String text, String regex, String replacement) {
         return text.replaceFirst("(?s)" + regex + "(?!.*?" + regex + ")", replacement);
+    }
+
+    public static String escapeJson(String jsonString) {
+        StringBuilder escapedJson = new StringBuilder();
+
+        for (int i = 0; i < jsonString.length(); i++) {
+            char ch = jsonString.charAt(i);
+
+            switch (ch) {
+                case '\"':
+                    escapedJson.append("\\\"");
+                    break;
+                case '\\':
+                    escapedJson.append("\\\\");
+                    break;
+                case '/':
+                    escapedJson.append("\\/");
+                    break;
+                case '\b':
+                    escapedJson.append("\\b");
+                    break;
+                case '\f':
+                    escapedJson.append("\\f");
+                    break;
+                case '\n':
+                    escapedJson.append("\\n");
+                    break;
+                case '\r':
+                    escapedJson.append("\\r");
+                    break;
+                case '\t':
+                    escapedJson.append("\\t");
+                    break;
+                default:
+                    if (Character.isISOControl(ch)) {
+                        escapedJson.append(String.format("\\u%04X", (int) ch));
+                    } else {
+                        escapedJson.append(ch);
+                    }
+            }
+        }
+
+        return escapedJson.toString();
     }
 }

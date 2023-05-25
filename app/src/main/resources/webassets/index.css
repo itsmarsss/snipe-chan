@@ -45,6 +45,19 @@ hr {
     background-color: #4e50587a;
 }
 
+code {
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #1e1f22;
+}
+
+code-block {
+    border-radius: 5px;
+    padding: 8px;
+    background-color: #1e1f22;
+    border: 1px solid #000;
+}
+
 .main {
     width: 85%;
 }
@@ -94,11 +107,11 @@ main {
     position: fixed;
 }
 
-.qotd-config::-webkit-scrollbar {
+.snipe-config::-webkit-scrollbar {
     width: 10px;
 }
 
-.qotd-config h5 {
+.snipe-config h5 {
     margin-bottom: 0px;
 }
 

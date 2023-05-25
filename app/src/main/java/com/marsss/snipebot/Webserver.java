@@ -3,7 +3,6 @@ package com.marsss.snipebot;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import kotlin.Pair;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.json.simple.JSONObject;
@@ -14,7 +13,6 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Webserver {
 

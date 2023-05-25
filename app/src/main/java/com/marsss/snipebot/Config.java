@@ -232,14 +232,11 @@ public class Config {
             return OnlineStatus.DO_NOT_DISTURB;
         }
 
-        switch(status.toLowerCase()) {
-            case "online":
-                return OnlineStatus.ONLINE;
-            case "idle":
-                return OnlineStatus.IDLE;
-            default:
-                return OnlineStatus.DO_NOT_DISTURB;
-        }
+        return switch (status.toLowerCase()) {
+            case "online" -> OnlineStatus.ONLINE;
+            case "idle" -> OnlineStatus.IDLE;
+            default -> OnlineStatus.DO_NOT_DISTURB;
+        };
     }
 
     public Activity.ActivityType getParsedActivity() {
@@ -247,18 +244,13 @@ public class Config {
             return Activity.ActivityType.WATCHING;
         }
 
-        switch(activity.toLowerCase()) {
-            case "playing":
-                return Activity.ActivityType.PLAYING;
-            case "competing":
-                return Activity.ActivityType.COMPETING;
-            case "listening":
-                return Activity.ActivityType.LISTENING;
-            case "streaming":
-                return Activity.ActivityType.STREAMING;
-            default:
-                return Activity.ActivityType.WATCHING;
-        }
+        return switch (activity.toLowerCase()) {
+            case "playing" -> Activity.ActivityType.PLAYING;
+            case "competing" -> Activity.ActivityType.COMPETING;
+            case "listening" -> Activity.ActivityType.LISTENING;
+            case "streaming" -> Activity.ActivityType.STREAMING;
+            default -> Activity.ActivityType.WATCHING;
+        };
     }
 
     public String getParsedName() {

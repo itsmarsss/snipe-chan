@@ -122,7 +122,7 @@ function getSnipeList() {
         for (let i in data.cache) {
             const c = data.cache[i];
 
-            const fields = "";
+            var fields = "";
 
             for (let i in c.titles) {
                 const field = `

@@ -247,7 +247,7 @@ public class Webserver {
                     try {
                         MessageEmbed.Field field = q.getEmbed().getFields().get(i);
                         titles.add(convertToHtml(field.getName()));
-                        values.add(field.getValue());
+                        values.add(convertToHtml(field.getValue()));
                     } catch (Exception e) {
                     }
                 }

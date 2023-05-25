@@ -121,7 +121,7 @@ public class Webserver {
         public void handle(HttpExchange he) throws IOException {
             System.out.println("Config queried");
 
-            String response = escapeJson(String.format("""
+            String response = String.format("""
                             {
                                 "prefix": "%s",
                                 "snipedeletedmessages": "%s",
@@ -140,7 +140,7 @@ public class Webserver {
                                 "snipeeditedlogsid": "%s"
                             }
                             """,
-                    SnipeChanBot.config.getPrefix(),
+                    escapeJson(SnipeChanBot.config.getPrefix()),
                     SnipeChanBot.config.isSnipeDeletedMessages(),
                     SnipeChanBot.config.isSnipeDeletedFiles(),
                     SnipeChanBot.config.isSnipeEditedMessages(),
@@ -151,8 +151,8 @@ public class Webserver {
                     SnipeChanBot.config.isEnableSnipeCommand(),
                     SnipeChanBot.config.getMaxMessageCache(),
                     SnipeChanBot.config.getMaxSnipedCache(),
-                    SnipeChanBot.config.getSnipeDeletedLogsID(),
-                    SnipeChanBot.config.getSnipeEditedLogsID()));
+                    escapeJson(SnipeChanBot.config.getSnipeDeletedLogsID()),
+                    escapeJson(SnipeChanBot.config.getSnipeEditedLogsID()));
 
             he.sendResponseHeaders(200, response.length());
             OutputStream os = he.getResponseBody();
@@ -257,18 +257,18 @@ public class Webserver {
                 time = time.replaceAll("\u2022", "&bull;");
 
                 data.append(String.format(template,
-                        q.getMessage().getAuthor().getAsTag(),
+                        escapeJson(q.getMessage().getAuthor().getAsTag()),
                         convertListToJSON(titles),
                         convertListToJSON(values),
-                        time,
+                        escapeJson(time),
                         convertToJSON(q.getMessage().getAttachments()),
-                        q.getMessage().getAuthor().getAvatarUrl(),
-                        q.getMessage().getId()));
+                        escapeJson(q.getMessage().getAuthor().getAvatarUrl()),
+                        escapeJson(q.getMessage().getId())));
             }
 
             data.append("]}");
 
-            String response = escapeJson(replaceLast(data.toString(), ",", ""));
+            String response = replaceLast(data.toString(), ",", "");
 
             he.sendResponseHeaders(200, response.length());
             OutputStream os = he.getResponseBody();
@@ -279,7 +279,7 @@ public class Webserver {
         private String convertListToJSON(LinkedList<String> list) {
             String vals = "";
             for (String val : list) {
-                vals += "\"" + val + "\",";
+                vals += "\"" + escapeJson(val) + "\",";
             }
             return replaceLast(vals, ",", "");
         }
@@ -287,7 +287,7 @@ public class Webserver {
         private String convertToJSON(List<Message.Attachment> attachments) {
             String links = "";
             for (Message.Attachment att : attachments) {
-                links += "\"" + att + "\",";
+                links += "\"" + escapeJson(att.getUrl()) + "\",";
             }
             return replaceLast(links, ",", "");
         }

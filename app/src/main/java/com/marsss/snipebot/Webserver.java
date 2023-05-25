@@ -3,7 +3,9 @@ package com.marsss.snipebot;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import kotlin.Pair;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -11,6 +13,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Webserver {
@@ -219,9 +222,8 @@ public class Webserver {
 
                     {
                         "user": "%s",
-                        "from": "%s",
-                        "to": "%s",
-                        "other": "%s",
+                        "titles": [%s],
+                        "values": [%s],
                         "time": "%s",
                         "links": [%s],
                         "avatarurl": "%s",
@@ -236,51 +238,62 @@ public class Webserver {
                     "cache":[
                     """);
 
+            System.out.println(1);
             for (MessageInfo q : cache) {
+                LinkedList<String> titles = new LinkedList<>();
+                LinkedList<String> values = new LinkedList<>();
 
-                String from = "";
-                try{
-                    from = q.getEmbed().getFields().get(0).getValue();
-                }catch(Exception e) {}
+                for (int i = 0; i < 3; i++) {
+                    try {
+                        MessageEmbed.Field field = q.getEmbed().getFields().get(i);
+                        titles.add(field.getName());
+                        values.add(field.getValue());
+                        System.out.println(2 + "." + i);
+                    } catch (Exception e) {
+                    }
+                }
 
-                String to = "";
-                try{
-                    to = q.getEmbed().getFields().get(1).getValue();
-                }catch(Exception e) {}
-
-                String other = "";
-                try{
-                    other = q.getEmbed().getFields().get(2).getValue();
-                }catch(Exception e) {}
+                System.out.println(2);
 
                 String time = q.getEmbed().getFooter().getText();
-                time = time.substring(time.indexOf('\n')+1);
+                time = time.substring(time.indexOf('\n') + 1);
                 time = time.replaceAll("\n", "<br>");
                 time = time.replaceAll("\u2022", "&bull;");
 
                 data.append(String.format(template,
                         q.getMessage().getAuthor().getAsTag(),
-                        from,
-                        to,
-                        other,
+                        convertListToJSON(titles),
+                        convertListToJSON(values),
                         time,
                         convertToJSON(q.getMessage().getAttachments()),
                         q.getMessage().getAuthor().getAvatarUrl(),
                         q.getMessage().getId()));
             }
+            System.out.println(3);
 
             data.append("]}");
 
             String response = replaceLast(data.toString(), ",", "");
+
+            System.out.println(response);
+
             he.sendResponseHeaders(200, response.length());
             OutputStream os = he.getResponseBody();
             os.write(response.getBytes());
             os.close();
         }
 
+        private String convertListToJSON(LinkedList<String> list) {
+            String vals = "";
+            for (String val : list) {
+                vals += "\"" + val + "\",";
+            }
+            return replaceLast(vals, ",", "");
+        }
+
         private String convertToJSON(List<Message.Attachment> attachments) {
             String links = "";
-            for(Message.Attachment att : attachments) {
+            for (Message.Attachment att : attachments) {
                 links += "\"" + att + "\",";
             }
             return replaceLast(links, ",", "");

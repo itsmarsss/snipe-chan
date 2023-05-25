@@ -120,8 +120,19 @@ function getSnipeList() {
         }
 
         for (let i in data.cache) {
-
             const c = data.cache[i];
+
+            const fields = "";
+
+            for (let i in c.titles) {
+                const field = `
+                <div class="field">
+                    <b>${c.titles[i]}</b><br>
+                        ${c.values[i]}
+                </div>
+                `
+                fields += field;
+            }
 
             var card = `
 
@@ -137,20 +148,7 @@ function getSnipeList() {
         <hr style="background-color: transparent">
 
         <div class="contents">
-            <div class="from">
-                <b>Message Edited:</b><br>
-                ${c.from}
-            </div>
-
-            <div class="to">
-                <b>Message Edited:</b><br>
-                ${c.to}
-            </div>
-
-            <div class="other">
-                <b>Message Other:</b><br>
-                ${c.other}
-            </div>
+            ${fields}
         </div>
 
         <hr>

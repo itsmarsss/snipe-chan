@@ -12,12 +12,12 @@ Snipe Chan
 > :bangbang: This bot breaks the Discord TOS and you should use this program with CAUTION. By using this program, it is assumed that YOU understand the consequences and will be responsible for EVERYTHING thereon after. :bangbang:
 
 **What is Snipe Chan?** -
- Snipe Chan is a Discord Bot that snipes messages, you will have to run your own snipe bot with the code provided because of the limitations of Discord TOS.
+Snipe Chan is a Discord Bot that snipes messages, you will have to run your own snipe bot with the code provided because of the limitations of Discord TOS.
 
 **Why Snipe Chan?** -
 Snipe Chan was created in early 2021 because some guy wouldn't stop deleting messages, the name and original profile picture was suggested by "wvrs" (he's probably playing Genshin right now). The same group of people regrouped and "wvrs" reminded us of Snipe Chan, so I went back found the original poorly written source code and rewrote the bot so that anyone can use it. (Trust me, the current code is still pretty awful).
 
-**How to Download Snipe Chan?** 
+**How to Download Snipe Chan?**
 1. Head over to [[Releases]](https://github.com/itsmarsss/Snipe-Chan/releases) and look for the latest version
 2. Download both SnipeChanBot.jar and config.yml
 3. Put them into the same folder somewhere on your computer
@@ -42,6 +42,7 @@ Snipe Chan was created in early 2021 because some guy wouldn't stop deleting mes
 15. If there are issues that you cannot solve, please create an issue at [[Issue]](https://github.com/itsmarsss/Snipe-Chan/issues)
 
 ## Features
+### Commands
 - Snipe messages
 - Snipe files
 - Sniped cache
@@ -50,13 +51,28 @@ Snipe Chan was created in early 2021 because some guy wouldn't stop deleting mes
 - `[prefix]snipe` - shows the latest snipe
 - `[prefix]sniped [index]` - shows a snipe in sniped cache
 - `[prefix]snipelist [index | nothing]` - shows interactive snipe list (Prev | Next | Hide | Remove)
-  - `[Prev]` - browse previous snipe
-  - `[Next]` - browse next snipe
-  - `[Hide List]` - hide embed
-  - `[Remove Snipe]` - remove from cache
+    - `[Prev]` - browse previous snipe
+    - `[Next]` - browse next snipe
+    - `[Hide List]` - hide embed
+    - `[Remove Snipe]` - remove from cache
 - `[prefix]remove [index]` - removes index from cache
 - `[prefix]clear` - clears cache
 - `[prefix]version` - check for newer versions
+
+### GUI ~ Desktop Window
+- See a version of the logs
+- Controls
+    - Start
+    - Stop
+    - Control Panel
+    - Edit [config.yml]
+
+### Control Panel ~ Local website (accessible in web browsers)
+- Edit Snipe Bot configuration
+- View cache list
+    - Attachment links
+    - Jump To Message
+    - Delete
 
 <!---## Upcoming Features
 - Editable status and status message

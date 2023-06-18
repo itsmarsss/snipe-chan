@@ -301,7 +301,7 @@ public class Webserver {
         }
 
         public static String convertToHtml(String markdown) {
-            String html = markdown
+            return markdown
                     .replaceAll("\\*\\*(.*?)\\*\\*", "<strong>$1</strong>")
                     .replaceAll("\\*(.*?)\\*", "<em>$1</em>")
                     .replaceAll("__(.*?)__", "<strong>$1</strong>")
@@ -309,8 +309,6 @@ public class Webserver {
                     .replaceAll("```(.*?)```", "<code-block>$1</code-block>")
                     .replaceAll("`(.*?)`", "<code>$1</code>")
                     .replaceAll("\n", "<br>");
-
-            return html;
         }
     }
 

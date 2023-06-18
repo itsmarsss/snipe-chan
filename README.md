@@ -41,7 +41,26 @@ Snipe Chan was created in early 2021 because some guy wouldn't stop deleting mes
 14. Follow the instructions given by the program
 15. If there are issues that you cannot solve, please create an issue at [[Issue]](https://github.com/itsmarsss/Snipe-Chan/issues)
 
+## Usage
+### Normal Run
+`java -jar <drag the .jar file into the window OR paste .jar file path (do not include "<" or ">")>`
+
+### No Window Run
+`java -jar <drag the .jar file into the window OR paste .jar file path (do not include "<" or ">")> --nohead`
+
+### Auto Start Run
+`java -jar <drag the .jar file into the window OR paste .jar file path (do not include "<" or ">")> --autostart`
+
+### No Window and Auto Start Run
+`java -jar <drag the .jar file into the window OR paste .jar file path (do not include "<" or ">")> --nohead --autostart`
+
 ## Features
+### Start Config
+| Argument | Usage |
+|---|---|
+| `--nohead` or `--nh` | Run without window |
+| `--autostart` or `--as` | Start bot ASAP (skip confirmation prompt) |
+
 ### Commands
 - Snipe messages
 - Snipe files

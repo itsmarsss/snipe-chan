@@ -36,6 +36,7 @@ public class SnipeChanBot {
             GatewayIntent.MESSAGE_CONTENT);
 
     private static boolean head = true;
+    private static boolean autostart = false;
 
     private final static String template = """
             # Input the bot token here, this can be found in Developers Portal > Applications > [Bot Profile] > Bot > Token > [Copy]
@@ -103,11 +104,15 @@ public class SnipeChanBot {
             """;
 
     public static void main(String[] args) throws URISyntaxException {
-        if (args.length > 0) {
-            if (args[0].equalsIgnoreCase("--nohead")) {
+        for (String arg : args) {
+            if (arg.equals("--nohead") || arg.equals("--nh")) {
                 head = false;
             }
+            if (arg.equals("--autostart") || arg.equals("--as")) {
+                autostart = true;
+            }
         }
+
         if (head) {
             System.out.println("Loading UI...");
 
@@ -202,10 +207,14 @@ public class SnipeChanBot {
         System.out.println("~ Successfully read config.yml ~");
         System.out.println();
         System.out.println(head ? "** Click [Start] button to start the bot **" : "** Press [enter] to start the bot **");
-        Scanner sc = new Scanner(System.in);
-        sc.nextLine();
-        sc.close();
-        start();
+        if (autostart) {
+            start();
+        } else {
+            Scanner sc = new Scanner(System.in);
+            sc.nextLine();
+            sc.close();
+            start();
+        }
     }
 
     public static void start() {

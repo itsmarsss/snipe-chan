@@ -249,8 +249,8 @@ public class Webserver {
                 for (int i = 0; i < 3; i++) {
                     try {
                         MessageEmbed.Field field = q.getEmbed().getFields().get(i);
-                        titles.add(convertToHtml(field.getName()));
-                        values.add(convertToHtml(field.getValue()));
+                        titles.add(convertToHtml((field.getName() == null ? "" : field.getName())));
+                        values.add(convertToHtml((field.getValue() == null ? "" : field.getValue())));
                     } catch (Exception e) {
                     }
                 }
@@ -277,7 +277,7 @@ public class Webserver {
                         escapeJson(time),
                         convertListToJSON(files),
                         convertListToJSON(links),
-                        escapeJson(q.getMessage().getAuthor().getAvatarUrl()),
+                        escapeJson((q.getMessage().getAuthor().getAvatarUrl() == null ? "https://cdn.discordapp.com/embed/avatars/" + ((int) (Math.random() * 6)) + ".png" : q.getMessage().getAuthor().getAvatarUrl())),
                         escapeJson(q.getMessage().getId()),
                         escapeJson(q.getMessage().getJumpUrl())));
             }
@@ -293,11 +293,11 @@ public class Webserver {
         }
 
         private String convertListToJSON(LinkedList<String> list) {
-            String vals = "";
+            StringBuilder vals = new StringBuilder();
             for (String val : list) {
-                vals += "\"" + escapeJson(val) + "\",";
+                vals.append("\"").append(escapeJson(val)).append("\",");
             }
-            return replaceLast(vals, ",", "");
+            return replaceLast(vals.toString(), ",", "");
         }
 
         public static String convertToHtml(String markdown) {

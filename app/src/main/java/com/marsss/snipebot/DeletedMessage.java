@@ -43,7 +43,7 @@ public class DeletedMessage extends ListenerAdapter {
         Date date = new Date();
 
         EmbedBuilder emb = new EmbedBuilder()
-                .setAuthor(originalMessage.getMember().getUser().getAsTag(), null, originalMessage.getMember().getUser().getAvatarUrl())
+                .setAuthor(originalMessage.getMember().getUser().getAsTag(), null, (originalMessage.getMember().getUser().getAvatarUrl() == null ? "https://cdn.discordapp.com/embed/avatars/" + ((int) (Math.random() * 6)) + ".png" : originalMessage.getMember().getUser().getAvatarUrl()))
                 .setDescription(originalMessage.getMember().getAsMention() + "'s message has been deleted in channel " + originalMessage.getChannel().getAsMention())
                 .appendDescription("\n[[jump to  message](" + originalMessage.getJumpUrl() + ")]")
                 .setFooter(

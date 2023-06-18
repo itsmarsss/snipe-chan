@@ -189,7 +189,11 @@ public class Webserver {
                 SnipeChanBot.config.setSnipeDeletedLogsID((String) data.get("snipedeletedlogsid"));
                 SnipeChanBot.config.setSnipeEditedLogsID((String) data.get("snipeeditedlogsid"));
 
-                SnipeChanBot.writeConfigYML();
+                if(SnipeChanBot.writeConfigYML()) {
+                    System.out.println("Config written successfully.");
+                } else {
+                    System.out.println("Config written unsuccessfully.");
+                }
 
                 String response = "Success";
                 he.sendResponseHeaders(200, response.length());
